@@ -4,12 +4,22 @@ import {SharedModule} from '../shared';
 import {AppConfigModule} from '../app-config';
 import {AuthorizationModule} from '../authorization';
 import {BigchainModule} from '../bigchain';
-import {GraphController, PermissionsController, UsersController} from './controllers';
+import {
+    AssetsController,
+    BlocksController,
+    GraphController,
+    PermissionsController,
+    TransactionsController,
+    UsersController
+} from './controllers';
 import {Neo4jModule} from '../neo4j';
 
 const controllers = [
+    AssetsController,
+    BlocksController,
     GraphController,
     PermissionsController,
+    TransactionsController,
     UsersController
 ];
 

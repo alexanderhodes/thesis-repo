@@ -2,17 +2,21 @@ import {HttpService, Injectable} from '@nestjs/common';
 import {BigchainBaseService} from './bigchain-base.service';
 import {ConfigurationService} from '../../app-config/services';
 import {IAsset, IMetaData, ITransaction} from '../interfaces';
+import {InjectModel} from '@nestjs/mongoose';
+import {Model} from 'mongoose';
+import {Transactions} from '../models';
 
 @Injectable()
 export class TransactionsService extends BigchainBaseService {
 
     constructor(configurationService: ConfigurationService,
-                httpService: HttpService) {
+                httpService: HttpService,
+                @InjectModel(Transactions.name) private transactionsModel: Model<Transactions>) {
         super(configurationService, httpService);
     }
 
-    getAllTransactions() {
-        return this.apiPath;
+    async find(): Promise<Transactions[]> {
+        return this.transactionsModel.find();
     }
 
     getTransaction(transactionId: string): Promise<ITransaction> {

@@ -19,7 +19,7 @@ export class ColService {
     }
 
     async findByQuery(name: string, id: number, limit?: number): Promise<Col[]> {
-        let query = name ? { name: name } : (id ? { id: id } : {});
+        const query = name ? { name: name } : (id ? { id: id } : {});
         return this.colModel.find(query).limit(limit);
     }
 

@@ -3,6 +3,7 @@ import {TypeOrmModuleOptions} from '@nestjs/typeorm';
 import {Permission, User} from '../../database/entities';
 import {InsertPermissions1601456259497Migration} from '../../database/migrations';
 import {ConfigService} from '@nestjs/config';
+import {MongooseModuleOptions} from '@nestjs/mongoose';
 
 @Injectable()
 export class ConfigurationService {
@@ -39,5 +40,11 @@ export class ConfigurationService {
             }
         }
     }
-    
+
+    createMongoDbConfigFactory(): { uri: string } {
+        return {
+            uri: this.get<string>("MONGODB_PATH"),
+        };
+    }
+
 }

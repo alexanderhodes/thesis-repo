@@ -36,7 +36,12 @@ import {InsertPermissions1601456259497Migration} from './database/migrations';
 
 @Module({
     imports: [
-        MongooseModule.forRoot("mongodb://localhost:27018/test"),
+//        MongooseModule.forRoot("mongodb://localhost:27018/bigchain"),
+        MongooseModule.forRootAsync({
+           imports: [AppConfigModule],
+           inject: [ConfigurationService],
+           useFactory: (configurationService: ConfigurationService) => configurationService.createMongoDbConfigFactory()
+        }),
         ScheduleModule.forRoot(),
         TypeOrmModule.forRootAsync({
             imports: [AppConfigModule],
