@@ -1,0 +1,19 @@
+
+<h1>Cols</h1>
+<div class="bg-gray-200">
+  <form [formGroup]="form" (ngSubmit)="createCol()">
+    <div>
+      <span>ID:</span>
+      <input formControlName="id" class="border-solid border-black">
+    </div>
+    <div>
+      <span>Name:</span>
+      <input formControlName="name" class="border-solid border-black">
+    </div>
+    <button type="submit" class="btn btn-blue">add col</button>
+  </form>
+</div>
+
+<ng-container *ngFor="let col of cols; index as index">
+  <div>{{ col.id }}: {{ col.name }}</div>
+</ng-container>

@@ -39,6 +39,7 @@ testem.log
 
 # IDEs and editors
 /.idea
+.idea
 .project
 .classpath
 .c9/
@@ -52,6 +53,9 @@ testem.log
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# Docker
+mongo-volume
 
 # local files
 /backup
