@@ -1,0 +1,11 @@
+{
+  "name": "mono-repo-test",
+  "version": "1.0.0",
+  "description": "Test for Mono Repo",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run:thesis-frontend": "cd thesis-frontend && npm run start"
+  },
+  "author": "",
+  "license": "ISC"
+}
