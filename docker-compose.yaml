@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   database:
-    container_name: nestjs_postgres
+    container_name: thesis_postgres
     image: postgis/postgis:11-3.0
     ports:
       - 5432:5432
@@ -12,7 +12,7 @@ services:
       POSTGRES_DB: authentication
   database2:
     image: mongo
-    container_name: nestjs_mongodb
+    container_name: thesis_mongodb
     command: mongod --port 27018
     volumes:
     - ./mongo-volume:/data/db
