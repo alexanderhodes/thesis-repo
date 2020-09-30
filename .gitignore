@@ -62,3 +62,4 @@ mongo-volume
 
 # local files
 /backup
+ormconfig.json
