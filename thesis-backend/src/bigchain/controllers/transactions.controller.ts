@@ -9,7 +9,7 @@ export class TransactionsController {
 
     @Get()
     getAllTransactions() {
-        return this.transactionsService.getAllTransactions();
+        return this.transactionsService.find();
     }
 
     @Post()
