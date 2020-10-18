@@ -1,7 +1,8 @@
-export enum Permissions {
+export enum PermissionsEnum {
     ASSETS_CREATE = "ASSETS:CREATE",
     ASSETS_READ = "ASSETS:READ",
     ASSETS_UPDATE = "ASSETS:UPDATE",
     ASSETS_DELETE = "ASSETS:DELETE",
-    ASSETS_SUGGEST = "ASSETS:SUGGEST"
+    ASSETS_SUGGEST = "ASSETS:SUGGEST",
+    USER = "USER"
 }

@@ -2,7 +2,7 @@
 export interface Payload {
     sub: string;
     username: string;
-    groups: string[]
+    permissions: string[];
 }
 
 export interface JwtToken {

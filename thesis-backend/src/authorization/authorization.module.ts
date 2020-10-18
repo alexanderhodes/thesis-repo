@@ -1,5 +1,5 @@
 import {Module} from '@nestjs/common';
-import {AuthenticationService, JwtStrategyService, LocationStrategyService, OldUsersService} from './services';
+import {AuthenticationService, JwtStrategyService, LocationStrategyService} from './services';
 import {AuthenticationController} from './controllers';
 import {PassportModule} from '@nestjs/passport';
 import {JwtModule} from '@nestjs/jwt';
@@ -14,8 +14,7 @@ const controllers = [
 const services = [
     AuthenticationService,
     JwtStrategyService,
-    LocationStrategyService,
-    OldUsersService
+    LocationStrategyService
 ];
 const guards = [
     JwtAuthGuard,

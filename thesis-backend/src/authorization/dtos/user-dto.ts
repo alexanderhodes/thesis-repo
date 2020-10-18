@@ -1,10 +1,10 @@
 export class UserDto {
-    id: number;
+    id: string;
     username: string;
     password: string;
 }
 
 export interface UserResponseDto {
-    id: number;
+    id: string;
     username: string;
 }

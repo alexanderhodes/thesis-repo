@@ -1,38 +1,56 @@
-import {Controller, Get, Post, Request, UseGuards} from '@nestjs/common';
+import {Controller, Get, HttpException, HttpStatus, Post, Req, Request, UseGuards} from '@nestjs/common';
 import {JwtAuthGuard, LocalAuthGuard, PermissionsGuard} from '../guards';
-import {AuthenticationService, OldUsersService} from '../services';
-import {Permissions} from '../decorators';
+import {AuthenticationService} from '../services';
 import {UserResponseDto} from '../dtos';
-import {JwtToken, User} from '../interfaces';
+import {JwtToken} from '../interfaces';
 import {KeypairService} from '../../shared/services';
+import {UsersService} from '../../database/services';
+import {HasPermissions} from '../decorators';
+import {PermissionsEnum} from '../constants';
 
-@Controller()
+@Controller('auth')
 export class AuthenticationController {
 
     constructor(private authenticationService: AuthenticationService,
                 private keyPairService: KeypairService,
-                private usersService: OldUsersService) {}
+                private usersService: UsersService) {
+    }
 
     @UseGuards(LocalAuthGuard)
-    @Post('auth/login')
+    @Post('login')
     async login(@Request() req): Promise<JwtToken> {
         return this.authenticationService.login(req.user);
     }
 
-    @UseGuards(JwtAuthGuard, PermissionsGuard)
-//    @Permissions('ASSETS:READ')
-    @Get('profile')
-    getProfile(@Request() req): UserResponseDto {
-        return <UserResponseDto>{
-            id: req.user.id,
-            username: req.user.username
-        };
+    @Post('login/silent')
+    async loginSilent(): Promise<JwtToken> {
+        return this.authenticationService.loginSilent();
     }
 
+    @UseGuards(JwtAuthGuard, PermissionsGuard)
+    @HasPermissions(PermissionsEnum.USER)
+    @Get('profile')
+    async getProfile(@Request() req): Promise<UserResponseDto> {
+        const id = req.user ? req.user.id : null;
+        const user = await this.usersService.findOneById(id);
+        if (user) {
+            return <UserResponseDto>{
+                id: user.id,
+                username: user.username
+            };
+        }
+        throw new HttpException('No content', HttpStatus.FORBIDDEN);
+    }
 
     @Get('users')
     getUsers() {
-        return this.usersService.getAllUsers();
+        return this.usersService.findAll();
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Get('permissions')
+    getPermissions(@Request() req) {
+        return { permissions: req.user.permissions };
     }
 
 }

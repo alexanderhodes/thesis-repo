@@ -1,6 +1,5 @@
 import {Injectable} from '@nestjs/common';
 import {User} from '../interfaces';
-import {Permissions} from '../constants/permissions';
 
 @Injectable()
 export class OldUsersService {
@@ -9,7 +8,7 @@ export class OldUsersService {
 
     constructor() {
         this.#users = [{
-            "id": 1,
+            "id": "1",
             "username": "john",
             "password": "changeme",
             "permissions": ["ASSETS:CREATE", "ASSETS:READ"],
@@ -18,7 +17,7 @@ export class OldUsersService {
                 "privateKey": "Fzr6s7KFAoSzRKsNfKdjjGD9aotL5hR9Zz1PfeteGeBj"
             }
         }, {
-            "id": 2,
+            "id": "2",
             "username": "chris",
             "password": "secret",
             "permissions": ["ASSETS:READ"],
@@ -27,7 +26,7 @@ export class OldUsersService {
                 "privateKey": "EG64FJpgPPuCEN2UTY11FsxJ7vs9ScDVVPxTLEC5rEW4"
             }
         }, {
-            "id": 3,
+            "id": "3",
             "username": "maria",
             "password": "guess",
             "permissions": ["ASSETS:READ"],
