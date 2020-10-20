@@ -12,10 +12,11 @@ export class TransactionsController {
         return this.transactionsService.find();
     }
 
-    @Post()
-    createTransaction(@Body() asset: IAsset) {
-        return this.transactionsService.createTransaction(asset);
-    }
+    // @Post(":transaction")
+    // createTransaction(@Body() asset: IAsset, @Param("transaction") ) {
+    //
+    //     return this.transactionsService.createTransaction(asset);
+    // }
 
     @Get(":transaction")
     getTransaction(@Param("transaction") transaction: string) {

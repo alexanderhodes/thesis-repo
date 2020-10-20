@@ -1,1 +1,3 @@
-export interface IMetaData {}
+export interface IMetaData {
+    [key: string]: any
+}
