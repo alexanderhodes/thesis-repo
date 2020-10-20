@@ -3,29 +3,28 @@ version: '3.1'
 services:
   postgres-database:
     container_name: thesis_postgres
-    image: postgis/postgis:11-3.0
+    image: postgres
     ports:
       - 5432:5432
     environment:
       POSTGRES_PASSWORD: nimda
       POSTGRES_USER: admin
       POSTGRES_DB: authentication
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
   mongodb-database:
     image: mongo
     container_name: thesis_mongodb
     command: mongod --port 27018
     volumes:
-    - ./mongo-volume:/data/db
+      - ./mongo-volume:/data/db
     ports:
-    - '27018:27018'
+      - '27018:27018'
   neo4j-database:
     image: neo4j
     container_name: thesis_neo4j
     environment:
       NEO4J_AUTH: 'neo4j/j4oen'
     ports:
-    - 7474:7474
-    - 7687:7687
-
-
-
+      - 7474:7474
+      - 7687:7687
