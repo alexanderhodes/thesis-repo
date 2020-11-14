@@ -1,9 +1,10 @@
-import {Body, Controller, Get, Param, Post, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, NotFoundException, Param, Post, UseGuards} from '@nestjs/common';
 import {UsersService} from '../../database/services';
 import {KeypairService} from '../../shared/services';
-import {CreatedUserDto, CreateUserDto} from '../dtos';
+import {CreatedUserDto, CreateUserDto, UserResponseDto} from '../dtos';
 import {toUserEntity} from '../mappers';
 import {JwtAuthGuard} from '../../authorization/guards';
+import {UserDto} from '../../authorization/dtos';
 
 @Controller("api/users")
 export class UsersController {
@@ -35,14 +36,29 @@ export class UsersController {
 
     @UseGuards(JwtAuthGuard)
     @Get()
-    getAllUsers() {
-        return this.usersService.findAll();
+    async getAllUsers(): Promise<UserResponseDto[]> {
+        const users = await this.usersService.findAll();
+        return users.map(user => <UserResponseDto>{
+            id: user.id,
+            permissions: user.permissions,
+            publicKey: user.publicKey,
+            username: user.username
+        });
     }
 
     @UseGuards(JwtAuthGuard)
     @Get(":id")
-    getUserById(@Param("id") id: string) {
-        return this.usersService.findOneById(id);
+    async getUserById(@Param("id") id: string): Promise<UserResponseDto> {
+        const user = await this.usersService.findOneById(id);
+        if (user) {
+            return {
+                id: user.id,
+                permissions: user.permissions,
+                publicKey: user.publicKey,
+                username: user.username
+            }
+        }
+        throw new NotFoundException("User", `not found for id ${id}`);
     }
 
 }

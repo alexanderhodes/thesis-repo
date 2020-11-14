@@ -3,6 +3,7 @@ import {LoginApiService} from './login-api.service';
 import {LoginCredentials} from './login.interface';
 import {take} from 'rxjs/operators';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'ts-login',
@@ -21,6 +22,7 @@ export class LoginComponent {
   submitted: boolean = false;
 
   constructor(private loginApiService: LoginApiService,
+              private router: Router,
               private changeDetectorRef: ChangeDetectorRef) {
   }
 
@@ -35,8 +37,8 @@ export class LoginComponent {
 
       this.loginApiService.login(loginCredentials)
         .pipe(take(1))
-        .subscribe((response) => {
-          // ToDo: redirect to start page
+        .subscribe(() => {
+          this.router.navigate(['users']).then();
         }, (error) => {
           console.log('error', error);
           if (error.status && error.status === 401) {
