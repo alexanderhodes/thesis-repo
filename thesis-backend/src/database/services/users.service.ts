@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
-import {DeleteResult, InsertResult, Repository, UpdateResult} from 'typeorm';
-import {Permission, User} from '../entities';
+import {DeleteResult, Repository, UpdateResult} from 'typeorm';
+import {User} from '../entities';
 import {InjectRepository} from '@nestjs/typeorm';
 
 @Injectable()
@@ -20,7 +20,13 @@ export class UsersService {
     }
 
     findOneByUsername(username: string): Promise<User> {
-        return this.usersRepository.findOne({ username: username });
+        // return getConnection()
+        //     .getRepository(User)
+        //     .createQueryBuilder("user")
+        //     .where("user.username = :username", { username: username })
+        //     .leftJoinAndSelect("user.permissions", "permission")
+        //     .getOne();
+        return this.usersRepository.findOne({ where: [{ username: username }], relations: ["permissions"] });
     }
 
     insert(user: User): Promise<User> {

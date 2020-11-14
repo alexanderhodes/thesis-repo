@@ -5,6 +5,8 @@ export interface Payload {
     permissions: string[];
 }
 
-export interface JwtToken {
-    access_token: string;
+export interface LoginResponse {
+    accessToken: string;
+    permissions: string[];
+    username: string;
 }

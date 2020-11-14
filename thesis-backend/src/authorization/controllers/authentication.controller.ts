@@ -2,7 +2,7 @@ import {Controller, Get, HttpException, HttpStatus, Post, Req, Request, UseGuard
 import {JwtAuthGuard, LocalAuthGuard, PermissionsGuard} from '../guards';
 import {AuthenticationService} from '../services';
 import {UserResponseDto} from '../dtos';
-import {JwtToken} from '../interfaces';
+import {LoginResponse} from '../interfaces';
 import {KeypairService} from '../../shared/services';
 import {UsersService} from '../../database/services';
 import {HasPermissions} from '../decorators';
@@ -18,12 +18,12 @@ export class AuthenticationController {
 
     @UseGuards(LocalAuthGuard)
     @Post('login')
-    async login(@Request() req): Promise<JwtToken> {
+    async login(@Request() req): Promise<LoginResponse> {
         return this.authenticationService.login(req.user);
     }
 
     @Post('login/silent')
-    async loginSilent(): Promise<JwtToken> {
+    async loginSilent(): Promise<LoginResponse> {
         return this.authenticationService.loginSilent();
     }
 

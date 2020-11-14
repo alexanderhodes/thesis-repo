@@ -14,7 +14,9 @@ export class RequestInterceptor implements HttpInterceptor {
   constructor() {  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const userStorage = localStorage.getItem('user');
     this.#api = environment.apiUrl;
+    this.#authToken = userStorage ? JSON.parse(userStorage).accessToken : null;
 
     const updatedRequest = this.#authToken ? req.clone({
       url: `${this.#api}/${req.url}`,
@@ -40,9 +42,8 @@ export class RequestInterceptor implements HttpInterceptor {
   }
 
   handleResponseWithToken(event: HttpEvent<any>): void {
-    if (event['body'] && event['body'].access_token) {
-      const accessToken = event['body'].access_token;
-      console.log('access token received and has to be stored', accessToken);
+    if (event['body'] && event['body'].accessToken) {
+      localStorage.setItem('user', JSON.stringify(event['body']));
     }
   }
 

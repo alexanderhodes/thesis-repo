@@ -1,5 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {JwtToken, Payload, User} from '../interfaces';
+import {LoginResponse, Payload, User} from '../interfaces';
 import {JwtService} from '@nestjs/jwt';
 import {UsersService} from '../../database/services';
 import {PermissionsEnum} from '../constants';
@@ -12,15 +12,6 @@ export class AuthenticationService {
 
     async validateUser(username: string, password: string): Promise<any> {
         const user = await this.usersService.findOneByUsername(username);
-        // if (user && user.password === password) {
-        //     return {
-        //         id: user.id,
-        //         username: user.username,
-        //         publicKey: user.publicKey,
-        //         permissions: user.permissions
-        //     };
-        // }
-        // return null;
 
         return (user && user.password === password) ? {
             id: user.id,
@@ -30,25 +21,30 @@ export class AuthenticationService {
         } : null;
     }
 
-    async login(user: User): Promise<JwtToken> {
+    async login(user: User): Promise<LoginResponse> {
         const payload: Payload = {
             sub: `${user.id}`,
             username: user.username,
             permissions: user.permissions
         };
         return {
-            access_token: this.jwtService.sign(payload)
+            accessToken: this.jwtService.sign(payload),
+            permissions: user.permissions,
+            username: user.username
         };
     }
 
-    async loginSilent(): Promise<JwtToken> {
+    async loginSilent(): Promise<LoginResponse> {
+        const permissions = [PermissionsEnum.ASSETS_READ];
         const payload: Payload = {
             sub: null,
             username: null,
-            permissions: [PermissionsEnum.ASSETS_READ]
+            permissions: permissions
         };
         return {
-            access_token: this.jwtService.sign(payload)
+            accessToken: this.jwtService.sign(payload),
+            permissions: permissions,
+            username: null
         };
     }
 
