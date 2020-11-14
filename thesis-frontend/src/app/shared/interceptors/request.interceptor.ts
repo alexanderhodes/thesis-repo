@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
-import {map} from 'rxjs/operators';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
@@ -11,7 +12,7 @@ export class RequestInterceptor implements HttpInterceptor {
   #authToken: string;
 //  #methodsWithChange: string[] = ['POST', 'PUT', 'PATCH'];
 
-  constructor() {  }
+  constructor(private router: Router) {  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const userStorage = localStorage.getItem('user');
@@ -37,12 +38,21 @@ export class RequestInterceptor implements HttpInterceptor {
           this.handleResponseWithToken(event);
         }
         return event;
+      }),
+      catchError((error: HttpResponse<any>) => {
+        if (error && error.status === 401) {
+          // user is unauthorized and has to be logged out
+          localStorage.clear();
+          this.router.navigate(['/login']).then();
+        }
+        return throwError(error);
       })
     );
   }
 
   handleResponseWithToken(event: HttpEvent<any>): void {
     if (event['body'] && event['body'].accessToken) {
+      // store response from login in local storage as json object
       localStorage.setItem('user', JSON.stringify(event['body']));
     }
   }
