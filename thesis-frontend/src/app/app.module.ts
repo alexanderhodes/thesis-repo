@@ -4,6 +4,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {Neo4jModule} from './neo4j';
 import {ColModule} from './col';
+import {LoginModule} from './login';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import {ColModule} from './col';
     BrowserModule,
     AppRoutingModule,
     Neo4jModule,
-    ColModule
+    ColModule,
+    LoginModule
   ],
   providers: [],
   bootstrap: [AppComponent]

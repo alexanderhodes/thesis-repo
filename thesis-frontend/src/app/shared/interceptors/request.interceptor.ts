@@ -1,20 +1,27 @@
 import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {environment} from '../../../environments/environment';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
 
-  #api = 'http://localhost:3000';
+  #api: string;
+  #authToken: string;
 
-  constructor() {
-  }
+  constructor() {  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const prefixedReq = req.clone({
+    this.#api = environment.apiUrl;
+
+    const updatedRequest = this.#authToken ? req.clone({
+      url: `${this.#api}/${req.url}`,
+      headers: req.headers.append('Authorization', `Bearer ${this.#authToken}`)
+    }) : req.clone({
       url: `${this.#api}/${req.url}`
     });
-    return next.handle(prefixedReq);
+
+    return next.handle(updatedRequest);
   }
 
 }

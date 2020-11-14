@@ -1,13 +1,10 @@
 import {NgModule} from '@angular/core';
-import {RequestInterceptor} from './interceptors';
+import {HeaderComponent} from './header.component';
 import {CommonModule} from '@angular/common';
-import {ErrorMessageComponent} from './components/public-api';
 
 const components = [
-  ErrorMessageComponent
+  HeaderComponent
 ];
-// ToDo: Integrate Interceptor
-const services = [RequestInterceptor];
 
 @NgModule({
   declarations: [
@@ -21,6 +18,6 @@ const services = [RequestInterceptor];
   ],
   providers: []
 })
-export class SharedModule {
+export class HeaderModule {
 
 }

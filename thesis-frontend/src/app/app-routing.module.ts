@@ -11,6 +11,10 @@ const routes: Routes = [
     path: 'cols',
     loadChildren: () => import('./col').then(m => m.ColModule),
   },
+  {
+    path: 'login',
+    loadChildren: () => import('./login').then(m => m.LoginModule)
+  }
 ];
 
 @NgModule({

@@ -1,0 +1,26 @@
+<div class="container mx-auto">
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div>
+      <div class="text-gray-700">Benutzername</div>
+      <input class="border border-solid border-gray-400 rounded-sm p-1" formControlName="username">
+      <ng-container *ngIf="getFormControl('username').touched && getFormControl('username').invalid">
+        <ts-error-message [show]="getFormControl('username').errors.required">
+          Bitte geben Sie Ihren Benutzernamen ein.
+        </ts-error-message>
+      </ng-container>
+    </div>
+    <div>
+      <div class="text-gray-700">Passwort</div>
+      <input class="border border-solid border-gray-400 rounded-sm p-1" formControlName="password">
+      <ng-container *ngIf="getFormControl('password').touched && getFormControl('password').invalid">
+        <ts-error-message [show]="getFormControl('password').errors.required">
+          Bitte geben Sie Ihr Passwort ein.
+        </ts-error-message>
+      </ng-container>
+    </div>
+    <button type="submit"
+            class="mt-3 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+      anmelden
+    </button>
+  </form>
+</div>
