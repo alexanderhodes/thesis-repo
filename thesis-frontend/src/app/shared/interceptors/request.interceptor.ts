@@ -4,6 +4,7 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from
 import {Observable, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
+import {StateService, STORAGE_USER} from '../services/public-api';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
@@ -12,12 +13,13 @@ export class RequestInterceptor implements HttpInterceptor {
   #authToken: string;
 //  #methodsWithChange: string[] = ['POST', 'PUT', 'PATCH'];
 
-  constructor(private router: Router) {  }
+  constructor(private router: Router,
+              private stateService: StateService) {  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const userStorage = localStorage.getItem('user');
+    const userStorage = this.stateService.getItem(STORAGE_USER);
     this.#api = environment.apiUrl;
-    this.#authToken = userStorage ? JSON.parse(userStorage).accessToken : null;
+    this.#authToken = userStorage ? userStorage.accessToken : null;
 
     const updatedRequest = this.#authToken ? req.clone({
       url: `${this.#api}/${req.url}`,
@@ -42,7 +44,7 @@ export class RequestInterceptor implements HttpInterceptor {
       catchError((error: HttpResponse<any>) => {
         if (error && error.status === 401) {
           // user is unauthorized and has to be logged out
-          localStorage.clear();
+          this.stateService.clear();
           this.router.navigate(['/login']).then();
         }
         return throwError(error);
@@ -53,7 +55,7 @@ export class RequestInterceptor implements HttpInterceptor {
   handleResponseWithToken(event: HttpEvent<any>): void {
     if (event['body'] && event['body'].accessToken) {
       // store response from login in local storage as json object
-      localStorage.setItem('user', JSON.stringify(event['body']));
+      this.stateService.setItem(STORAGE_USER, event['body']);
     }
   }
 

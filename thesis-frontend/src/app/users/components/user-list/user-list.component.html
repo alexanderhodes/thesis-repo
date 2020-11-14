@@ -1,1 +1,22 @@
+<div class="lg:container mx-auto">
+  <h1>Benutzer</h1>
 
+  <table class="table-auto">
+    <thead>
+      <tr>
+        <th class="px-4 py-2">Benutzername</th>
+        <th class="px-4 py-2">Berechtigungen</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users; index as i">
+        <td class="border px-4 py-2">{{ user.username }}</td>
+        <td class="border px-4 py-2">
+          <span *ngFor="let permission of user.permissions; last as last">
+            {{ permission.name }} {{ !last ? ',' : '' }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
