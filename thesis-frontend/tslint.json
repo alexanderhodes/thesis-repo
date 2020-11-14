@@ -19,13 +19,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      "ts",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "app",
+      "ts",
       "kebab-case"
     ],
     "eofline": true,
@@ -65,7 +65,7 @@
     ],
     "no-empty": false,
     "no-inferrable-types": [
-      true,
+      false,
       "ignore-params"
     ],
     "no-non-null-assertion": true,
