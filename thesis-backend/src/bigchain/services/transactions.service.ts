@@ -29,10 +29,6 @@ export class TransactionsService extends BigchainBaseService {
     }
 
     createTransaction(asset: IAsset, user: User, privateKey: string, metadata: IMetaData = null): Promise<ITransaction> {
-        // Create a new keypair.
-//        const alice = new this.driver.Ed25519Keypair();
-//        console.log('alice', alice);
-
         // Construct a transaction payload
         const tx = this.driver.Transaction.makeCreateTransaction(
             asset,
