@@ -4,7 +4,6 @@ import {RouterModule} from '@angular/router';
 import {Neo4jComponent} from './components';
 import {Neo4jRoutingModule} from './neo4j-routing.module';
 import {Neo4jService} from './services';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RequestInterceptor, SharedModule} from '../shared';
 
 const components = [
@@ -25,13 +24,11 @@ const services = [
   imports: [
     CommonModule,
     RouterModule,
-    HttpClientModule,
     Neo4jRoutingModule,
     SharedModule
   ],
   providers: [
     ...services,
-    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
   ]
 })
 export class Neo4jModule {

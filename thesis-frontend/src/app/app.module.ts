@@ -5,6 +5,10 @@ import {AppComponent} from './app.component';
 import {Neo4jModule} from './neo4j';
 import {ColModule} from './col';
 import {LoginModule} from './login';
+import {RequestInterceptor, SharedModule} from './shared';
+import {HeaderModule} from './header/header.module';
+import {UsersModule} from './users';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -13,11 +17,17 @@ import {LoginModule} from './login';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     Neo4jModule,
     ColModule,
-    LoginModule
+    HeaderModule,
+    LoginModule,
+    UsersModule,
+    SharedModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

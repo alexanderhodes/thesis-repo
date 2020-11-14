@@ -4,7 +4,6 @@ import {UserListComponent} from './components/public-api';
 import {UsersApiService} from './services/users-api.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
-import {HttpClientModule} from '@angular/common/http';
 import {UserRoutingModule} from './user-routing.module';
 
 const components = [
@@ -27,7 +26,6 @@ const services = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    HttpClientModule,
     UserRoutingModule
   ],
   providers: [
