@@ -1,5 +1,5 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 
 const STORAGE_KEY: string = 'ts-data';
 
@@ -33,7 +33,9 @@ export class StateService implements OnDestroy {
     }
     this.#state[key] = value;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(this.#state));
+    console.log('---------------------------');
     console.log('updatedState', this.#state);
+    console.log('---------------------------');
   }
 
   removeItem(key: string) {
@@ -58,8 +60,10 @@ export class StateService implements OnDestroy {
   }
 
   clear(): void {
-    this.completeSubscriptions();
-    this.initState({});
+    // clear each value of current state
+    Object.keys(this.#state$).forEach(key => {
+      this.setItem(key, {});
+    });
   }
 
   private initState(data: any): void {
@@ -74,7 +78,9 @@ export class StateService implements OnDestroy {
         this.#state[key] = value;
       });
     }
+    console.log('---------------------------');
     console.log('init state', this.#state);
+    console.log('---------------------------');
   }
 
   private completeSubscriptions(): void {
