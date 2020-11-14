@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {HeaderComponent} from './header.component';
 import {CommonModule} from '@angular/common';
+import {SharedModule} from '../shared';
 
 const components = [
   HeaderComponent
@@ -14,7 +15,8 @@ const components = [
     ...components
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
   ],
   providers: []
 })

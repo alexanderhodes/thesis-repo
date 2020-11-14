@@ -2,23 +2,23 @@
   <form [formGroup]="loginForm" (ngSubmit)="login()">
     <div>
       <div class="text-gray-700">Benutzername</div>
-      <input class="border border-solid border-gray-400 rounded-sm p-1" formControlName="username">
+      <input class="border border-solid border-gray-400 rounded p-1" formControlName="username">
       <ng-container *ngIf="(submitted || getFormControl('username').touched) && getFormControl('username').invalid">
-        <ts-error-message [show]="getFormControl('username').errors.required">
+        <ts-error-message *ngIf="getFormControl('username').errors.required">
           Bitte geben Sie Ihren Benutzernamen ein.
         </ts-error-message>
       </ng-container>
     </div>
     <div>
       <div class="text-gray-700">Passwort</div>
-      <input class="border border-solid border-gray-400 rounded-sm p-1" formControlName="password">
+      <input class="border border-solid border-gray-400 rounded p-1" formControlName="password">
       <ng-container *ngIf="(submitted || getFormControl('password').touched) && getFormControl('password').invalid">
-        <ts-error-message [show]="getFormControl('password').errors.required">
+        <ts-error-message *ngIf="getFormControl('password').errors.required">
           Bitte geben Sie Ihr Passwort ein.
         </ts-error-message>
       </ng-container>
     </div>
-    <ts-error-message [show]="loginError !== null">
+    <ts-error-message *ngIf="loginError !== null">
       {{ loginError }}
     </ts-error-message>
     <button type="submit"

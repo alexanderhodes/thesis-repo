@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
 
 @Component({
-  selector: 'ts-error-message',
+  selector: 'ts-success-message',
   template: `
-    <div class="size-xs text-red-700">
+    <div class="size-xs text-green-700">
       <ng-content></ng-content>
     </div>
   `,
@@ -11,6 +11,6 @@ import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@ang
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.Emulated
 })
-export class ErrorMessageComponent {
+export class SuccessMessageComponent {
 
 }

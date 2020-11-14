@@ -6,3 +6,15 @@ export interface User {
   publicKey: string;
   permissions: Permission[];
 }
+
+export interface CreateUser {
+  password: string;
+  username: string;
+  permissions: Permission[];
+}
+
+export interface CreatedUser {
+  id: string;
+  privateKey: string;
+  username: string;
+}

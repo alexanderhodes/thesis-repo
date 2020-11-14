@@ -1,5 +1,5 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 
 const STORAGE_KEY: string = 'ts-data';
 
@@ -10,7 +10,7 @@ export const STORAGE_USER = 'user';
 })
 export class StateService implements OnDestroy {
 
-  #state$: {[key: string]: BehaviorSubject<any>};
+  #state$: {[key: string]: ReplaySubject<any>};
   #state: {[key: string]: any};
 
   constructor() {
@@ -28,7 +28,8 @@ export class StateService implements OnDestroy {
       this.#state$[key].next(value);
     } else {
       // key is not existing at this moment
-      this.#state$[key] = new BehaviorSubject<any>(value);
+      this.#state$[key] = new ReplaySubject<any>(1);
+      this.#state$[key].next(value);
     }
     this.#state[key] = value;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(this.#state));
@@ -43,7 +44,12 @@ export class StateService implements OnDestroy {
   }
 
   getItem$(key: string): Observable<any> {
-    return this.#state$[key].asObservable();
+    if (this.#state[key] && this.#state$[key]) {
+      return this.#state$[key].asObservable();
+    } else {
+      this.setItem(key, {});
+      return this.#state$[key].asObservable();
+    }
   }
 
   getItem(key: string): any {
@@ -63,7 +69,8 @@ export class StateService implements OnDestroy {
     if (data) {
       Object.keys(data).forEach((key) => {
         const value = data[key];
-        this.#state$[key] = new BehaviorSubject<any>(value);
+        this.#state$[key] = new ReplaySubject<any>(1);
+        this.#state$[key].next(value);
         this.#state[key] = value;
       });
     }
