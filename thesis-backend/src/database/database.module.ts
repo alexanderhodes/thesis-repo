@@ -1,11 +1,12 @@
 import {Module} from '@nestjs/common';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {Permission, User} from './entities';
-import {PermissionsService, UsersService} from './services';
+import {Permission, Role, User} from './entities';
+import {PermissionsService, RolesService, UsersService} from './services';
 
 const services = [
     PermissionsService,
-    UsersService
+    UsersService,
+    RolesService
 ];
 
 @Module({
@@ -13,7 +14,7 @@ const services = [
         ...services
     ],
     imports: [
-        TypeOrmModule.forFeature([User, Permission])
+        TypeOrmModule.forFeature([User, Permission, Role])
     ],
     providers: [
         ...services

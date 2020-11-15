@@ -49,7 +49,7 @@ export class CreateUserComponent implements OnInit {
       const createUser: CreateUser = {
         password: this.getFormControl('password').value,
         username: this.getFormControl('username').value,
-        permissions: this.selectedPermissions
+        roles: []
       };
 
       this.usersApiService.createUser(createUser)

@@ -1,5 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {DeleteResult, Repository, UpdateResult} from 'typeorm';
+import {DeleteResult, getConnection, Repository, UpdateResult} from 'typeorm';
 import {User} from '../entities';
 import {InjectRepository} from '@nestjs/typeorm';
 
@@ -12,21 +12,29 @@ export class UsersService {
     ) {}
 
     findAll(): Promise<User[]> {
-        return this.usersRepository.find({ relations: ["permissions"] });
+        return this.usersRepository.find({ relations: ["roles"] });
     }
 
     findOneById(id: string): Promise<User> {
-        return this.usersRepository.findOne({ where: [{"id": id} ], cache: true });
+        return getConnection()
+            .getRepository(User)
+            .createQueryBuilder("user")
+            .where("user.id = :id", { id: id })
+            .leftJoinAndSelect("user.roles", "roles")
+            .leftJoinAndSelect("roles.permissions", "permissions")
+            .getOne();
+//        return this.usersRepository.findOne({ where: [{"id": id} ], cache: true, relations: ["roles"] });
     }
 
     findOneByUsername(username: string): Promise<User> {
-        // return getConnection()
-        //     .getRepository(User)
-        //     .createQueryBuilder("user")
-        //     .where("user.username = :username", { username: username })
-        //     .leftJoinAndSelect("user.permissions", "permission")
-        //     .getOne();
-        return this.usersRepository.findOne({ where: [{ username: username }], relations: ["permissions"] });
+        return getConnection()
+            .getRepository(User)
+            .createQueryBuilder("user")
+            .where("user.username = :username", { username: username })
+            .leftJoinAndSelect("user.roles", "roles")
+            .leftJoinAndSelect("roles.permissions", "permissions")
+            .getOne();
+//        return this.usersRepository.findOne({ where: [{ username: username }], relations: ["roles"] });
     }
 
     insert(user: User): Promise<User> {

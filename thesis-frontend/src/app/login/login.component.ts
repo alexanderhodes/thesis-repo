@@ -38,7 +38,7 @@ export class LoginComponent {
       this.loginApiService.login(loginCredentials)
         .pipe(take(1))
         .subscribe(() => {
-          this.router.navigate(['users']).then();
+          this.router.navigate(['/']).then();
         }, (error) => {
           console.log('error', error);
           if (error.status && error.status === 401) {

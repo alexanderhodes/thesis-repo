@@ -1,12 +1,10 @@
-import {Controller, Get, HttpException, HttpStatus, Post, Req, Request, UseGuards} from '@nestjs/common';
-import {JwtAuthGuard, LocalAuthGuard, PermissionsGuard} from '../guards';
+import {Controller, Get, HttpException, HttpStatus, Post, Request, UseGuards} from '@nestjs/common';
+import {JwtAuthGuard, LocalAuthGuard} from '../guards';
 import {AuthenticationService} from '../services';
 import {UserResponseDto} from '../dtos';
 import {LoginResponse} from '../interfaces';
 import {KeypairService} from '../../shared/services';
 import {UsersService} from '../../database/services';
-import {HasPermissions} from '../decorators';
-import {PermissionsEnum} from '../constants';
 
 @Controller('auth')
 export class AuthenticationController {
@@ -27,8 +25,7 @@ export class AuthenticationController {
         return this.authenticationService.loginSilent();
     }
 
-    @UseGuards(JwtAuthGuard, PermissionsGuard)
-    @HasPermissions(PermissionsEnum.USER)
+    @UseGuards(JwtAuthGuard)
     @Get('profile')
     async getProfile(@Request() req): Promise<UserResponseDto> {
         const id = req.user ? req.user.id : null;

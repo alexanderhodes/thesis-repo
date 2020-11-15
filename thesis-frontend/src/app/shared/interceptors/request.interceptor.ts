@@ -42,7 +42,7 @@ export class RequestInterceptor implements HttpInterceptor {
         return event;
       }),
       catchError((error: HttpResponse<any>) => {
-        if (error && error.status === 401) {
+        if (error && (error.status === 401 || error.status === 403)) {
           // user is unauthorized and has to be logged out
           this.stateService.clear();
           this.router.navigate(['/login']).then();

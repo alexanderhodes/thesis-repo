@@ -1,6 +1,7 @@
 import {CanActivate, ExecutionContext, Injectable} from '@nestjs/common';
 import {Reflector} from '@nestjs/core';
 import {Observable} from 'rxjs';
+import {Permission, Role} from '../interfaces';
 
 @Injectable()
 export class PermissionsGuard implements CanActivate {
@@ -13,7 +14,16 @@ export class PermissionsGuard implements CanActivate {
             context.getHandler()
         );
 
-        const userPermissions = context.getArgs()[0].user.permissions;
+        const userRoles: Role[] = context.getArgs()[0].user.roles;
+        const permissionNames: string[] = [];
+
+        userRoles.forEach((role: Role) => {
+            role.permissions.forEach((permission: Permission) => {
+                if (permissionNames.indexOf(permission.name) === -1) {
+                    permissionNames.push(permission.name);
+                }
+            });
+        });
 
         if (!routePermissions) {
             return true;
@@ -21,7 +31,7 @@ export class PermissionsGuard implements CanActivate {
 
         const hasPermission = () =>
             routePermissions.every(routePermission =>
-                userPermissions && userPermissions.includes(routePermission.toUpperCase())
+                permissionNames && permissionNames.includes(routePermission.toUpperCase())
             );
 
         return hasPermission();

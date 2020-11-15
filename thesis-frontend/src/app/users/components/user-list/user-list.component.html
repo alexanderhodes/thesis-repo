@@ -19,12 +19,13 @@
   <tr *ngFor="let user of users; index as i">
     <td class="border px-4 py-2">{{ user.username }}</td>
     <td class="border px-4 py-2">
-      <span *ngFor="let permission of user.permissions; last as last">
-        {{ permission.name }} {{ !last ? ',' : '' }}
+      <span *ngFor="let role of user.roles; last as last">
+        {{ role.name }} {{ !last ? ',' : '' }}
       </span>
     </td>
     <td class="border px-4 py-2">
-      <button class="bg-black hover:bg-gray-700 text-white py-2 px-4 rounded my-1">
+      <button [routerLink]="[user.id]"
+        class="bg-black hover:bg-gray-700 text-white py-2 px-4 rounded my-1">
         bearbeiten
       </button>
     </td>

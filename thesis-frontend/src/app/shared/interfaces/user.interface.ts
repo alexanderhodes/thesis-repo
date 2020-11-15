@@ -1,20 +1,22 @@
-import {Permission} from './permission.interface';
+import {Role} from './role.interface';
 
 export interface User {
   id: string;
   username: string;
   publicKey: string;
-  permissions: Permission[];
+  roles: Role[];
 }
 
 export interface CreateUser {
   password: string;
   username: string;
-  permissions: Permission[];
+  roles: Role[];
 }
 
 export interface CreatedUser {
   id: string;
   privateKey: string;
   username: string;
+  publicKey: string;
+  roles: Role[];
 }

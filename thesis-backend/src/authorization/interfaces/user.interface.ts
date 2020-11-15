@@ -1,10 +1,10 @@
-import {Permission} from '../../database/entities';
+import {Role} from './role.interface';
 
 export interface User {
     id: string;
     username: string;
     password?: string;
-    permissions: string[];
+    roles: Role[];
     keyPair?: {
         privateKey: string;
         publicKey: string;
@@ -15,7 +15,7 @@ export interface UserWithPermissions {
     id: string;
     username: string;
     password?: string;
-    permissions: Permission[];
+    roles: Role[];
     keyPair?: {
         privateKey: string;
         publicKey: string;

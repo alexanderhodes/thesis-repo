@@ -5,10 +5,8 @@ import {TestModule} from './test';
 import {AuthorizationModule} from './authorization';
 import {BigchainModule} from './bigchain';
 import {ApiModule} from './api';
-import {TypeOrmModule, TypeOrmModuleOptions} from '@nestjs/typeorm';
-import {Permission, User} from './database/entities';
+import {TypeOrmModule} from '@nestjs/typeorm';
 import {AppConfigModule, ConfigurationService} from './app-config';
-import {InsertPermissions1601456259497Migration} from './database/migrations';
 
 // export function createTypeOrmConfigFactory(configService: ConfigurationService): TypeOrmModuleOptions {
 //     const dbConfig: any = {

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {CreateUserComponent, UserListComponent} from './components/public-api';
+import {CreateUserComponent, UserDetailComponent, UserListComponent} from './components/public-api';
 
 const routes: Routes = [
   {
@@ -10,6 +10,10 @@ const routes: Routes = [
   {
     path: 'create',
     component: CreateUserComponent
+  },
+  {
+    path: ':id',
+    component: UserDetailComponent
   }
 ];
 
