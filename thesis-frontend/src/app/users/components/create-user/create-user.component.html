@@ -32,14 +32,14 @@
       </ng-container>
     </div>
     <div class="col-span-6 col-start-4 mt-2">
-      <div class="text-gray-700">Berechtigungen</div>
+      <div class="text-gray-700">Rollen</div>
       <div class="relative">
         <select
           class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          (change)="selectPermission()" formControlName="permission">
+          formControlName="roles">
           <option [ngValue]="null">auswählen</option>
-          <option *ngFor="let permission of permissions" [ngValue]="permission">
-            {{ permission.name }}
+          <option *ngFor="let role of roles" [ngValue]="role">
+            {{ role.name }}
           </option>
         </select>
         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -56,8 +56,13 @@
     </div>
     <div class="col-span-6 col-start-4">
       <ts-success-message *ngIf="createdSuccessful">
-        Der Benutzer {{ createdUser.username }} ist erfolgreich angelegt worden. Der private Schlüssel für den Benutzer
-        lautet {{ createdUser.privateKey }}
+        <span>
+          Der Benutzer {{ createdUser.username }} ist erfolgreich angelegt worden. Der private Schlüssel für den Benutzer
+          lautet {{ createdUser.privateKey }}
+        </span>
+        <span>
+          Das Schlüsselpaar kann <a (click)="downloadKeyFile()" class="cursor-pointer">hier</a> heruntergeladen werden.
+        </span>
       </ts-success-message>
     </div>
     <div class="col-span-6 col-start-4 mt-3">

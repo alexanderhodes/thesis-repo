@@ -4,16 +4,19 @@ import {JwtService} from '@nestjs/jwt';
 import {UsersService} from '../../database/services';
 import {PermissionsEnum} from '../constants';
 import {Permission} from '../../database/entities';
+import {PasswordService} from '../../shared/services';
 
 @Injectable()
 export class AuthenticationService {
 
     constructor(private usersService: UsersService,
+                private passwordService: PasswordService,
                 private jwtService: JwtService) {}
 
     async validateUser(username: string, password: string): Promise<any> {
         const user = await this.usersService.findOneByUsername(username);
-        return (user && user.password === password) ? {
+//        return (user && user.password === password) ? {
+        return (user && await this.passwordService.compare(password, user.password)) ? {
             id: user.id,
             username: user.username,
             publicKey: user.publicKey,

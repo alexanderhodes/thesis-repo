@@ -4,3 +4,4 @@ export * from './graph.controller';
 export * from './permissions.controller';
 export * from './transactions.controller';
 export * from './users.controller';
+export * from './roles.controller';

@@ -1,7 +1,8 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import {CreatedUser, CreateUser, Permission, PermissionsApiService} from '../../../shared';
+import {CreatedUser, CreateUser, Role} from '../../../shared';
 import {UsersApiService} from '../../services/public-api';
+import {RolesApiService} from '../../../shared/services/roles-api.service';
 
 @Component({
   selector: 'ts-create-user',
@@ -16,29 +17,27 @@ export class CreateUserComponent implements OnInit {
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
     passwordRepeat: new FormControl('', [Validators.required]),
-    permission: new FormControl(null, [Validators.required])
+    roles: new FormControl(null, [Validators.required])
   });
 
-  permissions: Permission[];
-  selectedPermissions: Permission[];
+  roles: Role[];
   submitted: boolean = false;
   createdSuccessful: boolean = false;
   createdUser: CreatedUser;
   createdFailure: boolean = false;
 
-  constructor(private permissionsApiService: PermissionsApiService,
+  constructor(private rolesApiService: RolesApiService,
               private usersApiService: UsersApiService,
               private changeDetectorRef: ChangeDetectorRef) {
-    this.permissions = [];
-    this.selectedPermissions = [];
+    this.roles = [];
   }
 
   ngOnInit() {
-    this.permissionsApiService.getPermissions().subscribe(permissions => {
-      this.permissions = permissions;
+    this.rolesApiService.getAllRoles().subscribe(roles => {
+      this.roles = roles;
       this.changeDetectorRef.detectChanges();
     }, () => {
-      this.permissions = [];
+      this.roles = [];
       this.changeDetectorRef.detectChanges();
     });
   }
@@ -49,7 +48,7 @@ export class CreateUserComponent implements OnInit {
       const createUser: CreateUser = {
         password: this.getFormControl('password').value,
         username: this.getFormControl('username').value,
-        roles: []
+        roles: [this.getFormControl('roles').value]
       };
 
       this.usersApiService.createUser(createUser)
@@ -76,8 +75,14 @@ export class CreateUserComponent implements OnInit {
     return this.createUserForm.get(key);
   }
 
-  selectPermission(): void {
-    console.log('selected permission', this.getFormControl('permission').value);
+  downloadKeyFile(): void {
+    const keyPair = {
+      privateKey: this.createdUser.privateKey,
+      publicKey: this.createdUser.publicKey
+    };
+    const blob = new Blob([JSON.stringify(keyPair, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
   }
 
 }

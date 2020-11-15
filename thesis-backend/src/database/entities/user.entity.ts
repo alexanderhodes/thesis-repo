@@ -7,11 +7,15 @@ export class User {
 
     @PrimaryGeneratedColumn("uuid")
     id: string;
-    @Column()
+    @Column({
+        unique: true
+    })
     username: string;
     @Column()
     password: string;
-    @Column()
+    @Column({
+        unique: true
+    })
     publicKey: string;
     // @ManyToMany(() => Permission, permission => permission.name, {
     //     cascade: ["insert", "update"]

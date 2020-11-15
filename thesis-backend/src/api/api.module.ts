@@ -9,6 +9,7 @@ import {
     BlocksController,
     GraphController,
     PermissionsController,
+    RolesController,
     TransactionsController,
     UsersController
 } from './controllers';
@@ -19,6 +20,7 @@ const controllers = [
     BlocksController,
     GraphController,
     PermissionsController,
+    RolesController,
     TransactionsController,
     UsersController
 ];

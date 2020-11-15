@@ -34,6 +34,8 @@
     "@nestjs/platform-express": "^7.0.0",
     "@nestjs/schedule": "^0.4.1",
     "@nestjs/typeorm": "^7.1.4",
+    "@types/bcrypt": "^3.0.0",
+    "bcrypt": "^5.0.0",
     "bigchaindb-driver": "^4.1.2",
     "mongoose": "^5.10.7",
     "neo4j-driver": "^4.1.2",
