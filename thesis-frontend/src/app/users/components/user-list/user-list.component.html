@@ -1,22 +1,33 @@
-<div class="lg:container mx-auto">
-  <h1>Benutzer</h1>
+<div class="text-xl mt-3">Benutzer</div>
 
-  <table class="table-auto">
-    <thead>
-      <tr>
-        <th class="px-4 py-2">Benutzername</th>
-        <th class="px-4 py-2">Berechtigungen</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users; index as i">
-        <td class="border px-4 py-2">{{ user.username }}</td>
-        <td class="border px-4 py-2">
-          <span *ngFor="let permission of user.permissions; last as last">
-            {{ permission.name }} {{ !last ? ',' : '' }}
-          </span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div>
+  <span [routerLink]="['/users', 'create']"
+    class="text-black cursor-pointer hover:underline inline-block mr-3">
+    Neuen Benutzer anlegen
+  </span>
 </div>
+
+<table class="table-auto">
+  <thead>
+  <tr>
+    <th class="px-4 py-2 text-left">Benutzername</th>
+    <th class="px-4 py-2 text-left">Berechtigungen</th>
+    <th class="px-4 py-2 text-left">Aktionen</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of users; index as i">
+    <td class="border px-4 py-2">{{ user.username }}</td>
+    <td class="border px-4 py-2">
+      <span *ngFor="let permission of user.permissions; last as last">
+        {{ permission.name }} {{ !last ? ',' : '' }}
+      </span>
+    </td>
+    <td class="border px-4 py-2">
+      <button class="bg-black hover:bg-gray-700 text-white py-2 px-4 rounded my-1">
+        bearbeiten
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>

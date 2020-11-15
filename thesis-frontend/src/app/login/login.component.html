@@ -12,7 +12,7 @@
     </div>
     <div class="col-span-6 col-start-4 mt-2">
       <div class="text-gray-700">Passwort</div>
-      <input class="border border-solid border-gray-400 rounded p-1 w-full" formControlName="password">
+      <input class="border border-solid border-gray-400 rounded p-1 w-full" type="password" formControlName="password">
       <ng-container *ngIf="(submitted || getFormControl('password').touched) && getFormControl('password').invalid">
         <ts-error-message *ngIf="getFormControl('password').errors.required">
           Bitte geben Sie Ihr Passwort ein.
