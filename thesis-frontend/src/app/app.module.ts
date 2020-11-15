@@ -9,6 +9,7 @@ import {RequestInterceptor, SharedModule} from './shared';
 import {HeaderModule} from './header/header.module';
 import {UsersModule} from './users';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {ConfigurationModule} from './configuration';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
     HeaderModule,
     LoginModule,
     UsersModule,
-    SharedModule
+    SharedModule,
+    ConfigurationModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
