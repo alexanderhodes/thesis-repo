@@ -1,4 +1,4 @@
-name: Build Thesis-Frontend
+name: Build Thesis-Backend
 on:
   push:
     branches:
