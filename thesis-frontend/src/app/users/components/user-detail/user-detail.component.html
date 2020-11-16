@@ -1,3 +1,85 @@
 <div class="text-xl mt-3 text-center">Benutzer bearbeiten</div>
-
-
+<form [formGroup]="updateUserForm" (ngSubmit)="updateUser()">
+  <div class="grid grid-cols-12">
+    <div class="col-span-6 col-start-4 mt-2">
+      <div class="text-gray-700">Benutzername</div>
+      <input class="border border-solid border-gray-400 rounded p-1 w-full" formControlName="username" autocomplete>
+      <ng-container *ngIf="(submitted || getFormControl('username').touched) && getFormControl('username').invalid">
+        <ts-error-message *ngIf="getFormControl('username').errors.required">
+          Bitte geben Sie einen Benutzernamen ein.
+        </ts-error-message>
+      </ng-container>
+    </div>
+    <div class="col-span-6 col-start-4 mt-2">
+      <div class="text-gray-700">Passwort</div>
+      <input class="border border-solid border-gray-400 rounded p-1 w-full" type="password"
+             formControlName="password" autocomplete="new-password">
+      <ng-container *ngIf="(submitted || getFormControl('password').touched) && getFormControl('password').invalid">
+        <ts-error-message *ngIf="getFormControl('password').errors.required">
+          Bitte geben Sie ein Passwort ein.
+        </ts-error-message>
+      </ng-container>
+    </div>
+    <div class="col-span-6 col-start-4 mt-2">
+      <div class="text-gray-700">Passwort wiederholen</div>
+      <input class="border border-solid border-gray-400 rounded p-1 w-full" type="password"
+             formControlName="passwordRepeat" autocomplete="new-password">
+      <ng-container
+        *ngIf="(submitted || getFormControl('passwordRepeat').touched) && getFormControl('passwordRepeat').invalid">
+        <ts-error-message *ngIf="getFormControl('passwordRepeat').errors.required">
+          Bitte geben Sie das Passwort erneut ein.
+        </ts-error-message>
+      </ng-container>
+    </div>
+    <div class="col-span-6 col-start-4 mt-2">
+      <div class="text-gray-700">Rollen</div>
+      <div class="relative">
+        <select
+          class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          formControlName="roles">
+          <option [ngValue]="null">auswählen</option>
+          <option *ngFor="let role of roles" [ngValue]="role">
+            {{ role.name }}
+          </option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+          <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="col-span-6 col-start-4">
+      <ts-error-message *ngIf="updateFailure">
+        Beim Anlegen des Benutzers ist ein Fehler auftreten. Bitte versuchen Sie es erneut.
+      </ts-error-message>
+    </div>
+    <div class="col-span-6 col-start-4">
+      <ts-success-message *ngIf="updatedSuccessful">
+        <span>
+          Der Benutzer {{ updatedUser.username }} ist erfolgreich angelegt worden. Der private Schlüssel für den Benutzer
+          lautet {{ updatedUser.privateKey }}
+        </span>
+        <span>
+          Das Schlüsselpaar kann <a (click)="downloadKeyFile()" class="cursor-pointer">hier</a> heruntergeladen werden.
+        </span>
+      </ts-success-message>
+    </div>
+    <div class="col-span-6 col-start-4 mt-3">
+      <div class="grid grid-cols-12">
+        <div class="col-span-6 text-center">
+          <a [routerLink]="['/users']"
+             class="text-black cursor-pointer hover:underline inline-block mr-3">
+            zurück
+          </a>
+        </div>
+        <div class="col-span-6 text-center">
+          <button type="submit"
+                  class="bg-white hover:bg-gray-300 text-black border border-black hover:border-gray-300 font-semibold py-2 px-4 rounded">
+            erstellen
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
