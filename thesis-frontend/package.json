@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "start:prod": "lite-server --baseDir=\"dist\\thesis-frontend\"",
+    "clean": "rimraf ./dist",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
