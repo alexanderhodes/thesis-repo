@@ -32,3 +32,8 @@ jobs:
           cd thesis-frontend
           npm ci
           npm run build:ci
+
+      - name: Push Build to Releases
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/thesis-frontend/*"

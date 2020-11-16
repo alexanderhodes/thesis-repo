@@ -32,3 +32,8 @@ jobs:
           cd thesis-backend
           npm ci
           npm run build
+
+      - name: Push Build to Releases
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/*"
