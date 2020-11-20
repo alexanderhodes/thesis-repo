@@ -9,6 +9,14 @@
               class="text-white cursor-pointer hover:underline inline-block mr-3">
           Benutzer
         </div>
+        <div [routerLink]="['/occupations']" [routerLinkActive]="['font-bold']" [routerLinkActiveOptions]="{exact: false}"
+             class="text-white cursor-pointer hover:underline inline-block mr-3">
+          Berufe
+        </div>
+        <div [routerLink]="['/qualifications']" [routerLinkActive]="['font-bold']" [routerLinkActiveOptions]="{exact: false}"
+             class="text-white cursor-pointer hover:underline inline-block mr-3">
+          Qualifikationen
+        </div>
         <div [routerLink]="['/configuration']" [routerLinkActive]="['font-bold']" [routerLinkActiveOptions]="{exact: false}"
              class="text-white cursor-pointer hover:underline inline-block">
           Konfiguration

@@ -10,6 +10,8 @@ import {HeaderModule} from './header/header.module';
 import {UsersModule} from './users';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ConfigurationModule} from './configuration';
+import {OccupationsModule} from './occupations';
+import {QualificationsModule} from './qualifications/qualifications.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import {ConfigurationModule} from './configuration';
     LoginModule,
     UsersModule,
     SharedModule,
+    OccupationsModule,
+    QualificationsModule,
     ConfigurationModule
   ],
   providers: [
