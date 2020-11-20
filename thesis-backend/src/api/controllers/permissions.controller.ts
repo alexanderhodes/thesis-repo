@@ -5,7 +5,7 @@ import {HasPermissions} from '../../authorization/decorators';
 import {PermissionsEnum} from '../../authorization/constants';
 import {PermissionDto} from '../dtos';
 
-@Controller("api/permissions")
+@Controller("permissions")
 export class PermissionsController {
 
     constructor(private permissionsService: PermissionsService) {}

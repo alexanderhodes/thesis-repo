@@ -3,7 +3,7 @@ import {TransactionsService} from '../../bigchain/services';
 import {IAsset, IMetaData} from '../../bigchain/interfaces';
 import {JwtAuthGuard} from '../../authorization/guards';
 
-@Controller("api/transactions")
+@Controller("transactions")
 export class TransactionsController {
 
     constructor(private transactionsService: TransactionsService) {}

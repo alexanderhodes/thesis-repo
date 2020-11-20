@@ -5,7 +5,7 @@ import {JwtAuthGuard, PermissionsGuard} from '../../authorization/guards';
 import {HasPermissions} from '../../authorization/decorators';
 import {PermissionsEnum} from '../../authorization/constants';
 
-@Controller("api/roles")
+@Controller("roles")
 export class RolesController {
 
     constructor(private rolesService: RolesService) {}

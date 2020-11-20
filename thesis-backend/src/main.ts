@@ -13,6 +13,8 @@ async function bootstrap() {
                 preflightContinue: false
             }
     });
+    // set default app prefix with api so that it is not necessary in each controller
+    app.setGlobalPrefix('api');
     await app.listen(3000);
 
     if (module.hot) {

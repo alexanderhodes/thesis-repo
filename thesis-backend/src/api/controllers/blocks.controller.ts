@@ -1,7 +1,7 @@
 import {Controller, Get} from '@nestjs/common';
 import {BlocksService} from '../../bigchain/services';
 
-@Controller("api/blocks")
+@Controller("blocks")
 export class BlocksController {
 
     constructor(private blocksService: BlocksService) {}

@@ -9,11 +9,11 @@ export class UsersApiService {
   constructor(private httpClient: HttpClient) {}
 
   getAllUsers(): Observable<any> {
-    return this.httpClient.get('api/users');
+    return this.httpClient.get('users');
   }
 
   createUser(user: CreateUser): Observable<CreatedUser> {
-    return this.httpClient.post<CreatedUser>('api/users', user);
+    return this.httpClient.post<CreatedUser>('users', user);
   }
 
   getUserById(id: string): Observable<User> {

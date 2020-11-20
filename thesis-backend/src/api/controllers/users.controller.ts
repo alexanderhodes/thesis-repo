@@ -6,9 +6,8 @@ import {toUserEntity} from '../mappers';
 import {JwtAuthGuard, PermissionsGuard} from '../../authorization/guards';
 import {HasPermissions} from '../../authorization/decorators';
 import {PermissionsEnum} from '../../authorization/constants';
-import {createReadStream} from 'fs';
 
-@Controller("api/users")
+@Controller("users")
 export class UsersController {
 
     constructor(private usersService: UsersService,

@@ -1,7 +1,7 @@
 import {Controller, Get} from '@nestjs/common';
 import {Neo4jService} from '../../neo4j/services';
 
-@Controller("api/graph")
+@Controller("graph")
 export class GraphController {
 
     constructor(private neo4jService: Neo4jService) {}
