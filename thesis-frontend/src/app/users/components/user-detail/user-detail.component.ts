@@ -143,7 +143,7 @@ export class UserDetailComponent implements OnInit {
       .subscribe((response: GenerateKeyPairResponse) => {
         this._downloadKeyFile(response.keyPair);
         this.actionsResponse = {
-          message: 'Das Keypair wurde erfolgreich bereitgestellt und wird heruntergeladen',
+          message: 'Das Schlüsselpaar wurde erfolgreich bereitgestellt und wird heruntergeladen',
           successful: true
         };
         this.changeDetectorRef.detectChanges();
