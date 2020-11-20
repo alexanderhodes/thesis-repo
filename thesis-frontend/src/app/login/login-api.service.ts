@@ -9,7 +9,7 @@ export class LoginApiService {
   constructor(private httpClient: HttpClient) {}
 
   login(loginCredentials: LoginCredentials): Observable<any> {
-    return this.httpClient.post('auth/login', loginCredentials);
+    return this.httpClient.post('authentication/login', loginCredentials);
   }
 
 }

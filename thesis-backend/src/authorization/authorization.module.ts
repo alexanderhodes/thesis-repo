@@ -1,6 +1,6 @@
 import {Module} from '@nestjs/common';
 import {AuthenticationService, JwtStrategyService, LocationStrategyService} from './services';
-import {AuthenticationController} from './controllers';
+import {AuthenticationController, AuthenticationFunctionsController} from './controllers';
 import {PassportModule} from '@nestjs/passport';
 import {JwtModule} from '@nestjs/jwt';
 import {jwtConstants} from './constants';
@@ -9,7 +9,8 @@ import {DatabaseModule} from '../database';
 import {JwtAuthGuard, LocalAuthGuard, PermissionsGuard} from './guards';
 
 const controllers = [
-    AuthenticationController
+    AuthenticationController,
+    AuthenticationFunctionsController
 ];
 const services = [
     AuthenticationService,

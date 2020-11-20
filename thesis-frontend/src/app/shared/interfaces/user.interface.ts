@@ -1,4 +1,5 @@
 import {Role} from './role.interface';
+import {KeyPair} from './key-pair.interface';
 
 export interface User {
   id: string;
@@ -24,4 +25,12 @@ export interface CreatedUser {
 export interface UpdateUserPassword {
   user: string;
   password: string;
+}
+
+export interface GenerateKeyPairResponse {
+  id: string;
+  username: string;
+  password?: string;
+  roles: Role[];
+  keyPair?: KeyPair;
 }

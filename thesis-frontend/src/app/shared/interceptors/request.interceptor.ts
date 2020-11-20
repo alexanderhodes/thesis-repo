@@ -36,7 +36,7 @@ export class RequestInterceptor implements HttpInterceptor {
 
     return next.handle(updatedRequest).pipe(
       map((event: HttpEvent<any>) => {
-        if (event['url'] && event['url'].indexOf('auth/login') > 0 && event['status'] === 201) {
+        if (event['url'] && event['url'].indexOf('authentication/login') > 0 && event['status'] === 201) {
           this.handleResponseWithToken(event);
         }
         return event;

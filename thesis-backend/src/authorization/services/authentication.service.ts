@@ -1,18 +1,18 @@
 import {Injectable} from '@nestjs/common';
-import {LoginResponse, Payload, User, UserWithPassword} from '../interfaces';
+import {LoginResponse, Payload, UserWithPassword, UserWithPermissions} from '../interfaces';
 import {JwtService} from '@nestjs/jwt';
 import {UsersService} from '../../database/services';
 import {PermissionsEnum} from '../constants';
 import {PermissionEntity, UserEntity} from '../../database/entities';
-import {PasswordService} from '../../shared/services';
+import {KeypairService, PasswordService} from '../../shared/services';
 
 @Injectable()
 export class AuthenticationService {
 
     constructor(private usersService: UsersService,
                 private passwordService: PasswordService,
-                private jwtService: JwtService) {
-    }
+                private keypairService: KeypairService,
+                private jwtService: JwtService) {}
 
     async validateUser(username: string, password: string): Promise<any> {
         const user = await this.usersService.findOneByUsername(username);
@@ -25,7 +25,7 @@ export class AuthenticationService {
         } : null;
     }
 
-    async login(user: User): Promise<LoginResponse> {
+    async login(user: UserWithPermissions): Promise<LoginResponse> {
         const permissions: PermissionEntity[] = [];
         user.roles.forEach((role) => {
             role.permissions.forEach((permission) => {
@@ -70,6 +70,21 @@ export class AuthenticationService {
     async updatePassword(user: UserEntity, userWithPassword: UserWithPassword): Promise<UserEntity> {
         user.password = await this.passwordService.createHash(userWithPassword.password);
         return await this.usersService.update(user.id, user);
+    }
+
+    async generateKeypairAndUpdate(user: UserEntity): Promise<UserWithPermissions> {
+        // create key pair
+        const keypair = this.keypairService.createKeyPair();
+        user.publicKey = keypair.publicKey;
+        // save user in database
+        const updatedUser = await this.usersService.update(user.id, user);
+
+        return {
+            id: updatedUser.id,
+            roles: updatedUser.roles,
+            username: updatedUser.username,
+            keyPair: keypair
+        };
     }
 
 }

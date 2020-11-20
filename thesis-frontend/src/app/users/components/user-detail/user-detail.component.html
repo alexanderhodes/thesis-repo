@@ -33,14 +33,13 @@
         </div>
         <div class="col-span-6 col-start-4">
           <ts-error-message *ngIf="updateFailure">
-            Beim Anlegen des Benutzers ist ein Fehler auftreten. Bitte versuchen Sie es erneut.
+            Beim Speichern des Benutzers ist ein Fehler auftreten. Bitte versuchen Sie es erneut.
           </ts-error-message>
         </div>
         <div class="col-span-6 col-start-4">
           <ts-success-message *ngIf="updatedSuccessful">
         <span>
-          Der Benutzer {{ updatedUser.username }} ist erfolgreich angelegt worden. Der private Schlüssel für den Benutzer
-          lautet {{ updatedUser.privateKey }}
+          Der Benutzer {{ updatedUser.username }} ist erfolgreich gespeichert worden.
         </span>
             <span>
           Das Schlüsselpaar kann <a (click)="downloadKeyFile()" class="cursor-pointer">hier</a> heruntergeladen werden.
@@ -107,6 +106,22 @@
     </form>
   </div>
 </div>
-
-
-
+<div class="grid grid-cols-12">
+  <div class="col-span-12">
+    <div class="text-xl mt-3 text-center">Aktionen</div>
+    <ng-container *ngIf="actionsResponse">
+      <ts-error-message *ngIf="!actionsResponse.successful">
+        {{ actionsResponse.message }}
+      </ts-error-message>
+      <ts-success-message *ngIf="actionsResponse.successful">
+        {{ actionsResponse.message }}
+      </ts-success-message>
+    </ng-container>
+    <div class="text-center">
+      <button (click)="generateNewKeyPair()"
+              class="bg-white hover:bg-gray-300 text-black border border-black hover:border-gray-300 font-semibold py-2 px-4 rounded">
+        Schlüsselpaar generieren
+      </button>
+    </div>
+  </div>
+</div>

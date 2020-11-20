@@ -1,4 +1,4 @@
-import {Body, Controller, Get, NotFoundException, Param, Post, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, HttpException, HttpStatus, Param, Post, UseGuards} from '@nestjs/common';
 import {UsersService} from '../../database/services';
 import {KeypairService, PasswordService} from '../../shared/services';
 import {CreatedUserDTO, CreateUserDTO, UserResponseDTO} from '../dtos';
@@ -20,7 +20,6 @@ export class UsersController {
     async createUser(@Body() createUser: CreateUserDTO): Promise<CreatedUserDTO> {
         // has password
         const hashedPassword = await this.passwordService.createHash(createUser.password);
-        console.log('hash password', hashedPassword);
         // create key pair
         const keypair = this.keypairService.createKeyPair();
         // hash password
@@ -69,7 +68,7 @@ export class UsersController {
                 username: user.username
             }
         }
-        throw new NotFoundException("User", `not found for id ${id}`);
+        throw new HttpException(`Benutzer mit der ID ${id} wurde nicht gefunden`, HttpStatus.NOT_FOUND);
     }
 
 }

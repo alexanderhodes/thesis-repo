@@ -2,7 +2,16 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncap
 import {UsersApiService} from '../../services/public-api';
 import {ActivatedRoute} from '@angular/router';
 import {take} from 'rxjs/operators';
-import {CreatedUser, CreateUser, Role, RolesApiService, User} from '../../../shared';
+import {
+  CreatedUser,
+  CreateUser,
+  FileService,
+  GenerateKeyPairResponse,
+  KeyPair,
+  Role,
+  RolesApiService,
+  User
+} from '../../../shared';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
@@ -24,6 +33,7 @@ export class UserDetailComponent implements OnInit {
     username: new FormControl('', [Validators.required]),
     roles: new FormControl(null, [Validators.required])
   });
+  #user: User;
 
   // password change
   submittedPasswordChange: boolean = false;
@@ -33,11 +43,13 @@ export class UserDetailComponent implements OnInit {
     passwordRepeat: new FormControl('', [Validators.required])
   });
 
-  #user: User;
+  // actions
+  actionsResponse: { successful: boolean, message: string };
 
   constructor(private rolesApiService: RolesApiService,
               private usersApiService: UsersApiService,
               private activatedRoute: ActivatedRoute,
+              private fileService: FileService,
               private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
@@ -52,7 +64,6 @@ export class UserDetailComponent implements OnInit {
           username: user.username,
           roles: user.roles[0]
         });
-        console.log('got user', user);
       });
     });
 
@@ -126,13 +137,37 @@ export class UserDetailComponent implements OnInit {
     return this.updatePasswordForm.get(key);
   }
 
+  generateNewKeyPair(): void {
+    this.usersApiService.generateNewKeyPair(this.#user.id)
+      .pipe()
+      .subscribe((response: GenerateKeyPairResponse) => {
+        this._downloadKeyFile(response.keyPair);
+        this.actionsResponse = {
+          message: 'Das Keypair wurde erfolgreich bereitgestellt und wird heruntergeladen',
+          successful: true
+        };
+        this.changeDetectorRef.detectChanges();
+      }, (error) => {
+        this.actionsResponse = error.status ? {
+          message: 'Beim Erzeugen des Schlüsselpaares ist ein Fehler aufgetreten.',
+          successful: false
+        } : {
+          message: 'Es besteht derzeit keine Internet-Verbindung. Bitte versuchen Sie es später erneut.',
+          successful: false
+        };
+        this.changeDetectorRef.detectChanges();
+      });
+  }
+
   downloadKeyFile(): void {
     const keyPair = {
       privateKey: this.updatedUser.privateKey,
       publicKey: this.updatedUser.publicKey
     };
-    const blob = new Blob([JSON.stringify(keyPair, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    window.open(url, '_blank');
+    this._downloadKeyFile(keyPair);
+  }
+
+  _downloadKeyFile(keyPair: KeyPair): void {
+    this.fileService.createFileForDownload(keyPair);
   }
 }

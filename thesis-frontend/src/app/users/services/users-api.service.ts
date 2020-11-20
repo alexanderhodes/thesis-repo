@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {CreatedUser, CreateUser, UpdateUserPassword, User} from '../../shared';
+import {CreatedUser, CreateUser, GenerateKeyPairResponse, UpdateUserPassword, User} from '../../shared';
 
 @Injectable()
 export class UsersApiService {
@@ -21,7 +21,11 @@ export class UsersApiService {
   }
 
   updatePassword(userWithPassword: UpdateUserPassword): Observable<any> {
-    return this.httpClient.post('auth/change-password', userWithPassword);
+    return this.httpClient.post('authentication-functions/change-password', userWithPassword);
+  }
+
+  generateNewKeyPair(userId: string): Observable<GenerateKeyPairResponse> {
+    return this.httpClient.post<GenerateKeyPairResponse>(`authentication-functions/generate-keypair/${userId}`, {});
   }
 
 }
