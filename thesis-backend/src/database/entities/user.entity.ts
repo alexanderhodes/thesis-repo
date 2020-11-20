@@ -1,8 +1,10 @@
 import {Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from 'typeorm';
-import {Role} from './role.entity';
+import {RoleEntity} from './role.entity';
 
-@Entity()
-export class User {
+@Entity({
+    name: "user"
+})
+export class UserEntity {
 
     @PrimaryGeneratedColumn("uuid")
     id: string;
@@ -16,10 +18,10 @@ export class User {
         unique: true
     })
     publicKey: string;
-    @ManyToMany(() => Role, role => role.name, {
+    @ManyToMany(() => RoleEntity, role => role.name, {
         cascade: ["insert", "update"]
     })
     @JoinTable()
-    roles: Role[];
+    roles: RoleEntity[];
 
 }

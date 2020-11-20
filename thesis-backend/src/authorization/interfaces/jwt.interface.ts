@@ -1,4 +1,4 @@
-import {Permission, Role} from '../../database/entities';
+import {PermissionEntity, RoleEntity} from '../../database/entities';
 
 export interface Payload {
     sub: string;
@@ -8,7 +8,7 @@ export interface Payload {
 
 export interface LoginResponse {
     accessToken: string;
-    permissions: Permission[];
+    permissions: PermissionEntity[];
     username: string;
-    roles: Role[];
+    roles: RoleEntity[];
 }

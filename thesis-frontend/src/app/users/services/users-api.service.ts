@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {CreatedUser, CreateUser, User} from '../../shared';
+import {CreatedUser, CreateUser, UpdateUserPassword, User} from '../../shared';
 
 @Injectable()
 export class UsersApiService {
@@ -18,6 +18,10 @@ export class UsersApiService {
 
   getUserById(id: string): Observable<User> {
     return this.httpClient.get<User>(`users/${id}`);
+  }
+
+  updatePassword(userWithPassword: UpdateUserPassword): Observable<any> {
+    return this.httpClient.post('auth/change-password', userWithPassword);
   }
 
 }

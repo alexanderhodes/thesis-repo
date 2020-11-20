@@ -1,11 +1,11 @@
-import {User} from '../../database/entities';
+import {UserEntity} from '../../database/entities';
 import {RoleDto} from '../dtos';
 
 export function toUserEntity(username: string,
                              password: string,
                              roles: RoleDto[],
                              publicKey: string,
-                             id: string = undefined): User {
+                             id: string = undefined): UserEntity {
     return {
         id: id,
         username: username,

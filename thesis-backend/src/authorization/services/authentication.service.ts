@@ -1,9 +1,9 @@
 import {Injectable} from '@nestjs/common';
-import {LoginResponse, Payload, User} from '../interfaces';
+import {LoginResponse, Payload, User, UserWithPassword} from '../interfaces';
 import {JwtService} from '@nestjs/jwt';
 import {UsersService} from '../../database/services';
 import {PermissionsEnum} from '../constants';
-import {Permission} from '../../database/entities';
+import {PermissionEntity, UserEntity} from '../../database/entities';
 import {PasswordService} from '../../shared/services';
 
 @Injectable()
@@ -11,7 +11,8 @@ export class AuthenticationService {
 
     constructor(private usersService: UsersService,
                 private passwordService: PasswordService,
-                private jwtService: JwtService) {}
+                private jwtService: JwtService) {
+    }
 
     async validateUser(username: string, password: string): Promise<any> {
         const user = await this.usersService.findOneByUsername(username);
@@ -25,7 +26,7 @@ export class AuthenticationService {
     }
 
     async login(user: User): Promise<LoginResponse> {
-        const permissions: Permission[] = [];
+        const permissions: PermissionEntity[] = [];
         user.roles.forEach((role) => {
             role.permissions.forEach((permission) => {
                 // filter doubled permissions because of roles
@@ -50,7 +51,7 @@ export class AuthenticationService {
     }
 
     async loginSilent(): Promise<LoginResponse> {
-        const permissions: Permission[] = [{name: PermissionsEnum.ASSETS_READ}];
+        const permissions: PermissionEntity[] = [{name: PermissionsEnum.ASSETS_READ}];
         const permissionNames = permissions.map(permission => permission.name);
 
         const payload: Payload = {
@@ -64,6 +65,11 @@ export class AuthenticationService {
             username: null,
             roles: []
         };
+    }
+
+    async updatePassword(user: UserEntity, userWithPassword: UserWithPassword): Promise<UserEntity> {
+        user.password = await this.passwordService.createHash(userWithPassword.password);
+        return await this.usersService.update(user.id, user);
     }
 
 }

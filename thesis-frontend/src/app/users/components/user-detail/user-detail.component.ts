@@ -2,9 +2,8 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncap
 import {UsersApiService} from '../../services/public-api';
 import {ActivatedRoute} from '@angular/router';
 import {take} from 'rxjs/operators';
-import {CreatedUser, CreateUser, Role, User} from '../../../shared';
+import {CreatedUser, CreateUser, Role, RolesApiService, User} from '../../../shared';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import {RolesApiService} from '../../../shared/services/roles-api.service';
 
 @Component({
   selector: 'ts-user-detail',
@@ -15,18 +14,26 @@ import {RolesApiService} from '../../../shared/services/roles-api.service';
 })
 export class UserDetailComponent implements OnInit {
 
-  updateUserForm: FormGroup = new FormGroup({
-    username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
-    passwordRepeat: new FormControl('', [Validators.required]),
-    roles: new FormControl(null, [Validators.required])
-  });
-
+  // user change
   roles: Role[];
   submitted: boolean = false;
   updatedSuccessful: boolean = false;
   updatedUser: CreatedUser;
   updateFailure: boolean = false;
+  updateUserForm: FormGroup = new FormGroup({
+    username: new FormControl('', [Validators.required]),
+    roles: new FormControl(null, [Validators.required])
+  });
+
+  // password change
+  submittedPasswordChange: boolean = false;
+  passwordChangeSuccessful: boolean = false;
+  updatePasswordForm: FormGroup = new FormGroup({
+    password: new FormControl('', [Validators.required]),
+    passwordRepeat: new FormControl('', [Validators.required])
+  });
+
+  #user: User;
 
   constructor(private rolesApiService: RolesApiService,
               private usersApiService: UsersApiService,
@@ -40,10 +47,9 @@ export class UserDetailComponent implements OnInit {
       this.usersApiService.getUserById(id).pipe(
         take(1)
       ).subscribe((user: User) => {
+        this.#user = user;
         this.updateUserForm.setValue({
           username: user.username,
-          password: '',
-          passwordRepeat: '',
           roles: user.roles[0]
         });
         console.log('got user', user);
@@ -63,9 +69,9 @@ export class UserDetailComponent implements OnInit {
     this.submitted = true;
     if (this.updateUserForm.valid) {
       const createUser: CreateUser = {
-        password: this.getFormControl('password').value,
-        username: this.getFormControl('username').value,
-        roles: [this.getFormControl('roles').value]
+        password: this.getFormControlForUpdateUser('password').value,
+        username: this.getFormControlForUpdateUser('username').value,
+        roles: [this.getFormControlForUpdateUser('roles').value]
       };
 
       this.usersApiService.createUser(createUser)
@@ -73,9 +79,7 @@ export class UserDetailComponent implements OnInit {
         .subscribe((createdUser: CreatedUser) => {
           this.updatedSuccessful = true;
           this.updateUserForm.reset({
-            username: null,
-            password: null,
-            passwordRepeat: null,
+            username: null
           });
           this.submitted = false;
           this.updateFailure = false;
@@ -88,8 +92,38 @@ export class UserDetailComponent implements OnInit {
     }
   }
 
-  getFormControl(key: string): AbstractControl {
+  changePassword(): void {
+    this.submittedPasswordChange = true;
+    this.passwordChangeSuccessful = false;
+
+    if (this.updatePasswordForm) {
+      this.usersApiService.updatePassword({
+        user: this.#user.id,
+        password: this.getFormControlForUpdatePassword('password').value
+      }).pipe()
+        .subscribe((response) => {
+          this.updatePasswordForm.reset({
+            password: '',
+            passwordRepeat: ''
+          });
+          this.submittedPasswordChange = false;
+          this.passwordChangeSuccessful = true;
+          this.changeDetectorRef.detectChanges();
+        }, (error) => {
+          console.log('error on update');
+          this.submittedPasswordChange = true;
+          this.passwordChangeSuccessful = false;
+          this.changeDetectorRef.detectChanges();
+        });
+    }
+  }
+
+  getFormControlForUpdateUser(key: string): AbstractControl {
     return this.updateUserForm.get(key);
+  }
+
+  getFormControlForUpdatePassword(key: string): AbstractControl {
+    return this.updatePasswordForm.get(key);
   }
 
   downloadKeyFile(): void {

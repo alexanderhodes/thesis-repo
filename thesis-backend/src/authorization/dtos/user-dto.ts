@@ -8,3 +8,8 @@ export interface UserResponseDto {
     id: string;
     username: string;
 }
+
+export class UpdateWithPasswordDTO {
+    readonly user: string;
+    readonly password: string;
+}

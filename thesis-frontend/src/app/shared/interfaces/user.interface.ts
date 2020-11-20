@@ -20,3 +20,8 @@ export interface CreatedUser {
   publicKey: string;
   roles: Role[];
 }
+
+export interface UpdateUserPassword {
+  user: string;
+  password: string;
+}

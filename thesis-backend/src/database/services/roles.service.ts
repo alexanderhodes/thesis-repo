@@ -1,29 +1,29 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Role} from '../entities';
+import {RoleEntity} from '../entities';
 import {DeleteResult, Repository, UpdateResult} from 'typeorm';
 
 @Injectable()
 export class RolesService {
 
     constructor(
-        @InjectRepository(Role)
-        private rolesRepository: Repository<Role>
+        @InjectRepository(RoleEntity)
+        private rolesRepository: Repository<RoleEntity>
     ) {}
 
-    findAll(): Promise<Role[]> {
+    findAll(): Promise<RoleEntity[]> {
         return this.rolesRepository.find({ relations: ["permissions"] });
     }
 
-    findOneByName(name: string): Promise<Role> {
+    findOneByName(name: string): Promise<RoleEntity> {
         return this.rolesRepository.findOne({ where: [{"name": name}], cache: true, relations: ["permissions"] });
     }
 
-    insert(role: Role): Promise<Role> {
+    insert(role: RoleEntity): Promise<RoleEntity> {
         return this.rolesRepository.save(role);
     }
 
-    update(name: string, role: Role): Promise<UpdateResult> {
+    update(name: string, role: RoleEntity): Promise<UpdateResult> {
         return this.rolesRepository.update({ name: name }, role);
     }
 

@@ -21,3 +21,8 @@ export interface UserWithPermissions {
         publicKey: string;
     }
 }
+
+export interface UserWithPassword {
+    user: string;
+    password: string;
+}

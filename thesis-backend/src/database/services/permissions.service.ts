@@ -1,29 +1,29 @@
 import {Injectable} from '@nestjs/common';
 import {DeleteResult, InsertResult, Repository, UpdateResult} from 'typeorm';
-import {Permission} from '../entities';
+import {PermissionEntity} from '../entities';
 import {InjectRepository} from '@nestjs/typeorm';
 
 @Injectable()
 export class PermissionsService {
 
     constructor(
-        @InjectRepository(Permission)
-        private permissionsRepository: Repository<Permission>
+        @InjectRepository(PermissionEntity)
+        private permissionsRepository: Repository<PermissionEntity>
     ) {}
 
-    findAll(): Promise<Permission[]> {
+    findAll(): Promise<PermissionEntity[]> {
         return this.permissionsRepository.find();
     }
 
-    findOne(name: string): Promise<Permission> {
+    findOne(name: string): Promise<PermissionEntity> {
         return this.permissionsRepository.findOne({ name: name });
     }
 
-    insert(permission: Permission): Promise<InsertResult> {
+    insert(permission: PermissionEntity): Promise<InsertResult> {
         return this.permissionsRepository.insert(permission);
     }
 
-    update(name: string, permission: Permission): Promise<UpdateResult> {
+    update(name: string, permission: PermissionEntity): Promise<UpdateResult> {
         return this.permissionsRepository.update({ name: name }, permission);
     }
 

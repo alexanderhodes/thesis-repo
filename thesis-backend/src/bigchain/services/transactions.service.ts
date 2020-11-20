@@ -5,7 +5,7 @@ import {IAsset, IMetaData, ITransaction} from '../interfaces';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {Transactions} from '../models';
-import {User} from '../../database/entities';
+import {UserEntity} from '../../database/entities';
 
 @Injectable()
 export class TransactionsService extends BigchainBaseService {
@@ -28,7 +28,7 @@ export class TransactionsService extends BigchainBaseService {
         return this.getConnection().listTransactions(assetId);
     }
 
-    createTransaction(asset: IAsset, user: User, privateKey: string, metadata: IMetaData = null): Promise<ITransaction> {
+    createTransaction(asset: IAsset, user: UserEntity, privateKey: string, metadata: IMetaData = null): Promise<ITransaction> {
         // Construct a transaction payload
         const tx = this.driver.Transaction.makeCreateTransaction(
             asset,
@@ -52,7 +52,7 @@ export class TransactionsService extends BigchainBaseService {
             });
     }
 
-    updateTransaction(createdTransaction: any, user: User, privateKey: string, metadata: IMetaData = null): Promise<ITransaction> {
+    updateTransaction(createdTransaction: any, user: UserEntity, privateKey: string, metadata: IMetaData = null): Promise<ITransaction> {
         const tx = this.driver.Transaction.makeTransferTransaction(
             [{ tx: createdTransaction, output_index: 0 }],
             [

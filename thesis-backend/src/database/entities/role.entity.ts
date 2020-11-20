@@ -1,15 +1,17 @@
 import {Entity, JoinTable, ManyToMany, PrimaryColumn} from 'typeorm';
-import {Permission} from './permission.entity';
+import {PermissionEntity} from './permission.entity';
 
-@Entity()
-export class Role {
+@Entity({
+    name: "role"
+})
+export class RoleEntity {
 
     @PrimaryColumn()
     name: string;
-    @ManyToMany(() => Permission, permission => permission.name, {
+    @ManyToMany(() => PermissionEntity, permission => permission.name, {
         cascade: ["insert", "update"]
     })
     @JoinTable()
-    permissions: Permission[];
+    permissions: PermissionEntity[];
 
 }

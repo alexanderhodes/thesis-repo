@@ -1,7 +1,9 @@
 import {Entity, PrimaryColumn} from 'typeorm';
 
-@Entity()
-export class Permission {
+@Entity({
+    name: "permission"
+})
+export class PermissionEntity {
 
     @PrimaryColumn()
     name: string;

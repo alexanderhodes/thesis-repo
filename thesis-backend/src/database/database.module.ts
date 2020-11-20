@@ -1,6 +1,6 @@
 import {Module} from '@nestjs/common';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {Permission, Role, User} from './entities';
+import {PermissionEntity, RoleEntity, UserEntity} from './entities';
 import {PermissionsService, RolesService, UsersService} from './services';
 
 const services = [
@@ -14,7 +14,7 @@ const services = [
         ...services
     ],
     imports: [
-        TypeOrmModule.forFeature([User, Permission, Role])
+        TypeOrmModule.forFeature([UserEntity, PermissionEntity, RoleEntity])
     ],
     providers: [
         ...services
