@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import {CreatedUser, CreateUser, Role} from '../../../shared';
+import {comparePasswordsValidator, CreatedUser, CreateUser, Role} from '../../../shared';
 import {UsersApiService} from '../../services/public-api';
 import {RolesApiService} from '../../../shared/services/roles-api.service';
 
@@ -18,7 +18,7 @@ export class CreateUserComponent implements OnInit {
     password: new FormControl('', [Validators.required]),
     passwordRepeat: new FormControl('', [Validators.required]),
     roles: new FormControl(null, [Validators.required])
-  });
+  }, { validators: [comparePasswordsValidator] });
 
   roles: Role[];
   submitted: boolean = false;
