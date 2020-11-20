@@ -1,7 +1,7 @@
 import {Body, Controller, Get, HttpCode, HttpException, HttpStatus, Post, Request, UseGuards} from '@nestjs/common';
 import {JwtAuthGuard, LocalAuthGuard, PermissionsGuard} from '../guards';
 import {AuthenticationService} from '../services';
-import {UpdateWithPasswordDTO, UserResponseDto} from '../dtos';
+import {UpdateWithPasswordDTO, UserResponseDTO} from '../dtos';
 import {LoginResponse} from '../interfaces';
 import {KeypairService} from '../../shared/services';
 import {UsersService} from '../../database/services';
@@ -30,11 +30,11 @@ export class AuthenticationController {
 
     @UseGuards(JwtAuthGuard)
     @Get('profile')
-    async getProfile(@Request() req): Promise<UserResponseDto> {
+    async getProfile(@Request() req): Promise<UserResponseDTO> {
         const id = req.user ? req.user.id : null;
         const user = await this.usersService.findOneById(id);
         if (user) {
-            return <UserResponseDto>{
+            return <UserResponseDTO>{
                 id: user.id,
                 username: user.username
             };

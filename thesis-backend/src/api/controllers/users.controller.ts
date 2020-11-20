@@ -1,7 +1,7 @@
 import {Body, Controller, Get, NotFoundException, Param, Post, UseGuards} from '@nestjs/common';
 import {UsersService} from '../../database/services';
 import {KeypairService, PasswordService} from '../../shared/services';
-import {CreatedUserDto, CreateUserDto, UserResponseDto} from '../dtos';
+import {CreatedUserDTO, CreateUserDTO, UserResponseDTO} from '../dtos';
 import {toUserEntity} from '../mappers';
 import {JwtAuthGuard, PermissionsGuard} from '../../authorization/guards';
 import {HasPermissions} from '../../authorization/decorators';
@@ -17,7 +17,7 @@ export class UsersController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @HasPermissions(PermissionsEnum.USER_CREATE)
     @Post()
-    async createUser(@Body() createUser: CreateUserDto): Promise<CreatedUserDto> {
+    async createUser(@Body() createUser: CreateUserDTO): Promise<CreatedUserDTO> {
         // has password
         const hashedPassword = await this.passwordService.createHash(createUser.password);
         console.log('hash password', hashedPassword);
@@ -46,9 +46,9 @@ export class UsersController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @HasPermissions(PermissionsEnum.USER_READ)
     @Get()
-    async getAllUsers(): Promise<UserResponseDto[]> {
+    async getAllUsers(): Promise<UserResponseDTO[]> {
         const users = await this.usersService.findAll();
-        return users.map(user => <UserResponseDto>{
+        return users.map(user => <UserResponseDTO>{
             id: user.id,
             roles: user.roles,
             publicKey: user.publicKey,
@@ -59,7 +59,7 @@ export class UsersController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @HasPermissions(PermissionsEnum.USER_READ)
     @Get(":id")
-    async getUserById(@Param("id") id: string): Promise<UserResponseDto> {
+    async getUserById(@Param("id") id: string): Promise<UserResponseDTO> {
         const user = await this.usersService.findOneById(id);
         if (user) {
             return {

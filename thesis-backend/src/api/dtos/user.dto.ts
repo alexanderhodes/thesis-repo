@@ -1,22 +1,22 @@
-import {RoleDto} from './roles.dto';
+import {RoleDTO} from './roles.dto';
 
-export interface CreateUserDto {
+export interface CreateUserDTO {
     username: string;
     password: string;
-    roles: RoleDto[];
+    roles: RoleDTO[];
 }
 
-export interface CreatedUserDto {
+export interface CreatedUserDTO {
     id: string;
     username: string;
     privateKey: string;
     publicKey: string;
-    roles: RoleDto[];
+    roles: RoleDTO[];
 }
 
-export interface UserResponseDto {
+export interface UserResponseDTO {
     id: string;
     username: string;
     publicKey: string;
-    roles: RoleDto[];
+    roles: RoleDTO[];
 }

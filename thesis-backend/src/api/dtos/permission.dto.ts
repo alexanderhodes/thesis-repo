@@ -1,4 +1,4 @@
 
-export interface PermissionDto {
+export interface PermissionDTO {
     name: string;
 }

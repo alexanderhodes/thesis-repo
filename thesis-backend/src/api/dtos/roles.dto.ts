@@ -1,6 +1,6 @@
-import {PermissionDto} from './permission.dto';
+import {PermissionDTO} from './permission.dto';
 
-export interface RoleDto {
+export interface RoleDTO {
     name: string;
-    permissions: PermissionDto[];
+    permissions: PermissionDTO[];
 }
