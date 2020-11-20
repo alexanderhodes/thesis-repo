@@ -5,22 +5,33 @@
     </div>
     <div class="col-span-7 text-left">
       <ng-container *ngIf="username$ | async">
-        <div [routerLink]="['/users']" [routerLinkActive]="['font-bold']" [routerLinkActiveOptions]="{exact: false}"
-              class="text-white cursor-pointer hover:underline inline-block mr-3">
-          Benutzer
-        </div>
-        <div [routerLink]="['/occupations']" [routerLinkActive]="['font-bold']" [routerLinkActiveOptions]="{exact: false}"
-             class="text-white cursor-pointer hover:underline inline-block mr-3">
-          Berufe
-        </div>
-        <div [routerLink]="['/qualifications']" [routerLinkActive]="['font-bold']" [routerLinkActiveOptions]="{exact: false}"
-             class="text-white cursor-pointer hover:underline inline-block mr-3">
-          Qualifikationen
-        </div>
-        <div [routerLink]="['/configuration']" [routerLinkActive]="['font-bold']" [routerLinkActiveOptions]="{exact: false}"
-             class="text-white cursor-pointer hover:underline inline-block">
-          Konfiguration
-        </div>
+        <ng-container *tsHasPermission="'USER_READ'">
+          <div [routerLink]="['/users']" [routerLinkActive]="['font-bold']" [routerLinkActiveOptions]="{exact: false}"
+               class="text-white cursor-pointer hover:underline inline-block mr-3">
+            Benutzer
+          </div>
+        </ng-container>
+        <ng-container *tsHasPermission="'ASSETS_READ'">
+          <div [routerLink]="['/occupations']" [routerLinkActive]="['font-bold']"
+               [routerLinkActiveOptions]="{exact: false}"
+               class="text-white cursor-pointer hover:underline inline-block mr-3">
+            Berufe
+          </div>
+        </ng-container>
+        <ng-container *tsHasPermission="'ASSETS_READ'">
+          <div [routerLink]="['/qualifications']" [routerLinkActive]="['font-bold']"
+               [routerLinkActiveOptions]="{exact: false}"
+               class="text-white cursor-pointer hover:underline inline-block mr-3">
+            Qualifikationen
+          </div>
+        </ng-container>
+        <ng-container *tsHasPermission="'CONFIGURATION_READ'">
+          <div [routerLink]="['/configuration']" [routerLinkActive]="['font-bold']"
+               [routerLinkActiveOptions]="{exact: false}"
+               class="text-white cursor-pointer hover:underline inline-block">
+            Konfiguration
+          </div>
+        </ng-container>
       </ng-container>
     </div>
     <div class="col-span-3 text-right">

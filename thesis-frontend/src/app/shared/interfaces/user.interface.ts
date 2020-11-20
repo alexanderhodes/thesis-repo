@@ -1,5 +1,6 @@
 import {Role} from './role.interface';
 import {KeyPair} from './key-pair.interface';
+import {Permission} from './permission.interface';
 
 export interface User {
   id: string;
@@ -33,4 +34,11 @@ export interface GenerateKeyPairResponse {
   password?: string;
   roles: Role[];
   keyPair?: KeyPair;
+}
+
+export interface StorageUser {
+  accessToken: string;
+  permissions: Permission[];
+  username: string;
+  roles: Role[];
 }
