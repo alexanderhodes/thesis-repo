@@ -25,7 +25,7 @@
       <input class="border border-solid border-gray-400 rounded p-1 w-full" type="password"
              formControlName="passwordRepeat">
       <ng-container
-        *ngIf="(submitted || getFormControl('passwordRepeat').touched) && (getFormControl('passwordRepeat').invalid || createUserForm.errors.passwordNotEqual)">
+        *ngIf="(submitted || getFormControl('passwordRepeat').touched) && (getFormControl('passwordRepeat').invalid || createUserForm.errors)">
         <ts-error-message *ngIf="getFormControl('passwordRepeat').invalid && getFormControl('passwordRepeat').errors.required">
           Bitte geben Sie das Passwort erneut ein.
         </ts-error-message>

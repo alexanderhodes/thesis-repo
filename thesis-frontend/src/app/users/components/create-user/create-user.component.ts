@@ -1,8 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import {comparePasswordsValidator, CreatedUser, CreateUser, Role} from '../../../shared';
+import {comparePasswordsValidator, CreatedUser, CreateUser, FileService, Role, RolesApiService} from '../../../shared';
 import {UsersApiService} from '../../services/public-api';
-import {RolesApiService} from '../../../shared/services/roles-api.service';
 
 @Component({
   selector: 'ts-create-user',
@@ -28,6 +27,7 @@ export class CreateUserComponent implements OnInit {
 
   constructor(private rolesApiService: RolesApiService,
               private usersApiService: UsersApiService,
+              private fileService: FileService,
               private changeDetectorRef: ChangeDetectorRef) {
     this.roles = [];
   }
@@ -80,9 +80,7 @@ export class CreateUserComponent implements OnInit {
       privateKey: this.createdUser.privateKey,
       publicKey: this.createdUser.publicKey
     };
-    const blob = new Blob([JSON.stringify(keyPair, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    window.open(url, '_blank');
+    this.fileService.createFileForDownload(keyPair);
   }
 
 }

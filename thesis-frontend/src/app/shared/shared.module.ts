@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-import {RequestInterceptor} from './interceptors';
 import {CommonModule} from '@angular/common';
 import {ErrorMessageComponent, SuccessMessageComponent} from './components/public-api';
 
@@ -8,7 +7,7 @@ const components = [
   SuccessMessageComponent
 ];
 // ToDo: Integrate Interceptor
-const services = [RequestInterceptor];
+const services = [];
 
 @NgModule({
   declarations: [
