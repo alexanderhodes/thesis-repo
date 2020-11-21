@@ -21,7 +21,6 @@ export class UserListComponent implements OnInit {
     this.usersApiService.getAllUsers().pipe(
       take(1)
     ).subscribe(users => {
-      console.log('received users', users);
       this.users = users;
       this.changeDetectorRef.detectChanges();
     });

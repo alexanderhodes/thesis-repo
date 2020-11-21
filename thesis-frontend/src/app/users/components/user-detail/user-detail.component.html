@@ -5,7 +5,7 @@
       <div class="grid grid-cols-12">
         <div class="col-span-6 col-start-4 mt-2">
           <div class="text-gray-700">Benutzername</div>
-          <input class="border border-solid border-gray-400 rounded p-1 w-full" formControlName="username" autocomplete>
+          <input ts-input formControlName="username" autocomplete>
           <ng-container
             *ngIf="(submitted || getFormControlForUpdateUser('username').touched) && getFormControlForUpdateUser('username').invalid">
             <ts-error-message *ngIf="getFormControlForUpdateUser('username').errors.required">
@@ -55,8 +55,7 @@
               </a>
             </div>
             <div class="col-span-6 text-center">
-              <button type="submit"
-                      class="bg-white hover:bg-gray-300 text-black border border-black hover:border-gray-300 font-semibold py-2 px-4 rounded">
+              <button type="submit" ts-button-primary>
                 erstellen
               </button>
             </div>
@@ -71,8 +70,7 @@
       <div class="grid grid-cols-12">
         <div class="col-span-6 col-start-4 mt-2">
           <div class="text-gray-700">Passwort</div>
-          <input class="border border-solid border-gray-400 rounded p-1 w-full" type="password"
-                 formControlName="password" autocomplete="new-password">
+          <input ts-input type="password" formControlName="password" autocomplete="new-password">
           <ng-container
             *ngIf="(submittedPasswordChange || getFormControlForUpdatePassword('password').touched) && getFormControlForUpdatePassword('password').invalid">
             <ts-error-message *ngIf="getFormControlForUpdatePassword('password').errors.required">
@@ -82,8 +80,7 @@
         </div>
         <div class="col-span-6 col-start-4 mt-2">
           <div class="text-gray-700">Passwort wiederholen</div>
-          <input class="border border-solid border-gray-400 rounded p-1 w-full" type="password"
-                 formControlName="passwordRepeat" autocomplete="new-password">
+          <input ts-input type="password" formControlName="passwordRepeat" autocomplete="new-password">
           <ng-container
             *ngIf="(submittedPasswordChange || getFormControlForUpdatePassword('passwordRepeat').touched) && getFormControlForUpdatePassword('passwordRepeat').invalid">
             <ts-error-message *ngIf="getFormControlForUpdatePassword('passwordRepeat').errors.required">
@@ -97,8 +94,7 @@
           </ts-success-message>
         </div>
         <div class="col-span-12 text-center mt-2">
-          <button type="submit"
-                  class="bg-white hover:bg-gray-300 text-black border border-black hover:border-gray-300 font-semibold py-2 px-4 rounded">
+          <button type="submit" ts-button-primary>
             Passwort ändern
           </button>
         </div>
@@ -118,8 +114,7 @@
       </ts-success-message>
     </ng-container>
     <div class="text-center">
-      <button (click)="generateNewKeyPair()"
-              class="bg-white hover:bg-gray-300 text-black border border-black hover:border-gray-300 font-semibold py-2 px-4 rounded">
+      <button (click)="generateNewKeyPair()" ts-button-primary>
         Schlüsselpaar generieren
       </button>
     </div>

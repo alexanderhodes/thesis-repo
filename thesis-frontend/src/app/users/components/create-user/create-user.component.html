@@ -3,7 +3,7 @@
   <div class="grid grid-cols-12">
     <div class="col-span-6 col-start-4 mt-2">
       <div class="text-gray-700">Benutzername</div>
-      <input class="border border-solid border-gray-400 rounded p-1 w-full" formControlName="username">
+      <input ts-input formControlName="username">
       <ng-container *ngIf="(submitted || getFormControl('username').touched) && getFormControl('username').invalid">
         <ts-error-message *ngIf="getFormControl('username').errors.required">
           Bitte geben Sie einen Benutzernamen ein.
@@ -12,8 +12,7 @@
     </div>
     <div class="col-span-6 col-start-4 mt-2">
       <div class="text-gray-700">Passwort</div>
-      <input class="border border-solid border-gray-400 rounded p-1 w-full" type="password"
-             formControlName="password">
+      <input ts-input type="password" formControlName="password">
       <ng-container *ngIf="(submitted || getFormControl('password').touched) && getFormControl('password').invalid">
         <ts-error-message *ngIf="getFormControl('password').errors.required">
           Bitte geben Sie ein Passwort ein.
@@ -22,8 +21,7 @@
     </div>
     <div class="col-span-6 col-start-4 mt-2">
       <div class="text-gray-700">Passwort wiederholen</div>
-      <input class="border border-solid border-gray-400 rounded p-1 w-full" type="password"
-             formControlName="passwordRepeat">
+      <input ts-input type="password" formControlName="passwordRepeat">
       <ng-container
         *ngIf="(submitted || getFormControl('passwordRepeat').touched) && (getFormControl('passwordRepeat').invalid || createUserForm.errors)">
         <ts-error-message *ngIf="getFormControl('passwordRepeat').invalid && getFormControl('passwordRepeat').errors.required">
@@ -77,8 +75,7 @@
           </a>
         </div>
         <div class="col-span-6 text-center">
-          <button type="submit"
-                  class="bg-white hover:bg-gray-300 text-black border border-black hover:border-gray-300 font-semibold py-2 px-4 rounded">
+          <button type="submit" ts-button-primary>
             erstellen
           </button>
         </div>

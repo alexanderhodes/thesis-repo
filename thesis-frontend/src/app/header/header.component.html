@@ -37,7 +37,7 @@
     <div class="col-span-3 text-right">
       <ng-container *ngIf="username$ | async">
         <span class="text-white">angemeldet als: {{ username$ | async }}</span>
-        <button class="bg-white hover:bg-gray-300 text-black font-semibold py-2 px-4 rounded ml-4" (click)="logout()">
+        <button class="ml-4" ts-button-secondary (click)="logout()">
           abmelden
         </button>
       </ng-container>

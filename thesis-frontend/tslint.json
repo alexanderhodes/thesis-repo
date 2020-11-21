@@ -20,6 +20,7 @@
       true,
       "attribute",
       "ts",
+      "kebab-case",
       "camelCase"
     ],
     "component-selector": [
