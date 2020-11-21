@@ -17,6 +17,11 @@ export class RequestInterceptor implements HttpInterceptor {
               private stateService: StateService) {  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // do nothing for assets requests
+    if (req.url.indexOf('assets/i18n') > 0) {
+      return next.handle(req);
+    }
+
     const userStorage = this.stateService.getItem(STORAGE_USER);
     this.#api = environment.apiUrl;
     this.#authToken = userStorage ? userStorage.accessToken : null;

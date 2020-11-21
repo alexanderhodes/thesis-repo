@@ -8,37 +8,37 @@
         <ng-container *tsHasPermission="'USER_READ'">
           <div [routerLink]="['/users']" [routerLinkActive]="['font-bold']" [routerLinkActiveOptions]="{exact: false}"
                class="text-white cursor-pointer hover:underline inline-block mr-3">
-            Benutzer
+            {{ 'header.menu.users' | translate }}
           </div>
         </ng-container>
         <ng-container *tsHasPermission="'ASSETS_READ'">
           <div [routerLink]="['/occupations']" [routerLinkActive]="['font-bold']"
                [routerLinkActiveOptions]="{exact: false}"
                class="text-white cursor-pointer hover:underline inline-block mr-3">
-            Berufe
+            {{ 'header.menu.occupations' | translate }}
           </div>
         </ng-container>
         <ng-container *tsHasPermission="'ASSETS_READ'">
           <div [routerLink]="['/qualifications']" [routerLinkActive]="['font-bold']"
                [routerLinkActiveOptions]="{exact: false}"
                class="text-white cursor-pointer hover:underline inline-block mr-3">
-            Qualifikationen
+            {{ 'header.menu.qualifications' | translate }}
           </div>
         </ng-container>
         <ng-container *tsHasPermission="'CONFIGURATION_READ'">
           <div [routerLink]="['/configuration']" [routerLinkActive]="['font-bold']"
                [routerLinkActiveOptions]="{exact: false}"
                class="text-white cursor-pointer hover:underline inline-block">
-            Konfiguration
+            {{ 'header.menu.configuration' | translate }}
           </div>
         </ng-container>
       </ng-container>
     </div>
     <div class="col-span-3 text-right">
       <ng-container *ngIf="username$ | async">
-        <span class="text-white">angemeldet als: {{ username$ | async }}</span>
+        <span class="text-white">{{ 'header.text.logged-in-as' | translate }} {{ username$ | async }}</span>
         <button class="ml-4" ts-button-secondary (click)="logout()">
-          abmelden
+          {{ 'header.action.logout' | translate }}
         </button>
       </ng-container>
     </div>

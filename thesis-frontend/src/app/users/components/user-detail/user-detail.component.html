@@ -1,25 +1,25 @@
-<div class="text-xl mt-3 text-center">Benutzer bearbeiten</div>
+<div class="text-xl mt-3 text-center">{{ 'user.title.update-user' | translate }}</div>
 <div class="grid grid-cols-12">
   <div class="col-span-6">
     <form [formGroup]="updateUserForm" (ngSubmit)="updateUser()">
       <div class="grid grid-cols-12">
         <div class="col-span-6 col-start-4 mt-2">
-          <div class="text-gray-700">Benutzername</div>
+          <div class="text-gray-700">{{ 'common.username' | translate }}</div>
           <input ts-input formControlName="username" autocomplete>
           <ng-container
             *ngIf="(submitted || getFormControlForUpdateUser('username').touched) && getFormControlForUpdateUser('username').invalid">
             <ts-error-message *ngIf="getFormControlForUpdateUser('username').errors.required">
-              Bitte geben Sie einen Benutzernamen ein.
+              {{ 'common.error.username-missing' | translate }}
             </ts-error-message>
           </ng-container>
         </div>
         <div class="col-span-6 col-start-4 mt-2">
-          <div class="text-gray-700">Rollen</div>
+          <div class="text-gray-700">{{ 'common.roles' | translate }}</div>
           <div class="relative">
             <select
               class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               formControlName="roles">
-              <option [ngValue]="null">auswählen</option>
+              <option [ngValue]="null">{{ 'common.select' | translate }}</option>
               <option *ngFor="let role of roles" [ngValue]="role">
                 {{ role.name }}
               </option>
@@ -33,17 +33,14 @@
         </div>
         <div class="col-span-6 col-start-4">
           <ts-error-message *ngIf="updateFailure">
-            Beim Speichern des Benutzers ist ein Fehler auftreten. Bitte versuchen Sie es erneut.
+            {{ 'user.error.update' | translate }}
           </ts-error-message>
         </div>
         <div class="col-span-6 col-start-4">
           <ts-success-message *ngIf="updatedSuccessful">
-        <span>
-          Der Benutzer {{ updatedUser.username }} ist erfolgreich gespeichert worden.
-        </span>
             <span>
-          Das Schlüsselpaar kann <a (click)="downloadKeyFile()" class="cursor-pointer">hier</a> heruntergeladen werden.
-        </span>
+              {{ 'user.message.created' | translate: { username: updatedUser.username, privateKey: updatedUser.privateKey, publicKey: updatedUser.publicKey } }}
+            </span>
           </ts-success-message>
         </div>
         <div class="col-span-6 col-start-4 mt-3">
@@ -51,12 +48,12 @@
             <div class="col-span-6 text-center">
               <a [routerLink]="['/users']"
                  class="text-black cursor-pointer hover:underline inline-block mr-3">
-                zurück
+                {{ 'common.back' | translate }}
               </a>
             </div>
             <div class="col-span-6 text-center">
               <button type="submit" ts-button-primary>
-                erstellen
+                {{ 'common.save' | translate }}
               </button>
             </div>
           </div>
@@ -66,36 +63,36 @@
   </div>
   <div class="col-span-6">
     <form (ngSubmit)="changePassword()" [formGroup]="updatePasswordForm">
-      <div class="text-xl mt-3 text-center">Passwort ändern</div>
+      <div class="text-xl mt-3 text-center">{{ 'user.title.change-password' | translate }}</div>
       <div class="grid grid-cols-12">
         <div class="col-span-6 col-start-4 mt-2">
-          <div class="text-gray-700">Passwort</div>
+          <div class="text-gray-700">{{ 'common.password' | translate }}</div>
           <input ts-input type="password" formControlName="password" autocomplete="new-password">
           <ng-container
             *ngIf="(submittedPasswordChange || getFormControlForUpdatePassword('password').touched) && getFormControlForUpdatePassword('password').invalid">
             <ts-error-message *ngIf="getFormControlForUpdatePassword('password').errors.required">
-              Bitte geben Sie ein Passwort ein.
+              {{ 'common.error.password-missing' | translate }}
             </ts-error-message>
           </ng-container>
         </div>
         <div class="col-span-6 col-start-4 mt-2">
-          <div class="text-gray-700">Passwort wiederholen</div>
+          <div class="text-gray-700">{{ 'common.password-repeat' | translate }}</div>
           <input ts-input type="password" formControlName="passwordRepeat" autocomplete="new-password">
           <ng-container
             *ngIf="(submittedPasswordChange || getFormControlForUpdatePassword('passwordRepeat').touched) && getFormControlForUpdatePassword('passwordRepeat').invalid">
             <ts-error-message *ngIf="getFormControlForUpdatePassword('passwordRepeat').errors.required">
-              Bitte geben Sie das Passwort erneut ein.
+              {{ 'common.error.password-repeat-missing' | translate }}
             </ts-error-message>
           </ng-container>
         </div>
         <div class="col-span-6 col-start-4">
           <ts-success-message *ngIf="passwordChangeSuccessful">
-            <span>Das Passwort wurde erfolgreich geändert.</span>
+            <span>{{ 'user.message.change-success' | translate }}</span>
           </ts-success-message>
         </div>
         <div class="col-span-12 text-center mt-2">
           <button type="submit" ts-button-primary>
-            Passwort ändern
+            {{ 'common.save' | translate }}
           </button>
         </div>
       </div>
@@ -104,7 +101,7 @@
 </div>
 <div class="grid grid-cols-12">
   <div class="col-span-12">
-    <div class="text-xl mt-3 text-center">Aktionen</div>
+    <div class="text-xl mt-3 text-center">{{ 'common.actions' | translate }}</div>
     <ng-container *ngIf="actionsResponse">
       <ts-error-message *ngIf="!actionsResponse.successful">
         {{ actionsResponse.message }}
@@ -115,7 +112,7 @@
     </ng-container>
     <div class="text-center">
       <button (click)="generateNewKeyPair()" ts-button-primary>
-        Schlüsselpaar generieren
+        {{ 'user.action.generate-key-pair' | translate }}
       </button>
     </div>
   </div>

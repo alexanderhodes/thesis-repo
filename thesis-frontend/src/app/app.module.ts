@@ -8,10 +8,16 @@ import {LoginModule} from './login';
 import {RequestInterceptor, SharedModule} from './shared';
 import {HeaderModule} from './header/header.module';
 import {UsersModule} from './users';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {ConfigurationModule} from './configuration';
 import {OccupationsModule} from './occupations';
-import {QualificationsModule} from './qualifications/qualifications.module';
+import {QualificationsModule} from './qualifications';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -29,7 +35,15 @@ import {QualificationsModule} from './qualifications/qualifications.module';
     SharedModule,
     OccupationsModule,
     QualificationsModule,
-    ConfigurationModule
+    ConfigurationModule,
+    TranslateModule.forRoot({
+      defaultLanguage: 'de',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }

@@ -4,13 +4,18 @@ import {LoginCredentials} from './login.interface';
 import {take} from 'rxjs/operators';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {AsyncPipe} from '@angular/common';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'ts-login',
   templateUrl: 'login.component.html',
   styleUrls: ['login.component.scss'],
   encapsulation: ViewEncapsulation.Emulated,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    AsyncPipe
+  ]
 })
 export class LoginComponent {
 
@@ -23,6 +28,8 @@ export class LoginComponent {
 
   constructor(private loginApiService: LoginApiService,
               private router: Router,
+              private asyncPipe: AsyncPipe,
+              private translateService: TranslateService,
               private changeDetectorRef: ChangeDetectorRef) {
   }
 
@@ -42,9 +49,9 @@ export class LoginComponent {
         }, (error) => {
           console.log('error', error);
           if (error.status && error.status === 401) {
-            this.loginError = 'Der Benutzername oder das Passwort ist ungültig.';
+            this.loginError = this.asyncPipe.transform(this.translateService.get('common.error.username-password-invalid'));
           } else {
-            this.loginError = 'Es besteht derzeit keine Internet-Verbindung. Bitte versuchen Sie es erneut.';
+            this.loginError = this.asyncPipe.transform(this.translateService.get('common.error.no-internet-connection'));
           }
           this.changeDetectorRef.detectChanges();
         });

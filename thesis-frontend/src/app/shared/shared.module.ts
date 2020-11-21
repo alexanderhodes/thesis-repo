@@ -6,6 +6,7 @@ import {PermissionService, RoleService} from './services/public-api';
 import {RoleRouteGuard, PermissionRouteGuard} from './guards/public-api';
 import {ButtonDirective} from './directives/button.directive';
 import {InputDirective} from './directives/input.directive';
+import {TranslateModule} from '@ngx-translate/core';
 
 const components = [
   ErrorMessageComponent,
@@ -34,7 +35,8 @@ const guards = [
   ],
   exports: [
     ...components,
-    ...directives
+    ...directives,
+    TranslateModule
   ],
   imports: [
     CommonModule

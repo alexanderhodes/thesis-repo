@@ -13,13 +13,18 @@ import {
   User
 } from '../../../shared';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AsyncPipe} from '@angular/common';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'ts-user-detail',
   templateUrl: 'user-detail.component.html',
   styleUrls: ['user-detail.component.scss'],
   encapsulation: ViewEncapsulation.Emulated,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    AsyncPipe
+  ]
 })
 export class UserDetailComponent implements OnInit {
 
@@ -50,6 +55,8 @@ export class UserDetailComponent implements OnInit {
               private usersApiService: UsersApiService,
               private activatedRoute: ActivatedRoute,
               private fileService: FileService,
+              private asyncPipe: AsyncPipe,
+              private translateService: TranslateService,
               private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
@@ -121,7 +128,6 @@ export class UserDetailComponent implements OnInit {
           this.passwordChangeSuccessful = true;
           this.changeDetectorRef.detectChanges();
         }, (error) => {
-          console.log('error on update');
           this.submittedPasswordChange = true;
           this.passwordChangeSuccessful = false;
           this.changeDetectorRef.detectChanges();
@@ -143,16 +149,16 @@ export class UserDetailComponent implements OnInit {
       .subscribe((response: GenerateKeyPairResponse) => {
         this._downloadKeyFile(response.keyPair);
         this.actionsResponse = {
-          message: 'Das Schlüsselpaar wurde erfolgreich bereitgestellt und wird heruntergeladen',
+          message: this.asyncPipe.transform(this.translateService.get('user.message.generate-key-pair-success')),
           successful: true
         };
         this.changeDetectorRef.detectChanges();
       }, (error) => {
         this.actionsResponse = error.status ? {
-          message: 'Beim Erzeugen des Schlüsselpaares ist ein Fehler aufgetreten.',
+          message: this.asyncPipe.transform(this.translateService.get('user.error.generate-key-pair')),
           successful: false
         } : {
-          message: 'Es besteht derzeit keine Internet-Verbindung. Bitte versuchen Sie es später erneut.',
+          message: this.asyncPipe.transform(this.translateService.get('common.error.no-internet-connection')),
           successful: false
         };
         this.changeDetectorRef.detectChanges();
