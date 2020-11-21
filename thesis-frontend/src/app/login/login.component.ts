@@ -1,11 +1,11 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewEncapsulation} from '@angular/core';
-import {LoginApiService} from './login-api.service';
-import {LoginCredentials} from './login.interface';
-import {take} from 'rxjs/operators';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
+import {take} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
+import {LoginApiService} from './login-api.service';
+import {LoginCredentials} from './login.interface';
 
 @Component({
   selector: 'ts-login',

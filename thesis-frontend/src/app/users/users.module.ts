@@ -1,9 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {CreateUserComponent, UserDetailComponent, UserListComponent} from './components/public-api';
-import {UsersApiService} from '../core/http/users-api.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
+import {CreateUserComponent, UserDetailComponent, UserListComponent} from './components';
 import {UserRoutingModule} from './user-routing.module';
 import {SharedModule} from '../shared';
 
@@ -11,10 +10,6 @@ const components = [
   CreateUserComponent,
   UserDetailComponent,
   UserListComponent
-];
-
-const services = [
-  UsersApiService
 ];
 
 @NgModule({
@@ -32,9 +27,7 @@ const services = [
     UserRoutingModule,
     SharedModule
   ],
-  providers: [
-    ...services
-  ]
+  providers: []
 })
 export class UsersModule {
 
