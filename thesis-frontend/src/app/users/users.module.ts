@@ -5,6 +5,7 @@ import {RouterModule} from '@angular/router';
 import {CreateUserComponent, UserDetailComponent, UserListComponent} from './components';
 import {UserRoutingModule} from './user-routing.module';
 import {SharedModule} from '../shared';
+import {CoreModule} from '../core';
 
 const components = [
   CreateUserComponent,
@@ -25,7 +26,8 @@ const components = [
     ReactiveFormsModule,
     RouterModule,
     UserRoutingModule,
-    SharedModule
+    SharedModule,
+    CoreModule
   ],
   providers: []
 })

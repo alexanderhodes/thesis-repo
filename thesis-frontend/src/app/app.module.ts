@@ -6,6 +6,7 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {CoreModule} from './core';
+import {SharedModule} from './shared';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
@@ -20,6 +21,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     HttpClientModule,
     CoreModule,
+    SharedModule,
     TranslateModule.forRoot({
       defaultLanguage: 'de',
       loader: {
@@ -29,9 +31,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  // providers: [
-  //   { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
-  // ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

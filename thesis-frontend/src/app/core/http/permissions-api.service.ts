@@ -3,9 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Permission} from '../../shared/interfaces';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class PermissionsApiService {
 
   constructor(private httpClient: HttpClient) {}

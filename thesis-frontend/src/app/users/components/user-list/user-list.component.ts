@@ -15,15 +15,31 @@ export class UserListComponent implements OnInit {
   users: User[];
 
   constructor(private usersApiService: UsersApiService,
-              private changeDetectorRef: ChangeDetectorRef) {}
+              private changeDetectorRef: ChangeDetectorRef) {
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.usersApiService.getAllUsers().pipe(
       take(1)
     ).subscribe(users => {
       this.users = users;
       this.changeDetectorRef.detectChanges();
     });
+  }
+
+  deleteUser(id: string): void {
+    this.usersApiService.deleteUser(id)
+      .pipe(take(1))
+      .subscribe((response) => {
+        console.log('result', response);
+        const index = this.users.findIndex(user => user.id === id);
+        if (index >= -1) {
+          this.users.splice(index, 1);
+        }
+        this.changeDetectorRef.detectChanges();
+      }, (error) => {
+        console.log('error', error);
+      });
   }
 
 }

@@ -17,6 +17,7 @@
   "common.actions": "Aktionen",
   "common.create": "erstellen",
   "common.change": "bearbeiten",
+  "common.delete": "löschen",
   "login.action.login": "anmelden",
   "login.title": "Anmelden",
   "user.action.generate-key-pair": "Schlüsselpaar generieren",

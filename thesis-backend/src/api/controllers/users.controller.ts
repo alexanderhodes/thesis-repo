@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpException, HttpStatus, Param, Post, UseGuards} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, UseGuards} from '@nestjs/common';
 import {UsersService} from '../../database/services';
 import {KeypairService, PasswordService} from '../../shared/services';
 import {CreatedUserDTO, CreateUserDTO, UserResponseDTO} from '../dtos';
@@ -69,6 +69,17 @@ export class UsersController {
             }
         }
         throw new HttpException(`Benutzer mit der ID ${id} wurde nicht gefunden`, HttpStatus.NOT_FOUND);
+    }
+
+    @UseGuards(JwtAuthGuard, PermissionsGuard)
+    @HasPermissions(PermissionsEnum.USER_DELETE)
+    @Delete(":id")
+    async deleteUser(@Param("id") id: string) {
+        const result = await this.usersService.remove(id);
+        if (result && result.affected) {
+            return {};
+        }
+        throw new HttpException(`Der Benutzer mit der Id ${id} wurde nicht gefunden.`, HttpStatus.NOT_FOUND);
     }
 
 }

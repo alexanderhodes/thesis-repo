@@ -8,8 +8,8 @@ export class UsersApiService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getAllUsers(): Observable<any> {
-    return this.httpClient.get('users');
+  getAllUsers(): Observable<User[]> {
+    return this.httpClient.get<User[]>('users');
   }
 
   createUser(user: CreateUser): Observable<CreatedUser> {
@@ -26,6 +26,10 @@ export class UsersApiService {
 
   generateNewKeyPair(userId: string): Observable<GenerateKeyPairResponse> {
     return this.httpClient.post<GenerateKeyPairResponse>(`authentication-functions/generate-keypair/${userId}`, {});
+  }
+
+  deleteUser(id: string): Observable<any> {
+    return this.httpClient.delete(`users/${id}`);
   }
 
 }

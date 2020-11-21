@@ -3,9 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Role} from '../../shared/interfaces';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class RolesApiService {
 
   constructor(private httpClient: HttpClient) {}

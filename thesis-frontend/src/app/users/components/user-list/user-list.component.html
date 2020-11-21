@@ -24,8 +24,11 @@
       </span>
     </td>
     <td class="border px-4 py-2">
-      <button [routerLink]="[user.id]" ts-button-tertiary class="my-1">
+      <button [routerLink]="[user.id]" ts-button-tertiary class="my-1 mr-3">
         {{ 'common.change' | translate }}
+      </button>
+      <button (click)="deleteUser(user.id)" ts-button-tertiary class="my-1">
+        {{ 'common.delete' | translate }}
       </button>
     </td>
   </tr>
