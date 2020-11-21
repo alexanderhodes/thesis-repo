@@ -1,3 +1,4 @@
+export * from './guard-data.interface';
 export * from './key-pair.interface';
 export * from './user.interface';
 export * from './permission.interface';

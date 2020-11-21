@@ -2,7 +2,8 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ErrorMessageComponent, SuccessMessageComponent} from './components/public-api';
 import {HasPermissionDirective} from './directives/has-permission.directive';
-import {PermissionService} from './services/permission.service';
+import {PermissionService, RoleService} from './services/public-api';
+import {RoleRouteGuard, PermissionRouteGuard} from './guards/public-api';
 
 const components = [
   ErrorMessageComponent,
@@ -14,7 +15,12 @@ const directives = [
 ];
 // ToDo: Integrate Interceptor
 const services = [
-  PermissionService
+  PermissionService,
+  RoleService
+];
+const guards = [
+  RoleRouteGuard,
+  PermissionRouteGuard
 ];
 
 @NgModule({
@@ -30,7 +36,8 @@ const services = [
     CommonModule
   ],
   providers: [
-    ...services
+    ...services,
+    ...guards
   ]
 })
 export class SharedModule {

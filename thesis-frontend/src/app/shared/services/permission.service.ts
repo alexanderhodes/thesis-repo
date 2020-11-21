@@ -25,4 +25,8 @@ export class PermissionService extends CleanUpHelper {
     return !!this.#permissions.find(p => p.name === permission);
   }
 
+  get permissions(): Permission[] {
+    return this.#permissions;
+  }
+
 }

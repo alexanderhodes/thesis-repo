@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {PermissionsEnum} from './shared/enum/permissions.enum';
+import {PermissionRouteGuard} from './shared/guards/permission-route.guard';
 
 const routes: Routes = [
   {
@@ -17,19 +18,39 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    loadChildren: () => import('./users').then(m => m.UsersModule)
+    loadChildren: () => import('./users').then(m => m.UsersModule),
+    canActivate: [PermissionRouteGuard],
+    data: {
+      roles: [],
+      permissions: [PermissionsEnum.USER_READ]
+    }
   },
   {
     path: 'occupations',
-    loadChildren: () => import('./occupations').then(m => m.OccupationsModule)
+    loadChildren: () => import('./occupations').then(m => m.OccupationsModule),
+    canActivate: [PermissionRouteGuard],
+    data: {
+      roles: [],
+      permissions: [PermissionsEnum.ASSETS_READ]
+    }
   },
   {
     path: 'qualifications',
-    loadChildren: () => import('./qualifications').then(m => m.QualificationsModule)
+    loadChildren: () => import('./qualifications').then(m => m.QualificationsModule),
+    canActivate: [PermissionRouteGuard],
+    data: {
+      roles: [],
+      permissions: [PermissionsEnum.ASSETS_READ]
+    }
   },
   {
     path: 'configuration',
-    loadChildren: () => import('./configuration').then(m => m.ConfigurationModule)
+    loadChildren: () => import('./configuration').then(m => m.ConfigurationModule),
+    canActivate: [PermissionRouteGuard],
+    data: {
+      roles: ['ADMINISTRATOR', 'GREMIUM'],
+      permissions: [PermissionsEnum.CONFIGURATION_CREATE, PermissionsEnum.CONFIGURATION_READ]
+    }
   }
 ];
 
