@@ -4,6 +4,7 @@ import {ErrorMessageComponent, SuccessMessageComponent} from './components/publi
 import {HasPermissionDirective} from './directives/has-permission.directive';
 import {PermissionService, RoleService} from './services/public-api';
 import {RoleRouteGuard, PermissionRouteGuard} from './guards/public-api';
+import {ButtonDirective} from './directives/button.directive';
 
 const components = [
   ErrorMessageComponent,
@@ -11,6 +12,7 @@ const components = [
 ];
 
 const directives = [
+  ButtonDirective,
   HasPermissionDirective
 ];
 // ToDo: Integrate Interceptor

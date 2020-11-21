@@ -10,17 +10,16 @@ export class RoleRouteGuard implements CanActivate {
   constructor(private roleService: RoleService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    console.log('data', route.data);
-    console.log('roles', this.roleService.roles);
     const guardData: GuardData = route.data as GuardData;
     if (guardData.roles && guardData.roles.length) {
+      let isAllowed: boolean = false;
       guardData.roles.forEach(role => {
-        const hasRole = this.roleService.hasRole(role.name);
+        const hasRole = this.roleService.hasRole(role);
         if (hasRole) {
-          return true;
+          isAllowed = true;
         }
       });
-      return false;
+      return isAllowed;
     }
     return true;
   }

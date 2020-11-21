@@ -12,13 +12,14 @@ export class PermissionRouteGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     const guardData: GuardData = route.data as GuardData;
     if (guardData.permissions && guardData.permissions.length) {
+      let isAllowed: boolean = false;
       guardData.permissions.forEach(permission => {
-        const hasPermission = this.permissionService.hasPermission(permission.name);
+        const hasPermission = this.permissionService.hasPermission(permission);
         if (hasPermission) {
-          return true;
+          isAllowed = true;
         }
       });
-      return false;
+      return isAllowed;
     }
     return true;
   }
