@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "Test for Mono Repo",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start:frontend": "cd thesis-frontend && npm run start",
     "start:backend": "cd thesis-backend && npm run start",
     "start:backend:hmr": "cd thesis-backend && npm run start:dev:hmr",
     "start:backend:prod": "cd thesis-backend && npm run start:prod",
     "build:frontend": "cd thesis-frontend && npm run build:prod",
-    "build:backend": "cd thesis-backend && npm run build"
+    "build:backend": "cd thesis-backend && npm run build",
+    "install:frontend": "cd thesis-frontend && npm install",
+    "install:backend": "cd thesis-backend && npm install"
   },
   "author": "",
   "license": "ISC"
