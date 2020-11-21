@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import {comparePasswordsValidator, CreatedUser, CreateUser, FileService, Role, RolesApiService} from '../../../shared';
-import {UsersApiService} from '../../services/public-api';
+import {comparePasswordsValidator, CreatedUser, CreateUser, FileService, Role} from '../../../shared';
+import {RolesApiService, UsersApiService} from '../../../core/http';
 
 @Component({
   selector: 'ts-create-user',

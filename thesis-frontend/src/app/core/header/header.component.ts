@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {StateService, STORAGE_USER} from '../shared';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {StateService, STORAGE_USER} from '../services';
 
 @Component({
   selector: 'ts-header',

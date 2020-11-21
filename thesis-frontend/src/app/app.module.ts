@@ -2,18 +2,10 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {Neo4jModule} from './neo4j';
-import {ColModule} from './col';
-import {LoginModule} from './login';
-import {RequestInterceptor, SharedModule} from './shared';
-import {HeaderModule} from './header/header.module';
-import {UsersModule} from './users';
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
-import {ConfigurationModule} from './configuration';
-import {OccupationsModule} from './occupations';
-import {QualificationsModule} from './qualifications';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {CoreModule} from './core';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
@@ -27,15 +19,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    Neo4jModule,
-    ColModule,
-    HeaderModule,
-    LoginModule,
-    UsersModule,
-    SharedModule,
-    OccupationsModule,
-    QualificationsModule,
-    ConfigurationModule,
+    CoreModule,
     TranslateModule.forRoot({
       defaultLanguage: 'de',
       loader: {
@@ -45,9 +29,9 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
-  ],
+  // providers: [
+  //   { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
+  // ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

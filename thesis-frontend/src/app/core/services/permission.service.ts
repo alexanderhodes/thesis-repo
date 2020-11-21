@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {StateService, STORAGE_USER} from './state.service';
-import {Permission, StorageUser} from '../interfaces/public-api';
-import {CleanUpHelper} from '../helpers/public-api';
 import {takeUntil} from 'rxjs/operators';
-import {PermissionsEnum} from '../enum/permissions.enum';
+import {StateService, STORAGE_USER} from './state.service';
+import {Permission, StorageUser} from '../../shared/interfaces';
+import {CleanUpHelper} from '../utils';
+import {PermissionsEnum} from '../enums';
 
 @Injectable()
 export class PermissionService extends CleanUpHelper {

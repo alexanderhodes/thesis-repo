@@ -1,6 +1,6 @@
 import {Directive, Input, TemplateRef, ViewContainerRef} from '@angular/core';
-import {PermissionService} from '../services/permission.service';
-import {PermissionsEnum} from '../enum/permissions.enum';
+import {PermissionService} from '../services';
+import {PermissionsEnum} from '../enums';
 
 @Directive({
   selector: '[tsHasPermission]'

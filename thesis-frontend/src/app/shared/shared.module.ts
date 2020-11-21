@@ -1,12 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ErrorMessageComponent, SuccessMessageComponent} from './components/public-api';
-import {HasPermissionDirective} from './directives/has-permission.directive';
-import {PermissionService, RoleService} from './services/public-api';
-import {RoleRouteGuard, PermissionRouteGuard} from './guards/public-api';
-import {ButtonDirective} from './directives/button.directive';
-import {InputDirective} from './directives/input.directive';
 import {TranslateModule} from '@ngx-translate/core';
+import {ErrorMessageComponent, SuccessMessageComponent} from './components';
+import {ButtonDirective, InputDirective} from './directives';
 
 const components = [
   ErrorMessageComponent,
@@ -16,16 +12,6 @@ const components = [
 const directives = [
   ButtonDirective,
   InputDirective,
-  HasPermissionDirective
-];
-// ToDo: Integrate Interceptor
-const services = [
-  PermissionService,
-  RoleService
-];
-const guards = [
-  RoleRouteGuard,
-  PermissionRouteGuard
 ];
 
 @NgModule({
@@ -41,10 +27,7 @@ const guards = [
   imports: [
     CommonModule
   ],
-  providers: [
-    ...services,
-    ...guards
-  ]
+  providers: []
 })
 export class SharedModule {
 

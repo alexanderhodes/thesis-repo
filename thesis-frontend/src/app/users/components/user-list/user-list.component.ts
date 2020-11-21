@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {UsersApiService} from '../../services/public-api';
 import {take} from 'rxjs/operators';
 import {User} from '../../../shared';
+import {UsersApiService} from '../../../core/http';
 
 @Component({
   selector: 'ts-user-list',

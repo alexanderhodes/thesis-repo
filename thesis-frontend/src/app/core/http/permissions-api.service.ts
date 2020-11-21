@@ -1,16 +1,17 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Role} from '../interfaces/public-api';
+import {Permission} from '../../shared/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RolesApiService {
+export class PermissionsApiService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getAllRoles(): Observable<Role[]> {
-    return this.httpClient.get<Role[]>('roles');
+  getPermissions(): Observable<Permission[]> {
+    return this.httpClient.get<Permission[]>('permissions');
   }
+
 }

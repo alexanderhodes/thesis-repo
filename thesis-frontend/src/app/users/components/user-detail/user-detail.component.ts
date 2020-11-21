@@ -1,20 +1,11 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {UsersApiService} from '../../services/public-api';
 import {ActivatedRoute} from '@angular/router';
-import {take} from 'rxjs/operators';
-import {
-  CreatedUser,
-  CreateUser,
-  FileService,
-  GenerateKeyPairResponse,
-  KeyPair,
-  Role,
-  RolesApiService,
-  User
-} from '../../../shared';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AsyncPipe} from '@angular/common';
 import {TranslateService} from '@ngx-translate/core';
+import {take} from 'rxjs/operators';
+import {CreatedUser, CreateUser, FileService, GenerateKeyPairResponse, KeyPair, Role, User} from '../../../shared';
+import {RolesApiService, UsersApiService} from '../../../core/http';
 
 @Component({
   selector: 'ts-user-detail',

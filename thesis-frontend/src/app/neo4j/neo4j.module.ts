@@ -4,7 +4,7 @@ import {RouterModule} from '@angular/router';
 import {Neo4jComponent} from './components';
 import {Neo4jRoutingModule} from './neo4j-routing.module';
 import {Neo4jService} from './services';
-import {RequestInterceptor, SharedModule} from '../shared';
+import {SharedModule} from '../shared';
 
 const components = [
   Neo4jComponent

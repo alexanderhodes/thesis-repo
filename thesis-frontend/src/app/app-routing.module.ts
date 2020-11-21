@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {PermissionsEnum} from './shared/enum/permissions.enum';
-import {PermissionRouteGuard} from './shared/guards/permission-route.guard';
+import {PermissionsEnum} from './core/enums';
+import {PermissionRouteGuard} from './core/guards';
 
 const routes: Routes = [
   {

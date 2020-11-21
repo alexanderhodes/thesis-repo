@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CreateUserComponent, UserDetailComponent, UserListComponent} from './components/public-api';
-import {UsersApiService} from './services/users-api.service';
+import {UsersApiService} from '../core/http/users-api.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {UserRoutingModule} from './user-routing.module';
