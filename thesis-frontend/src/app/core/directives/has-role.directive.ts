@@ -1,38 +1,38 @@
 import {Directive, Input, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
-import {takeUntil} from 'rxjs/operators';
-import {PermissionService} from '../services';
-import {PermissionsEnum} from '../enums';
 import {CleanUpHelper} from '../utils';
+import {RoleService} from '../services';
+import {RolesEnum} from '../enums';
+import {takeUntil} from 'rxjs/operators';
 
 @Directive({
-  selector: '[tsHasPermission]'
+  selector: '[hasRole]'
 })
-export class HasPermissionDirective extends CleanUpHelper implements OnInit {
+export class HasRoleDirective extends CleanUpHelper implements OnInit {
 
-  #_permission: PermissionsEnum | string;
+  #_role: RolesEnum | string;
 
   constructor(private viewContainer: ViewContainerRef,
               private templateRef: TemplateRef<any>,
-              private permissionService: PermissionService) {
+              private roleService: RoleService) {
     super();
   }
 
   ngOnInit(): void {
-    this.permissionService.permissionsChanged$.pipe(
+    this.roleService.rolesChanged$.pipe(
       takeUntil(this.onDestroy$)
     ).subscribe(() => {
       this._toggleVisibility();
     });
   }
 
-  @Input('tsHasPermission')
-  set permission(value: PermissionsEnum | string) {
-    this.#_permission = value;
+  @Input()
+  set role(value: RolesEnum | string) {
+    this.#_role = value;
     this._toggleVisibility();
   }
 
   private _toggleVisibility(): void {
-    if (this.permissionService.hasPermission(this.#_permission)) {
+    if (this.roleService.hasRole(this.#_role)) {
       this.viewContainer.createEmbeddedView(this.templateRef);
     } else {
       this.viewContainer.clear();

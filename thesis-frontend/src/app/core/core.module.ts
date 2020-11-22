@@ -2,11 +2,11 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {SharedModule} from '../shared';
 import {PermissionRouteGuard, RoleRouteGuard} from './guards';
 import {HeaderComponent, HeaderItemComponent} from './header';
 import {ApiPrefixInterceptor, HttpErrorInterceptor, HttpTokenInterceptor} from './interceptor';
-import {SharedModule} from '../shared';
-import {HasPermissionDirective} from './directives';
+import {HasPermissionDirective, HasRoleDirective} from './directives';
 import {RoleService} from './services';
 import {LoginApiService, PermissionsApiService, RolesApiService, UsersApiService} from './http';
 
@@ -16,7 +16,8 @@ const components = [
 ];
 
 const directives = [
-  HasPermissionDirective
+  HasPermissionDirective,
+  HasRoleDirective
 ];
 
 const guards = [
