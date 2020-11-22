@@ -22,7 +22,7 @@ export class ObjectController {
                 assetStructure: []
             };
         }
-        throw new HttpException(`Object mit dem Namen ${createObject.name} existiert bereits`, HttpStatus.BAD_GATEWAY);
+        throw new HttpException(`Objekt mit dem Namen ${createObject.name} existiert bereits`, HttpStatus.BAD_GATEWAY);
     }
 
     @Get()

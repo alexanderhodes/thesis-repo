@@ -18,7 +18,7 @@ export class ObjectStructureController {
     }
 
     @Get("object/:objectName")
-    async getObjectStructureForAsset(@Param("objectName") objectName: string): Promise<IObjectStructure[]> {
+    async getObjectStructureForObject(@Param("objectName") objectName: string): Promise<IObjectStructure[]> {
         const object = await this.objectService.findOne(objectName);
         if (object) {
             return this.objectStructureService.findAllByObject(objectName);
@@ -32,7 +32,7 @@ export class ObjectStructureController {
         if (objectStructure) {
             return objectStructure;
         }
-        throw new HttpException(`Die Asset-Struktur mit der ID ${id} wurde nicht nicht gefunden.`, HttpStatus.NOT_FOUND);
+        throw new HttpException(`Die Objekt-Struktur mit der ID ${id} wurde nicht nicht gefunden.`, HttpStatus.NOT_FOUND);
     }
 
     @Post()

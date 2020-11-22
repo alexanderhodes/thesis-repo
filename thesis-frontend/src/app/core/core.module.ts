@@ -8,7 +8,14 @@ import {HeaderComponent, HeaderItemComponent} from './header';
 import {ApiPrefixInterceptor, HttpErrorInterceptor, HttpTokenInterceptor} from './interceptor';
 import {HasPermissionDirective, HasRoleDirective} from './directives';
 import {RoleService} from './services';
-import {LoginApiService, PermissionsApiService, RolesApiService, UsersApiService} from './http';
+import {
+  LoginApiService,
+  ObjectApiService,
+  ObjectStructureApiService,
+  PermissionsApiService,
+  RolesApiService,
+  UsersApiService
+} from './http';
 
 const components = [
   HeaderComponent,
@@ -29,6 +36,8 @@ const services = [
 //  PermissionService,
   RoleService,
   LoginApiService,
+  ObjectApiService,
+  ObjectStructureApiService,
   PermissionsApiService,
   RolesApiService,
   UsersApiService
