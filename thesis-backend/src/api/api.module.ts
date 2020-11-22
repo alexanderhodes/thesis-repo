@@ -6,7 +6,7 @@ import {AuthorizationModule} from '../authorization';
 import {BigchainModule} from '../bigchain';
 import {
     AssetsController,
-    BlocksController,
+    BlocksController, DbAssetController, DbAssetStructureController,
     GraphController,
     PermissionsController,
     RolesController,
@@ -18,6 +18,8 @@ import {Neo4jModule} from '../neo4j';
 const controllers = [
     AssetsController,
     BlocksController,
+    DbAssetController,
+    DbAssetStructureController,
     GraphController,
     PermissionsController,
     RolesController,

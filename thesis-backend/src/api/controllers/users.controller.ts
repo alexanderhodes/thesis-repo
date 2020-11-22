@@ -68,7 +68,7 @@ export class UsersController {
                 username: user.username
             }
         }
-        throw new HttpException(`Benutzer mit der ID ${id} wurde nicht gefunden`, HttpStatus.NOT_FOUND);
+        throw new HttpException(`Der Benutzer mit der ID ${id} wurde nicht gefunden.`, HttpStatus.NOT_FOUND);
     }
 
     @UseGuards(JwtAuthGuard, PermissionsGuard)
@@ -79,7 +79,7 @@ export class UsersController {
         if (result && result.affected) {
             return {};
         }
-        throw new HttpException(`Der Benutzer mit der Id ${id} wurde nicht gefunden.`, HttpStatus.NOT_FOUND);
+        throw new HttpException(`Der Benutzer mit der ID ${id} wurde nicht gefunden.`, HttpStatus.NOT_FOUND);
     }
 
 }

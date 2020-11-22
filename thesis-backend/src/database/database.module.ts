@@ -1,12 +1,22 @@
 import {Module} from '@nestjs/common';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {PermissionEntity, RoleEntity, UserEntity} from './entities';
-import {PermissionsService, RolesService, UsersService} from './services';
+import {AssetEntity, AssetStructureEntity, PermissionEntity, RoleEntity, UserEntity} from './entities';
+import {AssetService, AssetStructureService, PermissionsService, RolesService, UsersService} from './services';
 
 const services = [
+    AssetService,
+    AssetStructureService,
     PermissionsService,
     UsersService,
     RolesService
+];
+
+const entities = [
+    AssetEntity,
+    AssetStructureEntity,
+    PermissionEntity,
+    RoleEntity,
+    UserEntity
 ];
 
 @Module({
@@ -14,7 +24,7 @@ const services = [
         ...services
     ],
     imports: [
-        TypeOrmModule.forFeature([UserEntity, PermissionEntity, RoleEntity])
+        TypeOrmModule.forFeature(entities)
     ],
     providers: [
         ...services

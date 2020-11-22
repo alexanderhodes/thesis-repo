@@ -1,5 +1,7 @@
 export * from './assets.controller';
 export * from './blocks.controller';
+export * from './db-asset.controller';
+export * from './db-asset-structure.controller';
 export * from './graph.controller';
 export * from './permissions.controller';
 export * from './transactions.controller';
