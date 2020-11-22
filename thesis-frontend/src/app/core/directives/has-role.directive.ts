@@ -1,8 +1,8 @@
 import {Directive, Input, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
+import {takeUntil} from 'rxjs/operators';
 import {CleanUpHelper} from '../utils';
 import {RoleService} from '../services';
 import {RolesEnum} from '../enums';
-import {takeUntil} from 'rxjs/operators';
 
 @Directive({
   selector: '[hasRole]'

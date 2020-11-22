@@ -6,11 +6,7 @@ import {PermissionRouteGuard} from './core/guards';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./neo4j').then(m => m.Neo4jModule),
-  },
-  {
-    path: 'cols',
-    loadChildren: () => import('./col').then(m => m.ColModule),
+    loadChildren: () => import('./home').then(m => m.HomeModule),
   },
   {
     path: 'login',

@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {Neo4jComponent} from './components';
+import {HomeComponent} from './home.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: Neo4jComponent,
+    component: HomeComponent
   }
 ];
 
@@ -17,6 +17,6 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ]
 })
-export class Neo4jRoutingModule {
+export class HomeRoutingModule {
 
 }
