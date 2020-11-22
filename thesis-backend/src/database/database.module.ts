@@ -1,19 +1,19 @@
 import {Module} from '@nestjs/common';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {AssetEntity, AssetStructureEntity, PermissionEntity, RoleEntity, UserEntity} from './entities';
-import {AssetService, AssetStructureService, PermissionsService, RolesService, UsersService} from './services';
+import {ObjectEntity, ObjectStructureEntity, PermissionEntity, RoleEntity, UserEntity} from './entities';
+import {ObjectService, ObjectStructureService, PermissionsService, RolesService, UsersService} from './services';
 
 const services = [
-    AssetService,
-    AssetStructureService,
+    ObjectService,
+    ObjectStructureService,
     PermissionsService,
     UsersService,
     RolesService
 ];
 
 const entities = [
-    AssetEntity,
-    AssetStructureEntity,
+    ObjectEntity,
+    ObjectStructureEntity,
     PermissionEntity,
     RoleEntity,
     UserEntity

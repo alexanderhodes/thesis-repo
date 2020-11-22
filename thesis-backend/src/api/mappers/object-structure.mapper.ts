@@ -1,8 +1,8 @@
-import {AssetEntity, AssetStructureEntity} from '../../database/entities';
+import {ObjectEntity, ObjectStructureEntity} from '../../database/entities';
 
-export function toAssetStructureEntity(
+export function toObjectStructureEntity(
     id: string,
-    asset: AssetEntity,
+    object: ObjectEntity,
     createTimestamp: Date,
     datatype: string,
     deletable: boolean,
@@ -10,10 +10,10 @@ export function toAssetStructureEntity(
     nullable: boolean,
     schema: string,
     updateTimestamp: Date
-): AssetStructureEntity {
+): ObjectStructureEntity {
     return {
         createTimestamp: createTimestamp,
-        asset: asset,
+        object: object,
         datatype: datatype,
         deletable: deletable,
         field: field,

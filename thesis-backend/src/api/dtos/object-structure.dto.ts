@@ -1,10 +1,10 @@
-import {DbAsset} from '../../shared/interfaces';
+import {IObject} from '../../shared/interfaces';
 
-export class DBAssetStructureDTO {
+export class ObjectStructureDto {
     readonly field: string;
     readonly datatype: string;
     readonly schema: string;
     readonly nullable: boolean;
     readonly deletable: boolean;
-    readonly asset: DbAsset;
+    readonly object: IObject;
 }

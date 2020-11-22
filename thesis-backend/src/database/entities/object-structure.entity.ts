@@ -1,10 +1,10 @@
 import {Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
-import {AssetEntity} from './asset.entity';
+import {ObjectEntity} from './objectEntity';
 
 @Entity({
-    name: 'asset-structure'
+    name: 'object-structure'
 })
-export class AssetStructureEntity {
+export class ObjectStructureEntity {
 
     @PrimaryGeneratedColumn("uuid")
     id: string;
@@ -26,10 +26,10 @@ export class AssetStructureEntity {
     createTimestamp: Date;
     @Column()
     updateTimestamp: Date;
-    @ManyToOne(() => AssetEntity, asset => asset.name)
+    @ManyToOne(() => ObjectEntity, object => object.name)
     @JoinTable({
-        name: 'asset'
+        name: 'object'
     })
-    asset: AssetEntity;
+    object: ObjectEntity;
 
 }

@@ -1,6 +1,6 @@
-import {DbAsset} from './db-assets.interface';
+import {IObject} from './object.interface';
 
-export interface DbAssetStructure {
+export interface IObjectStructure {
     id: string;
     field: string;
     datatype: string;
@@ -9,5 +9,5 @@ export interface DbAssetStructure {
     deletable: boolean;
     createTimestamp: Date;
     updateTimestamp: Date;
-    asset: DbAsset;
+    object: IObject;
 }
