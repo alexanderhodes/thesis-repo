@@ -36,6 +36,7 @@
   "header.menu.occupations": "Berufe",
   "header.menu.qualifications": "Qualifikationen",
   "header.menu.configuration": "Konfiguration",
+  "header.menu.login": "Anmelden",
   "header.action.logout": "abmelden",
   "header.text.logged-in-as": "angemeldet als:"
 }

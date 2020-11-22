@@ -52,7 +52,6 @@ export class UserDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
-      console.log('id', params.get('id'));
       const id = params.get('id');
       this.usersApiService.getUserById(id).pipe(
         take(1)
