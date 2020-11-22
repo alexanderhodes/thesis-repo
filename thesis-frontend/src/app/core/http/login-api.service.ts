@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {LoginCredentials} from './login.interface';
 import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {LoginCredentials} from '../../shared/interfaces';
 
 @Injectable()
 export class LoginApiService {
@@ -10,6 +10,10 @@ export class LoginApiService {
 
   login(loginCredentials: LoginCredentials): Observable<any> {
     return this.httpClient.post('authentication/login', loginCredentials);
+  }
+
+  loginSilent(): Observable<any> {
+    return this.httpClient.post('authentication/login/silent', {});
   }
 
 }

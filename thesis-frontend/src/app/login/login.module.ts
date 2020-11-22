@@ -4,11 +4,11 @@ import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LoginRoutingModule} from './login-routing.module';
 import {LoginComponent} from './login.component';
-import {LoginApiService} from './login-api.service';
 import {SharedModule} from '../shared';
+import {CoreModule} from '../core';
 
 const components = [LoginComponent];
-const services = [LoginApiService];
+const services = [];
 
 @NgModule({
   declarations: [
@@ -23,7 +23,8 @@ const services = [LoginApiService];
     FormsModule,
     ReactiveFormsModule,
     LoginRoutingModule,
-    SharedModule
+    SharedModule,
+    CoreModule
   ],
   providers: [
     ...services

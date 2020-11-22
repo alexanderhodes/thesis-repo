@@ -4,8 +4,8 @@ import {Router} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
 import {take} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
-import {LoginApiService} from './login-api.service';
-import {LoginCredentials} from './login.interface';
+import {LoginApiService} from '../core/http';
+import {LoginCredentials} from '../shared/interfaces';
 
 @Component({
   selector: 'ts-login',

@@ -11,8 +11,7 @@ export class AuthenticationController {
 
     constructor(private authenticationService: AuthenticationService,
                 private keyPairService: KeypairService,
-                private usersService: UsersService) {
-    }
+                private usersService: UsersService) {}
 
     @UseGuards(LocalAuthGuard)
     @Post('login')

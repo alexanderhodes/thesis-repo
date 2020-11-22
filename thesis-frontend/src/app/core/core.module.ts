@@ -8,7 +8,7 @@ import {ApiPrefixInterceptor, HttpErrorInterceptor, HttpTokenInterceptor} from '
 import {SharedModule} from '../shared';
 import {HasPermissionDirective} from './directives';
 import {PermissionService, RoleService} from './services';
-import {PermissionsApiService, RolesApiService, UsersApiService} from './http';
+import {LoginApiService, PermissionsApiService, RolesApiService, UsersApiService} from './http';
 
 const components = [
   HeaderComponent
@@ -26,6 +26,7 @@ const guards = [
 const services = [
   PermissionService,
   RoleService,
+  LoginApiService,
   PermissionsApiService,
   RolesApiService,
   UsersApiService
