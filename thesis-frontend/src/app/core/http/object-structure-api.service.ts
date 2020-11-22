@@ -9,27 +9,27 @@ export class ObjectStructureApiService {
   constructor(private httpClient: HttpClient) {}
 
   getAll(): Observable<IObjectStructure[]> {
-    return this.httpClient.get<IObjectStructure[]>('configuration/object-structure');
+    return this.httpClient.get<IObjectStructure[]>('object-structure');
   }
 
   getObjectStructuresByObject(objectName: string): Observable<IObjectStructure[]> {
-    return this.httpClient.get<IObjectStructure[]>(`configuration/object-structure/${objectName}`);
+    return this.httpClient.get<IObjectStructure[]>(`object-structure/${objectName}`);
   }
 
   getObjectStructure(id: string): Observable<IObjectStructure> {
-    return this.httpClient.get<IObjectStructure>(`configuration/object-structure/${id}`);
+    return this.httpClient.get<IObjectStructure>(`object-structure/${id}`);
   }
 
   createObjectStructure(objectStructure: IObjectStructure): Observable<IObjectStructure> {
-    return this.httpClient.post<IObjectStructure>('configuration/object-structure', objectStructure);
+    return this.httpClient.post<IObjectStructure>('object-structure', objectStructure);
   }
 
   updateObjectStructure(id: string, objectStructure: IObjectStructure): Observable<IObjectStructure> {
-    return this.httpClient.put<IObjectStructure>(`configuration/object-structure/${id}`, objectStructure);
+    return this.httpClient.put<IObjectStructure>(`object-structure/${id}`, objectStructure);
   }
 
   deleteObjectStructure(id: string): Observable<any> {
-    return this.httpClient.delete(`configuration/object-structure/${id}`);
+    return this.httpClient.delete(`object-structure/${id}`);
   }
 
 }

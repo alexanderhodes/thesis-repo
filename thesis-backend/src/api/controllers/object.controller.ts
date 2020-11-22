@@ -4,7 +4,7 @@ import {ObjectDto} from '../dtos';
 import {toObjectEntity} from '../mappers';
 import {IObject} from '../../shared/interfaces';
 
-@Controller('configuration/objects')
+@Controller('objects')
 export class ObjectController {
 
     constructor(private objectService: ObjectService) {}

@@ -9,22 +9,22 @@ export class ObjectApiService {
   constructor(private httpClient: HttpClient) {}
 
   getAllObjects(): Observable<IObject[]> {
-    return this.httpClient.get<IObject[]>('configuration/objects');
+    return this.httpClient.get<IObject[]>('objects');
   }
 
   getObjectByName(name: string): Observable<IObject> {
-    return this.httpClient.get<IObject>(`configuration/objects/${name}`);
+    return this.httpClient.get<IObject>(`/objects/${name}`);
   }
 
   createObject(object: IObject): Observable<IObject> {
-    return this.httpClient.post<IObject>('configuration/objects', object);
+    return this.httpClient.post<IObject>('objects', object);
   }
 
   updateObject(name: string, object: IObject): Observable<IObject> {
-    return this.httpClient.put<IObject>(`configuration/objects/${name}`, object);
+    return this.httpClient.put<IObject>(`objects/${name}`, object);
   }
 
   deleteObject(name: string): Observable<any> {
-    return this.httpClient.delete(`configuration/objects/${name}`);
+    return this.httpClient.delete(`objects/${name}`);
   }
 }

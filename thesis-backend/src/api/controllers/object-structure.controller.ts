@@ -5,7 +5,7 @@ import {ObjectStructureDto} from '../dtos';
 import {toObjectStructureEntity} from '../mappers/object-structure.mapper';
 import {toObjectEntity} from '../mappers';
 
-@Controller('configuration/object-structure')
+@Controller('object-structure')
 export class ObjectStructureController {
 
     constructor(private objectStructureService: ObjectStructureService,
