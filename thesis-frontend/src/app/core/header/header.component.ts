@@ -1,32 +1,38 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
+import {Observable} from 'rxjs';
+import {map, takeUntil} from 'rxjs/operators';
 import {StateService, STORAGE_USER} from '../services';
+import {CleanUpHelper} from '../utils';
+import {StorageUser} from '../../shared/interfaces';
 
 @Component({
   selector: 'ts-header',
   templateUrl: 'header.component.html',
   styleUrls: ['header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   encapsulation: ViewEncapsulation.Emulated
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent extends CleanUpHelper implements OnInit {
 
   username$: Observable<string>;
 
   constructor(private stateService: StateService,
-              private router: Router) {  }
+              private router: Router,
+              private changeDetectorRef: ChangeDetectorRef) {
+    super();
+  }
 
   ngOnInit() {
     this.username$ = this.stateService.getItem$(STORAGE_USER).pipe(
-      map(value => {
-        if (value) {
-          return value.username;
-        }
-        return null;
-      })
+      takeUntil(this.onDestroy$),
+      map((value: StorageUser) => value ? value.username : null)
     );
+    this.stateService.getItem$(STORAGE_USER).pipe(
+      takeUntil(this.onDestroy$)
+    ).subscribe((user: StorageUser) => {
+      this.changeDetectorRef.detectChanges();
+    });
   }
 
   logout(): void {

@@ -3,15 +3,16 @@ import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {PermissionRouteGuard, RoleRouteGuard} from './guards';
-import {HeaderComponent} from './header';
+import {HeaderComponent, HeaderItemComponent} from './header';
 import {ApiPrefixInterceptor, HttpErrorInterceptor, HttpTokenInterceptor} from './interceptor';
 import {SharedModule} from '../shared';
 import {HasPermissionDirective} from './directives';
-import {PermissionService, RoleService} from './services';
+import {RoleService} from './services';
 import {LoginApiService, PermissionsApiService, RolesApiService, UsersApiService} from './http';
 
 const components = [
-  HeaderComponent
+  HeaderComponent,
+  HeaderItemComponent
 ];
 
 const directives = [
@@ -24,7 +25,7 @@ const guards = [
 ];
 
 const services = [
-  PermissionService,
+//  PermissionService,
   RoleService,
   LoginApiService,
   PermissionsApiService,

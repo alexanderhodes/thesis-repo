@@ -4,44 +4,27 @@
       <span [routerLink]="['/']" class="text-white cursor-pointer font-bold text-3xl">LOGO</span>
     </div>
     <div class="col-span-7 text-left">
-      <ng-container *ngIf="username$ | async; else notLoggedIn">
-        <ng-container *tsHasPermission="'USER_READ'">
-          <div [routerLink]="['/users']" [routerLinkActive]="['font-bold']" [routerLinkActiveOptions]="{exact: false}"
-               class="text-white cursor-pointer hover:underline inline-block mr-3">
-            {{ 'header.menu.users' | translate }}
-          </div>
-        </ng-container>
-        <ng-container *tsHasPermission="'ASSETS_READ'">
-          <div [routerLink]="['/occupations']" [routerLinkActive]="['font-bold']"
-               [routerLinkActiveOptions]="{exact: false}"
-               class="text-white cursor-pointer hover:underline inline-block mr-3">
-            {{ 'header.menu.occupations' | translate }}
-          </div>
-        </ng-container>
-        <ng-container *tsHasPermission="'ASSETS_READ'">
-          <div [routerLink]="['/qualifications']" [routerLinkActive]="['font-bold']"
-               [routerLinkActiveOptions]="{exact: false}"
-               class="text-white cursor-pointer hover:underline inline-block mr-3">
-            {{ 'header.menu.qualifications' | translate }}
-          </div>
-        </ng-container>
-        <ng-container *tsHasPermission="'CONFIGURATION_READ'">
-          <div [routerLink]="['/configuration']" [routerLinkActive]="['font-bold']"
-               [routerLinkActiveOptions]="{exact: false}"
-               class="text-white cursor-pointer hover:underline inline-block">
-            {{ 'header.menu.configuration' | translate }}
-          </div>
-        </ng-container>
-      </ng-container>
-      <ng-template #notLoggedIn>
+      <ng-container *ngIf="(username$ | async) === null">
         <div [routerLink]="['/login']" [routerLinkActive]="['font-bold']" [routerLinkActiveOptions]="{exact: false}"
              class="text-white cursor-pointer hover:underline inline-block mr-3">
           {{ 'header.menu.login' | translate }}
         </div>
-      </ng-template>
+      </ng-container>
+      <ts-header-item [routerLink]="'/users'" [permission]="'USER_READ'">
+        {{ 'header.menu.users' | translate }}
+      </ts-header-item>
+      <ts-header-item [routerLink]="'/occupations'" [permission]="'ASSETS_READ'">
+        {{ 'header.menu.occupations' | translate }}
+      </ts-header-item>
+      <ts-header-item [routerLink]="'/qualifications'" [permission]="'ASSETS_READ'">
+        {{ 'header.menu.qualifications' | translate }}
+      </ts-header-item>
+      <ts-header-item [routerLink]="'/configuration'" [permission]="'CONFIGURATION_READ'">
+        {{ 'header.menu.configuration' | translate }}
+      </ts-header-item>
     </div>
     <div class="col-span-3 text-right">
-      <ng-container *ngIf="username$ | async">
+      <ng-container *ngIf="(username$ | async) !== null">
         <span class="text-white">{{ 'header.text.logged-in-as' | translate }} {{ username$ | async }}</span>
         <button class="ml-4" ts-button-secondary (click)="logout()">
           {{ 'header.action.logout' | translate }}
