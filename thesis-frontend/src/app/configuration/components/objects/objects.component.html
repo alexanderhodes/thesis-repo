@@ -1,22 +1,28 @@
 <div class="text-xl mt-3">{{ 'objects.title.list' | translate }}</div>
 
-<table class="table-auto">
+<table class="table-auto w-full">
   <thead>
-  <tr>
-    <th class="px-4 py-2 text-left">{{ 'common.object' | translate }}</th>
-    <th class="px-4 py-2 text-left">{{ 'common.deletable' | translate }}</th>
-    <th class="px-4 py-2 text-left">{{ 'common.actions' | translate }}</th>
+  <tr class="border-t-4 border-black">
+    <th class="px-4 py-2 text-left">
+      <div class="h-auto">{{ 'common.object' | translate }}</div>
+    </th>
+    <th class="px-4 py-2 text-left">
+      <div class="h-auto">{{ 'common.deletable' | translate }}</div>
+    </th>
+    <th class="px-4 py-2 text-left">
+      <div class="h-auto">{{ 'common.actions' | translate }}</div>
+    </th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let object of objects">
-    <td class="border px-4 py-2">
+  <tr *ngFor="let object of objects; last as last" class="border-t-2 border-black" [ngClass]="{'border-b-2': last}">
+    <td class="px-4 py-2" >
       {{ object.name }}
     </td>
-    <td class="border px-4 py-2">
+    <td class="px-4 py-2">
       {{ (object.deletable ? 'common.yes' : 'common.no') | translate }}
     </td>
-    <td class="border px-4 py-2">
+    <td class="px-4 py-2">
       <button ts-button-tertiary class="my-1 mr-3" [routerLink]="['object', object.name]">
         {{ 'common.change' | translate }}
       </button>

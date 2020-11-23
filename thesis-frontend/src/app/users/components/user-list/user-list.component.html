@@ -7,23 +7,29 @@
   </span>
 </div>
 
-<table class="table-auto">
+<table class="table-auto w-full">
   <thead>
-  <tr>
-    <th class="px-4 py-2 text-left">{{ 'common.username' | translate }}</th>
-    <th class="px-4 py-2 text-left">{{ 'common.roles' | translate }}</th>
-    <th class="px-4 py-2 text-left">{{ 'common.actions' | translate }}</th>
+  <tr class="border-t-4 border-black">
+    <th class="px-4 py-2 text-left h-auto">
+      <span class="text-lg">{{ 'common.username' | translate }}</span>
+    </th>
+    <th class="px-4 py-2 text-left h-auto">
+      <span class="text-lg">{{ 'common.roles' | translate }}</span>
+    </th>
+    <th class="px-4 py-2 text-left h-auto">
+      <span class="text-lg">{{ 'common.actions' | translate }}</span>
+    </th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let user of users; index as i">
-    <td class="border px-4 py-2">{{ user.username }}</td>
-    <td class="border px-4 py-2">
+  <tr *ngFor="let user of users; index as i; last as last" class="border-t-2 border-black" [ngClass]="{'border-b-2': last}">
+    <td class="px-4 py-2">{{ user.username }}</td>
+    <td class="px-4 py-2">
       <span *ngFor="let role of user.roles; last as last">
         {{ role.name }} {{ !last ? ',' : '' }}
       </span>
     </td>
-    <td class="border px-4 py-2">
+    <td class="px-4 py-2">
       <button [routerLink]="[user.id]" ts-button-tertiary class="my-1 mr-3">
         {{ 'common.change' | translate }}
       </button>
