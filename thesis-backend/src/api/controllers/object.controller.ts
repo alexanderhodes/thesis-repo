@@ -1,15 +1,20 @@
-import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, UseGuards} from '@nestjs/common';
 import {ObjectService} from '../../database/services';
 import {ObjectDto} from '../dtos';
 import {toObjectEntity} from '../mappers';
 import {IObject} from '../../shared/interfaces';
+import {JwtAuthGuard, PermissionsGuard} from '../../authorization/guards';
+import {HasPermissions} from '../../authorization/decorators';
+import {PermissionsEnum} from '../../authorization/constants';
 
 @Controller('objects')
 export class ObjectController {
 
     constructor(private objectService: ObjectService) {}
 
+    @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Post()
+    @HasPermissions(PermissionsEnum.CONFIGURATION_CREATE)
     async createObject(@Body() createObject: ObjectDto): Promise<IObject> {
         const foundObject = await this.objectService.findOne(createObject.name);
         if (foundObject) {
@@ -25,11 +30,13 @@ export class ObjectController {
         throw new HttpException(`Objekt mit dem Namen ${createObject.name} existiert bereits`, HttpStatus.BAD_GATEWAY);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get()
     getAllObjects(): Promise<IObject[]> {
         return this.objectService.findAll();
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get(":name")
     async getObjectByName(@Param("name") name: string): Promise<IObject> {
         const object = await this.objectService.findOne(name);
@@ -39,7 +46,9 @@ export class ObjectController {
         throw new HttpException(`Das Objekt mit dem Namen ${name} wurde nicht gefunden.`, HttpStatus.NOT_FOUND);
     }
 
+    @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Put(":name")
+    @HasPermissions(PermissionsEnum.CONFIGURATION_UPDATE)
     async updateObject(@Param("name") name: string, @Body() updateObjectDto: ObjectDto): Promise<IObject> {
         const foundObject = await this.objectService.findOne(name);
         if (foundObject) {
@@ -49,7 +58,9 @@ export class ObjectController {
         throw new HttpException(`Das Objekt mit dem Namen ${name} wurde nicht gefunden.`, HttpStatus.NOT_FOUND);
     }
 
+    @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Delete()
+    @HasPermissions(PermissionsEnum.CONFIGURATION_DELETE)
     async deleteObject(@Param("name") name: string): Promise<any> {
         const result = await this.objectService.remove(name);
         if (result) {

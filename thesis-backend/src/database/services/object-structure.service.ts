@@ -20,7 +20,7 @@ export class ObjectStructureService {
             .getRepository(ObjectStructureEntity)
             .createQueryBuilder("object-structure")
             .where("object-structure.id = :id", { id: id })
-            .leftJoinAndSelect("object-structure.assetName", "object")
+            .leftJoinAndSelect("object-structure.object", "object")
             .getOne();
     }
 
@@ -28,8 +28,8 @@ export class ObjectStructureService {
         return getConnection()
             .getRepository(ObjectStructureEntity)
             .createQueryBuilder("object-structure")
-            .where("object-structure.object = :objectName", { objectName: objectName })
             .leftJoinAndSelect("object-structure.object", "object")
+            .where("object.name = :objectName", { objectName: objectName })
             .getMany();
     }
 
