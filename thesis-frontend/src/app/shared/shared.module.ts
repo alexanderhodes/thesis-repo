@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {ErrorMessageComponent, SuccessMessageComponent} from './components';
 import {ButtonDirective, InputDirective} from './directives';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 const components = [
   ErrorMessageComponent,
@@ -25,7 +26,8 @@ const directives = [
     TranslateModule
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FontAwesomeModule
   ],
   providers: []
 })

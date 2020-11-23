@@ -1,53 +1,56 @@
-<div class="text-xl mt-3 text-center">{{ 'user.title.create-user' | translate }}</div>
 <form [formGroup]="createUserForm" (ngSubmit)="createUser()">
   <div class="grid grid-cols-12">
-    <div class="col-span-6 col-start-4 mt-2">
-      <div class="text-gray-700">{{ 'common.username' | translate }}</div>
-      <input ts-input formControlName="username">
-      <ng-container *ngIf="(submitted || getFormControl('username').touched) && getFormControl('username').invalid">
-        <ts-error-message *ngIf="getFormControl('username').errors.required">
-          {{ 'common.error.username-missing' | translate }}
-        </ts-error-message>
-      </ng-container>
-    </div>
-    <div class="col-span-6 col-start-4 mt-2">
-      <div class="text-gray-700">{{ 'common.password' | translate }}</div>
-      <input ts-input type="password" formControlName="password">
-      <ng-container *ngIf="(submitted || getFormControl('password').touched) && getFormControl('password').invalid">
-        <ts-error-message *ngIf="getFormControl('password').errors.required">
-          {{ 'common.error.password-missing' | translate }}
-        </ts-error-message>
-      </ng-container>
-    </div>
-    <div class="col-span-6 col-start-4 mt-2">
-      <div class="text-gray-700">{{ 'common.password-repeat' | translate }}</div>
-      <input ts-input type="password" formControlName="passwordRepeat">
-      <ng-container
-        *ngIf="(submitted || getFormControl('passwordRepeat').touched) && (getFormControl('passwordRepeat').invalid || createUserForm.errors)">
-        <ts-error-message *ngIf="getFormControl('passwordRepeat').invalid && getFormControl('passwordRepeat').errors.required">
-          {{ 'common.error.password-repeat-missing' | translate }}
-        </ts-error-message>
-        <ts-error-message *ngIf="createUserForm.errors.passwordNotEqual">
-          {{ 'common.error.password-not-matching' | translate }}
-        </ts-error-message>
-      </ng-container>
-    </div>
-    <div class="col-span-6 col-start-4 mt-2">
-      <div class="text-gray-700">{{ 'common.roles' | translate }}</div>
-      <div class="relative">
-        <select
-          class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          formControlName="roles">
-          <option [ngValue]="null">{{ 'common.select' | translate }}</option>
-          <option *ngFor="let role of roles" [ngValue]="role">
-            {{ role.name }}
-          </option>
-        </select>
-        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-          <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-          </svg>
+    <div class="col-span-3 col-start-4 mt-2 px-2">
+      <div>
+        <div class="text-black">{{ 'common.username' | translate }}</div>
+        <input ts-input formControlName="username">
+        <ng-container *ngIf="(submitted || getFormControl('username').touched) && getFormControl('username').invalid">
+          <ts-error-message *ngIf="getFormControl('username').errors.required">
+            {{ 'common.error.username-missing' | translate }}
+          </ts-error-message>
+        </ng-container>
+      </div>
+      <div class="mt-2">
+        <div class="text-black">{{ 'common.roles' | translate }}</div>
+        <div class="relative">
+          <select
+            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-black py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            formControlName="roles">
+            <option [ngValue]="null">{{ 'common.select' | translate }}</option>
+            <option *ngFor="let role of roles" [ngValue]="role">
+              {{ role.name }}
+            </option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-black">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+            </svg>
+          </div>
         </div>
+      </div>
+    </div>
+    <div class="col-span-3 col-start-7 mt-2 px-2">
+      <div class="">
+        <div class="text-black">{{ 'common.password' | translate }}</div>
+        <input ts-input type="password" formControlName="password">
+        <ng-container *ngIf="(submitted || getFormControl('password').touched) && getFormControl('password').invalid">
+          <ts-error-message *ngIf="getFormControl('password').errors.required">
+            {{ 'common.error.password-missing' | translate }}
+          </ts-error-message>
+        </ng-container>
+      </div>
+      <div class="mt-2">
+        <div class="text-black">{{ 'common.password-repeat' | translate }}</div>
+        <input ts-input type="password" formControlName="passwordRepeat">
+        <ng-container
+          *ngIf="(submitted || getFormControl('passwordRepeat').touched) && (getFormControl('passwordRepeat').invalid || createUserForm.errors)">
+          <ts-error-message *ngIf="getFormControl('passwordRepeat').invalid && getFormControl('passwordRepeat').errors.required">
+            {{ 'common.error.password-repeat-missing' | translate }}
+          </ts-error-message>
+          <ts-error-message *ngIf="createUserForm.errors.passwordNotEqual">
+            {{ 'common.error.password-not-matching' | translate }}
+          </ts-error-message>
+        </ng-container>
       </div>
     </div>
     <div class="col-span-6 col-start-4">
@@ -64,14 +67,8 @@
     </div>
     <div class="col-span-6 col-start-4 mt-3">
       <div class="grid grid-cols-12">
-        <div class="col-span-6 text-center">
-          <a [routerLink]="['/users']"
-             class="text-black cursor-pointer hover:underline inline-block mr-3">
-            {{ 'common.back' | translate }}
-          </a>
-        </div>
-        <div class="col-span-6 text-center">
-          <button type="submit" ts-button-primary>
+        <div class="col-span-12 text-center">
+          <button type="submit" ts-button-tertiary>
             {{ 'common.create' | translate }}
           </button>
         </div>
