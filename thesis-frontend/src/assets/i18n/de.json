@@ -18,6 +18,10 @@
   "common.create": "erstellen",
   "common.change": "bearbeiten",
   "common.delete": "löschen",
+  "common.object": "Objekt",
+  "common.deletable": "Löschbar",
+  "common.yes": "ja",
+  "common.no": "nein",
   "login.action.login": "anmelden",
   "login.title": "Anmelden",
   "user.action.generate-key-pair": "Schlüsselpaar generieren",
@@ -38,5 +42,6 @@
   "header.menu.configuration": "Konfiguration",
   "header.menu.login": "Anmelden",
   "header.action.logout": "abmelden",
-  "header.text.logged-in-as": "angemeldet als:"
+  "header.text.logged-in-as": "angemeldet als:",
+  "objects.title.list": "Objekte"
 }

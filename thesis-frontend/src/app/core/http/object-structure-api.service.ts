@@ -13,7 +13,7 @@ export class ObjectStructureApiService {
   }
 
   getObjectStructuresByObject(objectName: string): Observable<IObjectStructure[]> {
-    return this.httpClient.get<IObjectStructure[]>(`object-structure/${objectName}`);
+    return this.httpClient.get<IObjectStructure[]>(`object-structure/object/${objectName}`);
   }
 
   getObjectStructure(id: string): Observable<IObjectStructure> {

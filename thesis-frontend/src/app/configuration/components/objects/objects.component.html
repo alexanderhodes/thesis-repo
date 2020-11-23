@@ -1,0 +1,29 @@
+<div class="text-xl mt-3">{{ 'objects.title.list' | translate }}</div>
+
+<table class="table-auto">
+  <thead>
+  <tr>
+    <th class="px-4 py-2 text-left">{{ 'common.object' | translate }}</th>
+    <th class="px-4 py-2 text-left">{{ 'common.deletable' | translate }}</th>
+    <th class="px-4 py-2 text-left">{{ 'common.actions' | translate }}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let object of objects">
+    <td class="border px-4 py-2">
+      {{ object.name }}
+    </td>
+    <td class="border px-4 py-2">
+      {{ (object.deletable ? 'common.yes' : 'common.no') | translate }}
+    </td>
+    <td class="border px-4 py-2">
+      <button ts-button-tertiary class="my-1 mr-3" [routerLink]="['object', object.name]">
+        {{ 'common.change' | translate }}
+      </button>
+      <button *ngIf="object.deletable" ts-button-tertiary class="my-1">
+        {{ 'common.delete' | translate }}
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>

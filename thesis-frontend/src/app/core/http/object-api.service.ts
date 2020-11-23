@@ -13,7 +13,7 @@ export class ObjectApiService {
   }
 
   getObjectByName(name: string): Observable<IObject> {
-    return this.httpClient.get<IObject>(`/objects/${name}`);
+    return this.httpClient.get<IObject>(`objects/${name}`);
   }
 
   createObject(object: IObject): Observable<IObject> {
