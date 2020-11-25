@@ -9,7 +9,7 @@ const services = [
 @Module({
     imports: [
         ConfigModule.forRoot({
-            envFilePath: `.development.env`
+            envFilePath: `.env.${process.env.NODE_ENV}`
         })
     ],
     exports: [
