@@ -5,5 +5,7 @@ export * from './guards';
 export * from './header';
 export * from './http';
 export * from './interceptor';
+export * from './interfaces';
 export * from './services';
+export * from './tokens';
 export * from './utils';

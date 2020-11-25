@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
@@ -7,7 +7,7 @@ import {PermissionRouteGuard, RoleRouteGuard} from './guards';
 import {HeaderComponent, HeaderItemComponent} from './header';
 import {ApiPrefixInterceptor, HttpErrorInterceptor, HttpTokenInterceptor} from './interceptor';
 import {HasPermissionDirective, HasRoleDirective} from './directives';
-import {RoleService} from './services';
+import {ConfigService, RoleService} from './services';
 import {
   LoginApiService,
   ObjectApiService,
@@ -34,6 +34,7 @@ const guards = [
 
 const services = [
 //  PermissionService,
+  ConfigService,
   RoleService,
   LoginApiService,
   ObjectApiService,
@@ -58,25 +59,36 @@ const services = [
     SharedModule
   ],
   providers: [
-    ...guards,
-    ...services,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ApiPrefixInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpTokenInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpErrorInterceptor,
-      multi: true
-    }
+//    ...guards,
+//    ...services,
+
   ]
 })
 export class CoreModule {
+
+  static forRoot(): ModuleWithProviders<CoreModule> {
+    return {
+      ngModule: CoreModule,
+      providers: [
+        ...guards,
+        ...services,
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: ApiPrefixInterceptor,
+          multi: true
+        },
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: HttpTokenInterceptor,
+          multi: true
+        },
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: HttpErrorInterceptor,
+          multi: true
+        }
+      ]
+    };
+  }
 
 }
