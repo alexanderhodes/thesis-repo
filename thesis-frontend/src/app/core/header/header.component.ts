@@ -26,11 +26,11 @@ export class HeaderComponent extends CleanUpHelper implements OnInit {
   ngOnInit() {
     this.username$ = this.stateService.getItem$(STORAGE_USER).pipe(
       takeUntil(this.onDestroy$),
-      map((value: StorageUser) => value ? value.username : null)
+      map((value: StorageUser) => value && value.username ? value.username : null)
     );
     this.stateService.getItem$(STORAGE_USER).pipe(
       takeUntil(this.onDestroy$)
-    ).subscribe((user: StorageUser) => {
+    ).subscribe(() => {
       this.changeDetectorRef.detectChanges();
     });
   }
