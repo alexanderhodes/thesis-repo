@@ -3,12 +3,19 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
-import {ConfigurationComponent, ObjectDetailComponent, ObjectsComponent} from './components/public-api';
+import {
+  ConfigurationComponent,
+  CreateObjectComponent,
+  ObjectDetailComponent,
+  ObjectsComponent
+} from './components/public-api';
 import {ConfigurationRoutingModule} from './configuration-routing.module';
 import {CoreModule} from '../core';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 const components = [
   ConfigurationComponent,
+  CreateObjectComponent,
   ObjectDetailComponent,
   ObjectsComponent
 ];
@@ -28,7 +35,8 @@ const services = [];
     RouterModule,
     SharedModule,
     CoreModule,
-    ConfigurationRoutingModule
+    ConfigurationRoutingModule,
+    FontAwesomeModule
   ],
   providers: [
     ...services

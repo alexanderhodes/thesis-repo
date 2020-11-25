@@ -1,5 +1,20 @@
 <div class="text-xl mt-3">{{ 'objects.title.list' | translate }}</div>
 
+<div class="border-2 border-black" [ngClass]="{'pb-3 mb-4 mt-2': show, 'my-2': !show}">
+  <div class="flex justify-between text-lg py-1 px-4 cursor-pointer" (click)="toggle()"
+       [ngClass]="{'bg-black text-white': !show, 'bg-white text-black border-b-2 border-black': show}">
+    <div class="font-bold">
+      {{ 'objects.title.create-object' | translate }}
+    </div>
+    <div>
+      <fa-icon [icon]="icon"></fa-icon>
+    </div>
+  </div>
+  <div class="h-auto px-4 py-2" *ngIf="show">
+    <ts-create-object></ts-create-object>
+  </div>
+</div>
+
 <table class="table-auto w-full">
   <thead>
   <tr class="border-t-4 border-black">
@@ -29,6 +44,11 @@
       <button *ngIf="object.deletable" ts-button-tertiary class="my-1">
         {{ 'common.delete' | translate }}
       </button>
+    </td>
+  </tr>
+  <tr *ngIf="objects && objects.length === 0">
+    <td colspan="3">
+      {{ 'objects.message.no-objects' | translate }}
     </td>
   </tr>
   </tbody>

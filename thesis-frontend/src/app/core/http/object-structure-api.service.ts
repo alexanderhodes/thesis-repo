@@ -20,8 +20,8 @@ export class ObjectStructureApiService {
     return this.httpClient.get<IObjectStructure>(`object-structure/${id}`);
   }
 
-  createObjectStructure(objectStructure: IObjectStructure): Observable<IObjectStructure> {
-    return this.httpClient.post<IObjectStructure>('object-structure', objectStructure);
+  createObjectStructures(objectStructures: IObjectStructure[]): Observable<IObjectStructure[]> {
+    return this.httpClient.post<IObjectStructure[]>('object-structure', objectStructures);
   }
 
   updateObjectStructure(id: string, objectStructure: IObjectStructure): Observable<IObjectStructure> {

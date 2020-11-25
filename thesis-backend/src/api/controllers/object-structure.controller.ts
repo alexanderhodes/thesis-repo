@@ -44,7 +44,7 @@ export class ObjectStructureController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Post()
     @HasPermissions(PermissionsEnum.CONFIGURATION_CREATE)
-    async createAssetStructures(@Body() objectStructureDtos: ObjectStructureDto[]): Promise<IObjectStructure[]> {
+    async createObjectStructures(@Body() objectStructureDtos: ObjectStructureDto[]): Promise<IObjectStructure[]> {
         const createdObjectStructures: IObjectStructure[] = [];
         for (const createObjectStructure of objectStructureDtos) {
             const object = toObjectEntity(createObjectStructure.object.name, createObjectStructure.object.deletable, []);

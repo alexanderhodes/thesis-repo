@@ -25,7 +25,6 @@
   "login.action.login": "anmelden",
   "login.title": "Anmelden",
   "user.action.generate-key-pair": "Schlüsselpaar generieren",
-  "user.action.create-user": "Neuen Benutzer anlegen",
   "user.title.create-user": "Benutzer anlegen",
   "user.title.update-user": "Benutzer bearbeiten",
   "user.title.change-password": "Passwort ändern",
@@ -43,5 +42,7 @@
   "header.menu.login": "Anmelden",
   "header.action.logout": "abmelden",
   "header.text.logged-in-as": "angemeldet als:",
-  "objects.title.list": "Objekte"
+  "objects.title.list": "Objekte",
+  "objects.title.create-object": "Objekt anlegen",
+  "objects.message.no-objects": "Es sind noch keine Objekte angelegt worden."
 }

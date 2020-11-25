@@ -7,7 +7,7 @@ export interface IObjectStructure {
   schema: string;
   nullable: boolean;
   deletable: boolean;
-  createTimestamp: Date;
-  updateTimestamp: Date;
-  object: IObject;
+  createTimestamp?: Date;
+  updateTimestamp?: Date;
+  object?: IObject;
 }
