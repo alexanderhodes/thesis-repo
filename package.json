@@ -12,6 +12,6 @@
     "install:frontend": "cd thesis-frontend && npm install",
     "install:backend": "cd thesis-backend && npm install"
   },
-  "author": "",
+  "author": "Alexander Hodes",
   "license": "ISC"
 }
