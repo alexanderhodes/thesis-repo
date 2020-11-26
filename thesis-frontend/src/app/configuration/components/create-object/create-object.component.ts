@@ -31,14 +31,14 @@ export class CreateObjectComponent implements OnInit {
 
   createObjectForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    deletable: new FormControl(false)
+    deletable: new FormControl(true)
   });
   addObjectStructureForm: FormGroup = new FormGroup({
     field: new FormControl('', [Validators.required]),
     datatype: new FormControl('', [Validators.required]),
     schema: new FormControl('', [Validators.required]),
     nullable: new FormControl(false),
-    deletable: new FormControl(false)
+    deletable: new FormControl(true)
   });
   objectStructures: IObjectStructure[];
   submitted: boolean = false;
@@ -140,7 +140,7 @@ export class CreateObjectComponent implements OnInit {
       datatype: '',
       schema: '',
       nullable: false,
-      deletable: false
+      deletable: true
     });
     this.changeDetectorRef.detectChanges();
   }
@@ -152,7 +152,7 @@ export class CreateObjectComponent implements OnInit {
     };
     this.createObjectForm.reset({
       name: '',
-      deletable: false
+      deletable: true
     });
     this.submitted = false;
     this.objectStructures = [];

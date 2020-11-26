@@ -5,12 +5,12 @@ import {IObject} from '../../../shared/interfaces';
 
 @Component({
   selector: 'ts-objects',
-  templateUrl: 'objects.component.html',
-  styleUrls: ['objects.component.scss'],
+  templateUrl: 'object-list.component.html',
+  styleUrls: ['object-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.Emulated
 })
-export class ObjectsComponent implements OnInit {
+export class ObjectListComponent implements OnInit {
 
   objects: IObject[];
   show: boolean = false;

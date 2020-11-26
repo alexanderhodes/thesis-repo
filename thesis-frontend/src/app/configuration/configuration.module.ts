@@ -7,7 +7,7 @@ import {
   ConfigurationComponent,
   CreateObjectComponent,
   ObjectDetailComponent,
-  ObjectsComponent
+  ObjectListComponent
 } from './components/public-api';
 import {ConfigurationRoutingModule} from './configuration-routing.module';
 import {CoreModule} from '../core';
@@ -16,7 +16,7 @@ const components = [
   ConfigurationComponent,
   CreateObjectComponent,
   ObjectDetailComponent,
-  ObjectsComponent
+  ObjectListComponent
 ];
 
 const services = [];
