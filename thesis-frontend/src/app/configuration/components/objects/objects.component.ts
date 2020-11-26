@@ -33,4 +33,8 @@ export class ObjectsComponent implements OnInit {
     this.show = !this.show;
   }
 
+  onObjectCreated(createdObject: IObject): void {
+    this.objects.push(createdObject);
+  }
+
 }

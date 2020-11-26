@@ -2,8 +2,8 @@
   <div class="grid grid-cols-12">
     <div class="col-span-3 col-start-4 mt-2 px-2">
       <div>
-        <div class="text-black">{{ 'common.username' | translate }}</div>
-        <input ts-input formControlName="username">
+        <label for="username" class="text-black">{{ 'common.username' | translate }}</label>
+        <input id="username" ts-input formControlName="username">
         <ng-container *ngIf="(submitted || getFormControl('username').touched) && getFormControl('username').invalid">
           <ts-error-message *ngIf="getFormControl('username').errors.required">
             {{ 'common.error.username-missing' | translate }}
@@ -11,9 +11,9 @@
         </ng-container>
       </div>
       <div class="mt-2">
-        <div class="text-black">{{ 'common.roles' | translate }}</div>
+        <label for="roles" class="text-black">{{ 'common.roles' | translate }}</label>
         <div class="relative">
-          <select
+          <select id="roles"
             class="block appearance-none w-full bg-gray-200 border border-gray-200 text-black py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             formControlName="roles">
             <option [ngValue]="null">{{ 'common.select' | translate }}</option>
@@ -31,8 +31,8 @@
     </div>
     <div class="col-span-3 col-start-7 mt-2 px-2">
       <div class="">
-        <div class="text-black">{{ 'common.password' | translate }}</div>
-        <input ts-input type="password" formControlName="password">
+        <label for="password" class="text-black">{{ 'common.password' | translate }}</label>
+        <input ts-input id="password" type="password" formControlName="password">
         <ng-container *ngIf="(submitted || getFormControl('password').touched) && getFormControl('password').invalid">
           <ts-error-message *ngIf="getFormControl('password').errors.required">
             {{ 'common.error.password-missing' | translate }}
@@ -40,8 +40,8 @@
         </ng-container>
       </div>
       <div class="mt-2">
-        <div class="text-black">{{ 'common.password-repeat' | translate }}</div>
-        <input ts-input type="password" formControlName="passwordRepeat">
+        <label for="passwordRepeat" class="text-black">{{ 'common.password-repeat' | translate }}</label>
+        <input ts-input id="passwordRepeat" type="password" formControlName="passwordRepeat">
         <ng-container
           *ngIf="(submitted || getFormControl('passwordRepeat').touched) && (getFormControl('passwordRepeat').invalid || createUserForm.errors)">
           <ts-error-message *ngIf="getFormControl('passwordRepeat').invalid && getFormControl('passwordRepeat').errors.required">

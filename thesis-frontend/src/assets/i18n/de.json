@@ -7,6 +7,8 @@
   "common.error.password-not-matching": "Die beiden eingegebenen Passwörter stimmen nicht überein.",
   "common.error.username-password-invalid": "Der Benutzername oder das Passwort ist ungültig.",
   "common.error.no-internet-connection": "Es besteht derzeit keine Internet-Verbindung. Bitte versuchen Sie es erneut.",
+  "common.error.object-name-missing": "Bitte geben Sie einen Namen für das Objekt ein.",
+  "common.error.object-name-already-existing": "Es existiert bereits ein Objekt mit dem Namen {{name}}.",
   "common.username": "Benutzername",
   "common.password": "Passwort",
   "common.password-repeat": "Passwort wiederholen",
@@ -15,7 +17,7 @@
   "common.back": "zurück",
   "common.save": "speichern",
   "common.actions": "Aktionen",
-  "common.create": "erstellen",
+  "common.create": "anlegen",
   "common.change": "bearbeiten",
   "common.delete": "löschen",
   "common.object": "Objekt",
@@ -44,5 +46,7 @@
   "header.text.logged-in-as": "angemeldet als:",
   "objects.title.list": "Objekte",
   "objects.title.create-object": "Objekt anlegen",
-  "objects.message.no-objects": "Es sind noch keine Objekte angelegt worden."
+  "objects.message.no-objects": "Es sind noch keine Objekte angelegt worden.",
+  "objects.message.created": "Das Objekt wurde erfolgreich angelegt.",
+  "objects.text.deletable": "Das Objekt kann zu einem späteren Zeitpunkt gelöscht werden."
 }

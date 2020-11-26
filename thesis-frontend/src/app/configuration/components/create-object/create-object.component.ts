@@ -1,17 +1,33 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewEncapsulation
+} from '@angular/core';
+import {AsyncPipe} from '@angular/common';
 import {take} from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
 import {ObjectApiService, ObjectStructureApiService} from '../../../core/http';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import {IObject, IObjectStructure} from '../../../shared/interfaces';
+import {IMessage, IObject, IObjectStructure} from '../../../shared/interfaces';
 
 @Component({
   selector: 'ts-create-object',
   templateUrl: 'create-object.component.html',
   styleUrls: ['create-object.component.scss'],
   encapsulation: ViewEncapsulation.Emulated,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    AsyncPipe
+  ]
 })
 export class CreateObjectComponent implements OnInit {
+
+  @Output()
+  objectCreated: EventEmitter<IObject>;
 
   createObjectForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -25,16 +41,23 @@ export class CreateObjectComponent implements OnInit {
     deletable: new FormControl(false)
   });
   objectStructures: IObjectStructure[];
+  submitted: boolean = false;
+  message: IMessage;
 
   constructor(private objectApiService: ObjectApiService,
               private objectStructureApiService: ObjectStructureApiService,
+              private asyncPipe: AsyncPipe,
+              private translateService: TranslateService,
               private changeDetectorRef: ChangeDetectorRef) {
     this.objectStructures = [];
+    this.objectCreated = new EventEmitter<IObject>();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   createObject(): void {
+    this.submitted = true;
     if (this.createObjectForm.valid) {
       const object: IObject = {
         name: this.getFormControlFromObjectForm('name').value,
@@ -45,23 +68,39 @@ export class CreateObjectComponent implements OnInit {
       this.objectApiService.createObject(object)
         .pipe(take(1))
         .subscribe((createdObject: IObject) => {
-          this.objectStructures.forEach((objectStructure: IObjectStructure) => {
-            objectStructure.object = createdObject;
-          });
-          this.objectStructureApiService.createObjectStructures(this.objectStructures)
-            .pipe(take(1))
-            .subscribe((createdObjectStructures: IObjectStructure[]) => {
-              this.createObjectForm.reset({
-                name: '',
-                deletable: false
-              });
-              this.objectStructures = [];
-              this._clearObjectStructureForm();
-            }, (error) => {
-              console.log('error', error);
+          if (this.objectStructures && this.objectStructures.length) {
+            this.objectStructures.forEach((objectStructure: IObjectStructure) => {
+              objectStructure.object = createdObject;
             });
+            this.objectStructureApiService.createObjectStructures(this.objectStructures)
+              .pipe(take(1))
+              .subscribe((createdObjectStructures: IObjectStructure[]) => {
+                createdObject.objectStructure = createdObjectStructures;
+                this.objectCreated.emit(createdObject);
+                this._resetForms();
+              }, (error) => {
+                console.log('error', error);
+              });
+          } else {
+            this.objectCreated.emit(createdObject);
+            this._resetForms();
+          }
         }, (error) => {
           console.log('error', error);
+          if (error && error.status === 409) {
+            this.message = {
+              type: 'error',
+              text: this.asyncPipe.transform(this.translateService.get('common.error.object-name-already-existing', {
+                name: object.name
+              }))
+            };
+          } else {
+            this.message = {
+              type: 'error',
+              text: this.asyncPipe.transform(this.translateService.get('common.error.no-internet-connection'))
+            };
+          }
+          this.changeDetectorRef.detectChanges();
         });
     }
   }
@@ -104,6 +143,20 @@ export class CreateObjectComponent implements OnInit {
       deletable: false
     });
     this.changeDetectorRef.detectChanges();
+  }
+
+  private _resetForms(): void {
+    this.message = {
+      type: 'success',
+      text: this.asyncPipe.transform(this.translateService.get('objects.message.created'))
+    };
+    this.createObjectForm.reset({
+      name: '',
+      deletable: false
+    });
+    this.submitted = false;
+    this.objectStructures = [];
+    this._clearObjectStructureForm();
   }
 
 }

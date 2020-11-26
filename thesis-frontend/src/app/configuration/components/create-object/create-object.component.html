@@ -1,1 +1,41 @@
-<div>Objekt anlegen</div>
+<form [formGroup]="createObjectForm" (ngSubmit)="createObject()">
+  <div class="grid grid-cols-12">
+    <div class="col-span-3 col-start-4 mt-2 px-2">
+      <label for="object-name" class="text-black">{{ 'common.object' | translate }}</label>
+      <input id="object-name" ts-input formControlName="name">
+      <ng-container *ngIf="(submitted || getFormControlFromObjectForm('name').touched) && getFormControlFromObjectForm('name').invalid">
+        <ts-error-message *ngIf="getFormControlFromObjectForm('name').errors.required">
+          {{ 'common.error.object-name-missing' | translate }}
+        </ts-error-message>
+      </ng-container>
+    </div>
+    <div class="col-span-3 col-start-7 mt-2 px-2">
+      <label for="deletable" class="text-black">{{ 'common.deletable' | translate }}</label>
+      <div class="flex items-start">
+        <div class="flex-items-center h-5">
+          <input id="deletable" type="checkbox" class="h-4 w-4 border-gray-300 rounded" formControlName="deletable">
+        </div>
+        <div class="ml-3">
+          <p>{{ 'objects.text.deletable' | translate }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-span-6 col-start-4 mt-3" *ngIf="message">
+      <ng-container *ngIf="message.type === 'error'; else successMessage">
+        <ts-error-message>{{ message.text }}</ts-error-message>
+      </ng-container>
+      <ng-template #successMessage>
+        <ts-success-message>{{ message.text }}</ts-success-message>
+      </ng-template>
+    </div>
+    <div class="col-span-6 col-start-4 mt-3">
+      <div class="grid grid-cols-12">
+        <div class="col-span-12 text-center">
+          <button type="submit" ts-button-tertiary>
+            {{ 'common.create' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

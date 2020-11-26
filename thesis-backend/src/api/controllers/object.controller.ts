@@ -17,7 +17,7 @@ export class ObjectController {
     @HasPermissions(PermissionsEnum.CONFIGURATION_CREATE)
     async createObject(@Body() createObject: ObjectDto): Promise<IObject> {
         const foundObject = await this.objectService.findOne(createObject.name);
-        if (foundObject) {
+        if (!foundObject) {
             const objectEntity = toObjectEntity(createObject.name, createObject.deletable, []);
             const createdObjectEntity = await this.objectService.insert(objectEntity);
 
@@ -27,7 +27,9 @@ export class ObjectController {
                 assetStructure: []
             };
         }
-        throw new HttpException(`Objekt mit dem Namen ${createObject.name} existiert bereits`, HttpStatus.BAD_GATEWAY);
+        throw new HttpException({
+            message: `Objekt mit dem Namen ${createObject.name} existiert bereits`
+        }, HttpStatus.CONFLICT);
     }
 
     @UseGuards(JwtAuthGuard)

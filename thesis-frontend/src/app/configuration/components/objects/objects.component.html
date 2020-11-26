@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="h-auto px-4 py-2" *ngIf="show">
-    <ts-create-object></ts-create-object>
+    <ts-create-object (objectCreated)="onObjectCreated($event)"></ts-create-object>
   </div>
 </div>
 
