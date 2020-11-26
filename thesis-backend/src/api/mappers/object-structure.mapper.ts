@@ -1,7 +1,6 @@
 import {ObjectEntity, ObjectStructureEntity} from '../../database/entities';
 
 export function toObjectStructureEntity(
-    id: string,
     object: ObjectEntity,
     createTimestamp: Date,
     datatype: string,
@@ -9,7 +8,8 @@ export function toObjectStructureEntity(
     field: string,
     nullable: boolean,
     schema: string,
-    updateTimestamp: Date
+    updateTimestamp: Date,
+    id: string = undefined
 ): ObjectStructureEntity {
     return {
         createTimestamp: createTimestamp,

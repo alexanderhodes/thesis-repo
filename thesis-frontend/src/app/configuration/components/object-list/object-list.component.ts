@@ -37,4 +37,17 @@ export class ObjectListComponent implements OnInit {
     this.objects.push(createdObject);
   }
 
+  deleteObject(deletableObject: IObject): void {
+    this.objectApiService.deleteObject(deletableObject.name)
+      .pipe(take(1))
+      .subscribe((success) => {
+        console.log(`object with name ${deletableObject.name} deleted`, success);
+        const index = this.objects.findIndex(object => object.name === deletableObject.name);
+        if (index >= -1) {
+          this.objects.splice(index, 1);
+          this.changeDetectorRef.detectChanges();
+        }
+      });
+  }
+
 }

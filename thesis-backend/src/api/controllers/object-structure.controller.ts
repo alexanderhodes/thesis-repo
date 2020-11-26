@@ -49,7 +49,7 @@ export class ObjectStructureController {
         for (const createObjectStructure of objectStructureDtos) {
             const object = toObjectEntity(createObjectStructure.object.name, createObjectStructure.object.deletable, []);
             const objectStructure = toObjectStructureEntity(
-                null,  object, new Date(), createObjectStructure.datatype, createObjectStructure.deletable,
+                object, new Date(), createObjectStructure.datatype, createObjectStructure.deletable,
                 createObjectStructure.field, createObjectStructure.nullable, createObjectStructure.schema,
                 new Date()
             );
@@ -67,7 +67,7 @@ export class ObjectStructureController {
         if (foundObjectStructure) {
             const object = toObjectEntity(objectStructureDto.object.name, objectStructureDto.object.deletable, []);
             const objectStructureEntity = toObjectStructureEntity(
-                id, object, foundObjectStructure.createTimestamp,
+                object, foundObjectStructure.createTimestamp,
                 objectStructureDto.datatype, objectStructureDto.deletable,
                 objectStructureDto.field, objectStructureDto.nullable,
                 objectStructureDto.schema, new Date()

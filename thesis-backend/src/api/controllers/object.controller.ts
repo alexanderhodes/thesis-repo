@@ -61,7 +61,7 @@ export class ObjectController {
     }
 
     @UseGuards(JwtAuthGuard, PermissionsGuard)
-    @Delete()
+    @Delete(":name")
     @HasPermissions(PermissionsEnum.CONFIGURATION_DELETE)
     async deleteObject(@Param("name") name: string): Promise<any> {
         const result = await this.objectService.remove(name);

@@ -42,7 +42,7 @@
       <button ts-button-tertiary class="my-1 mr-3" [routerLink]="['object', object.name]">
         {{ 'common.change' | translate }}
       </button>
-      <button *ngIf="object.deletable" ts-button-tertiary class="my-1">
+      <button *ngIf="object.deletable" ts-button-tertiary class="my-1" (click)="deleteObject(object)">
         {{ 'common.delete' | translate }}
       </button>
     </td>

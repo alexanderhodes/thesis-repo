@@ -106,6 +106,7 @@ export class CreateObjectComponent implements OnInit {
   }
 
   addObjectStructure(): void {
+    console.log('adding object-structure', this.addObjectStructureForm.value, this.addObjectStructureForm.valid);
     if (this.addObjectStructureForm.valid) {
       const objectStructure: IObjectStructure = {
         field: this.getFormControlFromObjectStructureForm('field').value,
@@ -157,6 +158,11 @@ export class CreateObjectComponent implements OnInit {
     this.submitted = false;
     this.objectStructures = [];
     this._clearObjectStructureForm();
+  }
+
+  private _hasFieldInObjectStructure(): boolean {
+    const name = this.getFormControlFromObjectStructureForm('field');
+    return false;
   }
 
 }

@@ -3,7 +3,8 @@
     <div class="col-span-3 col-start-4 mt-2 px-2">
       <label for="object-name" class="text-black">{{ 'common.object' | translate }}</label>
       <input id="object-name" ts-input formControlName="name">
-      <ng-container *ngIf="(submitted || getFormControlFromObjectForm('name').touched) && getFormControlFromObjectForm('name').invalid">
+      <ng-container
+        *ngIf="(submitted || getFormControlFromObjectForm('name').touched) && getFormControlFromObjectForm('name').invalid">
         <ts-error-message *ngIf="getFormControlFromObjectForm('name').errors.required">
           {{ 'common.error.object-name-missing' | translate }}
         </ts-error-message>
@@ -19,6 +20,103 @@
           <p>{{ 'objects.text.deletable' | translate }}</p>
         </div>
       </div>
+    </div>
+    <div class="col-span-6 col-start-4 mt-2 px-2">
+      <form [formGroup]="addObjectStructureForm" (ngSubmit)="addObjectStructure()">
+        <div class="font-bold">{{ 'common.object-structure' | translate }}</div>
+        <div class="grid grid-cols-6">
+          <div class="col-span-3 mt-2 px-2">
+            <label for="field" class="text-black">{{ 'common.field' | translate }}</label>
+            <input id="field" ts-input formControlName="field">
+            <ng-container
+              *ngIf="getFormControlFromObjectStructureForm('field').touched && getFormControlFromObjectStructureForm('field').invalid">
+              <ts-error-message *ngIf="getFormControlFromObjectStructureForm('field').errors.required">
+                {{ 'common.error.field-missing' | translate }}
+              </ts-error-message>
+            </ng-container>
+          </div>
+          <div class="col-span-3 mt-2 px-2">
+            <label for="datatype" class="text-black">{{ 'common.datatype' | translate }}</label>
+            <input id="datatype" ts-input formControlName="datatype">
+            <ng-container
+              *ngIf="getFormControlFromObjectStructureForm('datatype').touched && getFormControlFromObjectStructureForm('datatype').invalid">
+              <ts-error-message *ngIf="getFormControlFromObjectStructureForm('datatype').errors.required">
+                {{ 'common.error.datatype-missing' | translate }}
+              </ts-error-message>
+            </ng-container>
+          </div>
+          <div class="col-span-3 mt-2 px-2">
+            <label for="schema" class="text-black">{{ 'common.schema' | translate }}</label>
+            <input id="schema" ts-input formControlName="schema">
+            <ng-container
+              *ngIf="getFormControlFromObjectStructureForm('schema').touched && getFormControlFromObjectStructureForm('schema').invalid">
+              <ts-error-message *ngIf="getFormControlFromObjectStructureForm('schema').errors.required">
+                {{ 'common.error.no-schema-provided' | translate }}
+              </ts-error-message>
+            </ng-container>
+          </div>
+          <div class="col-span-3 mt-2 px-2">
+            <label for="deletableObjectStructure" class="text-black">{{ 'common.deletable' | translate }}</label>
+            <div class="flex items-start">
+              <div class="flex-items-center h-5">
+                <input id="deletableObjectStructure" type="checkbox" class="h-4 w-4 border-gray-300 rounded"
+                       formControlName="deletable">
+              </div>
+              <div class="ml-3">
+                <p>{{ 'objects.text.deletable' | translate }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-3 mt-2 px-2">
+            <label for="nullable" class="text-black">{{ 'common.nullable' | translate }}</label>
+            <div class="flex items-start">
+              <div class="flex-items-center h-5">
+                <input id="nullable" type="checkbox" class="h-4 w-4 border-gray-300 rounded" formControlName="nullable">
+              </div>
+              <div class="ml-3">
+                <p>{{ 'objects.text.nullable' | translate }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-3 mt-2 px-2">
+            <button type="submit" ts-button-tertiary class="text-center">
+              {{ 'common.add' | translate }}
+            </button>
+          </div>
+          <div class="col-span-6 mt-2 px-2">
+            <table class="table-auto w-full">
+              <thead>
+              <tr class="border-t-4 border-black">
+                <th class="px-4 py-2 text-left h-auto text-lg">{{ 'common.field' | translate }}</th>
+                <th class="px-4 py-2 text-left h-auto text-lg">{{ 'common.datatype' | translate }}</th>
+                <th class="px-4 py-2 text-left h-auto text-lg">{{ 'common.schema' | translate }}</th>
+                <th class="px-4 py-2 text-left h-auto text-lg">{{ 'common.deletable' | translate }}</th>
+                <th class="px-4 py-2 text-left h-auto text-lg">{{ 'common.nullable' | translate }}</th>
+                <th class="px-4 py-2 text-left h-auto text-lg">{{ 'common.actions' | translate }}</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let objectStructure of objectStructures; index as index; last as last" class="border-t-2 border-black"
+                  [ngClass]="{'border-b-2': last}">
+                <td class="px-4 py-2">{{ objectStructure.field }}</td>
+                <td class="px-4 py-2">{{ objectStructure.datatype }}</td>
+                <td class="px-4 py-2">{{ objectStructure.schema }}</td>
+                <td class="px-4 py-2">{{ (objectStructure.deletable ? 'common.yes' : 'common.no') | translate }}</td>
+                <td class="px-4 py-2">{{ (objectStructure.nullable ? 'common.yes' : 'common.no') | translate }}</td>
+                <td class="px-4 py-2">
+                  <button (click)="deleteObjectStructure(index)" ts-button-primary class="my-1">
+                    {{ 'common.delete' | translate }}
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="objectStructures && objectStructures.length === 0">
+                <td colspan="7">{{ 'objects.text.no-object-structures' | translate }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </form>
     </div>
     <div class="col-span-6 col-start-4 mt-3" *ngIf="message">
       <ng-container *ngIf="message.type === 'error'; else successMessage">

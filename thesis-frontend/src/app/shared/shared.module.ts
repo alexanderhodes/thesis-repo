@@ -1,14 +1,21 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
-import {ChevronDownComponent, ChevronUpComponent, ErrorMessageComponent, SuccessMessageComponent} from './components';
+import {
+  ChevronDownComponent,
+  ChevronUpComponent,
+  ErrorMessageComponent,
+  SuccessMessageComponent,
+  TrashComponent
+} from './components';
 import {ButtonDirective, InputDirective} from './directives';
 
 const components = [
   ChevronDownComponent,
   ChevronUpComponent,
   ErrorMessageComponent,
-  SuccessMessageComponent
+  SuccessMessageComponent,
+  TrashComponent
 ];
 
 const directives = [

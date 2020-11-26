@@ -9,6 +9,10 @@
   "common.error.no-internet-connection": "Es besteht derzeit keine Internet-Verbindung. Bitte versuchen Sie es erneut.",
   "common.error.object-name-missing": "Bitte geben Sie einen Namen für das Objekt ein.",
   "common.error.object-name-already-existing": "Es existiert bereits ein Objekt mit dem Namen {{name}}.",
+  "common.error.no-schema-provided": "Bitte geben Sie ein Schema ein.",
+  "common.error.invalid-schema-provided": "Bitte geben Sie ein gültiges Schema ein.",
+  "common.error.field-missing": "Bitte geben Sie eine Bezeichnung für das Feld ein.",
+  "common.error.datatype-missing": "Bitte geben Sie einen Datentyp ein.",
   "common.username": "Benutzername",
   "common.password": "Passwort",
   "common.password-repeat": "Passwort wiederholen",
@@ -24,6 +28,12 @@
   "common.deletable": "Löschbar",
   "common.yes": "ja",
   "common.no": "nein",
+  "common.add": "hinzufügen",
+  "common.field": "Feld",
+  "common.schema": "Schema",
+  "common.datatype": "Datentyp",
+  "common.nullable": "Nullable",
+  "common.object-structure": "Objekt-Struktur",
   "login.action.login": "anmelden",
   "login.title": "Anmelden",
   "user.action.generate-key-pair": "Schlüsselpaar generieren",
@@ -48,5 +58,7 @@
   "objects.title.create-object": "Objekt anlegen",
   "objects.message.no-objects": "Es sind noch keine Objekte angelegt worden.",
   "objects.message.created": "Das Objekt wurde erfolgreich angelegt.",
-  "objects.text.deletable": "Das Objekt kann zu einem späteren Zeitpunkt gelöscht werden."
+  "objects.text.deletable": "Das Objekt kann zu einem späteren Zeitpunkt gelöscht werden.",
+  "objects.text.nullable": "Das Attribut kann einen leeren Wert enthalten.",
+  "objects.text.no-object-structures": "Es sind noch keine Objekt-Strukturen vorhanden."
 }
