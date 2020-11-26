@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {take} from 'rxjs/operators';
-import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
 import {ObjectApiService} from '../../../core/http';
 import {IObject} from '../../../shared/interfaces';
 
@@ -15,7 +14,6 @@ export class ObjectsComponent implements OnInit {
 
   objects: IObject[];
   show: boolean = false;
-  icon = faChevronDown;
 
   constructor(private objectApiService: ObjectApiService,
               private changeDetectorRef: ChangeDetectorRef) {}
@@ -33,7 +31,6 @@ export class ObjectsComponent implements OnInit {
 
   toggle(): void {
     this.show = !this.show;
-    this.icon = this.show ? faChevronUp : faChevronDown;
   }
 
 }

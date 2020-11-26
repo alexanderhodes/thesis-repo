@@ -11,7 +11,6 @@ import {
 } from './components/public-api';
 import {ConfigurationRoutingModule} from './configuration-routing.module';
 import {CoreModule} from '../core';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 const components = [
   ConfigurationComponent,
@@ -35,8 +34,7 @@ const services = [];
     RouterModule,
     SharedModule,
     CoreModule,
-    ConfigurationRoutingModule,
-    FontAwesomeModule
+    ConfigurationRoutingModule
   ],
   providers: [
     ...services

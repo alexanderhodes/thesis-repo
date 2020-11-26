@@ -61,7 +61,7 @@ export class CreateObjectComponent implements OnInit {
               console.log('error', error);
             });
         }, (error) => {
-          console.log('error');
+          console.log('error', error);
         });
     }
   }

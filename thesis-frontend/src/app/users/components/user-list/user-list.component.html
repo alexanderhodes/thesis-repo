@@ -4,10 +4,13 @@
   <div class="flex justify-between text-lg py-1 px-4 cursor-pointer" (click)="toggle()"
        [ngClass]="{'bg-black text-white': !show, 'bg-white text-black border-b-2 border-black': show}">
     <div class="font-bold">
-      {{ 'user.action.create-user' | translate }}
+      {{ 'user.title.create-user' | translate }}
     </div>
     <div>
-      <fa-icon [icon]="icon"></fa-icon>
+      <div class="h-4">
+        <ts-chevron-down *ngIf="!show" [color]="'white'" [sideClasses]="'w-auto'" style="margin-top: 6px"></ts-chevron-down>
+        <ts-chevron-up *ngIf="show" [color]="'black'" [sideClasses]="'w-auto'" style="margin-top: 6px"></ts-chevron-up>
+      </div>
     </div>
   </div>
   <div class="h-auto px-4 py-2" *ngIf="show">

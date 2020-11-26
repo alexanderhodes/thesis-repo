@@ -6,7 +6,6 @@ import {CreateUserComponent, UserDetailComponent, UserListComponent} from './com
 import {UserRoutingModule} from './user-routing.module';
 import {SharedModule} from '../shared';
 import {CoreModule} from '../core';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 const components = [
   CreateUserComponent,
@@ -28,8 +27,7 @@ const components = [
         RouterModule,
         UserRoutingModule,
         SharedModule,
-        CoreModule,
-        FontAwesomeModule
+        CoreModule
     ],
   providers: []
 })

@@ -1,11 +1,12 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
-import {ErrorMessageComponent, SuccessMessageComponent} from './components';
+import {ChevronDownComponent, ChevronUpComponent, ErrorMessageComponent, SuccessMessageComponent} from './components';
 import {ButtonDirective, InputDirective} from './directives';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 const components = [
+  ChevronDownComponent,
+  ChevronUpComponent,
   ErrorMessageComponent,
   SuccessMessageComponent
 ];
@@ -18,7 +19,7 @@ const directives = [
 @NgModule({
   declarations: [
     ...components,
-    ...directives
+    ...directives,
   ],
   exports: [
     ...components,
@@ -26,8 +27,7 @@ const directives = [
     TranslateModule
   ],
   imports: [
-    CommonModule,
-    FontAwesomeModule
+    CommonModule
   ],
   providers: []
 })

@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
 import {take} from 'rxjs/operators';
 import {User} from '../../../shared';
 import {UsersApiService} from '../../../core/http';
@@ -15,11 +14,9 @@ export class UserListComponent implements OnInit {
 
   users: User[];
   show: boolean = false;
-  icon = faChevronDown;
 
   constructor(private usersApiService: UsersApiService,
-              private changeDetectorRef: ChangeDetectorRef) {
-  }
+              private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.usersApiService.getAllUsers().pipe(
@@ -47,7 +44,6 @@ export class UserListComponent implements OnInit {
 
   toggle(): void {
     this.show = !this.show;
-    this.icon = this.show ? faChevronUp : faChevronDown;
   }
 
 }

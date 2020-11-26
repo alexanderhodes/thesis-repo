@@ -6,8 +6,9 @@
     <div class="font-bold">
       {{ 'objects.title.create-object' | translate }}
     </div>
-    <div>
-      <fa-icon [icon]="icon"></fa-icon>
+    <div class="h-4">
+      <ts-chevron-down *ngIf="!show" [color]="'white'" [sideClasses]="'w-auto'" style="margin-top: 6px"></ts-chevron-down>
+      <ts-chevron-up *ngIf="show" [color]="'black'" [sideClasses]="'w-auto'" style="margin-top: 6px"></ts-chevron-up>
     </div>
   </div>
   <div class="h-auto px-4 py-2" *ngIf="show">
