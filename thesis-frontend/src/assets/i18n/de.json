@@ -12,6 +12,7 @@
   "common.error.no-schema-provided": "Bitte geben Sie ein Schema ein.",
   "common.error.invalid-schema-provided": "Bitte geben Sie ein gültiges Schema ein.",
   "common.error.field-missing": "Bitte geben Sie eine Bezeichnung für das Feld ein.",
+  "common.error.field-already-existing": "Es existiert bereits ein Feld mit der Bezeichnung {{field}}.",
   "common.error.datatype-missing": "Bitte geben Sie einen Datentyp ein.",
   "common.username": "Benutzername",
   "common.password": "Passwort",

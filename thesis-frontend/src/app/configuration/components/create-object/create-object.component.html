@@ -33,6 +33,9 @@
               <ts-error-message *ngIf="getFormControlFromObjectStructureForm('field').errors.required">
                 {{ 'common.error.field-missing' | translate }}
               </ts-error-message>
+              <ts-error-message *ngIf="getFormControlFromObjectStructureForm('field').errors.fieldNameExisting">
+                {{ 'common.error.field-already-existing' | translate:{ field: getFormControlFromObjectStructureForm('field').value } }}
+              </ts-error-message>
             </ng-container>
           </div>
           <div class="col-span-3 mt-2 px-2">

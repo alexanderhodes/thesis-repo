@@ -53,8 +53,7 @@ export class CreateObjectComponent implements OnInit {
     this.objectCreated = new EventEmitter<IObject>();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   createObject(): void {
     this.submitted = true;
@@ -107,7 +106,7 @@ export class CreateObjectComponent implements OnInit {
 
   addObjectStructure(): void {
     console.log('adding object-structure', this.addObjectStructureForm.value, this.addObjectStructureForm.valid);
-    if (this.addObjectStructureForm.valid) {
+    if (!this._hasFieldInObjectStructure() && this.addObjectStructureForm.valid) {
       const objectStructure: IObjectStructure = {
         field: this.getFormControlFromObjectStructureForm('field').value,
         datatype: this.getFormControlFromObjectStructureForm('datatype').value,
@@ -161,7 +160,15 @@ export class CreateObjectComponent implements OnInit {
   }
 
   private _hasFieldInObjectStructure(): boolean {
-    const name = this.getFormControlFromObjectStructureForm('field');
+    const fieldControl = this.getFormControlFromObjectStructureForm('field');
+    const foundObjectStructure = this.objectStructures.find(structure => structure.field === fieldControl.value);
+    if (foundObjectStructure) {
+      console.log('foundObjectStructure', foundObjectStructure);
+      fieldControl.setErrors({
+        fieldNameExisting: true
+      });
+      return true;
+    }
     return false;
   }
 
