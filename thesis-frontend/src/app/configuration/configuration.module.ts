@@ -8,7 +8,8 @@ import {
   ConfigurationComponent,
   CreateObjectComponent,
   ObjectDetailComponent,
-  ObjectListComponent
+  ObjectListComponent,
+  ObjectStructureListComponent
 } from './components/public-api';
 import {ConfigurationRoutingModule} from './configuration-routing.module';
 import {CoreModule} from '../core';
@@ -18,7 +19,8 @@ const components = [
   ConfigurationComponent,
   CreateObjectComponent,
   ObjectDetailComponent,
-  ObjectListComponent
+  ObjectListComponent,
+  ObjectStructureListComponent
 ];
 
 const services = [];

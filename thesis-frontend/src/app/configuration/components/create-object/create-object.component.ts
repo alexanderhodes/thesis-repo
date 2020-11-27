@@ -46,7 +46,8 @@ export class CreateObjectComponent implements OnInit {
     this.objectCreated = new EventEmitter<IObject>();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   createObject(): void {
     this.submitted = true;
@@ -97,14 +98,20 @@ export class CreateObjectComponent implements OnInit {
     }
   }
 
-  deleteObjectStructure(index: number): void {
-    if (this.objectStructures[index]) {
+  onObjectStructureDelete(objectStructure: IObjectStructure): void {
+    const index = this.objectStructures.findIndex(structure => {
+      return structure.id === objectStructure.id && structure.field === objectStructure.field;
+    });
+    if (index > -1) {
       this.objectStructures.splice(index, 1);
     }
   }
 
   onObjectStructureAdded(objectStructure: IObjectStructure): void {
-    this.objectStructures.push(objectStructure);
+//    this.objectStructures.push(objectStructure);
+//    console.log('objectStructure', this.objectStructures);
+    this.objectStructures = [...this.objectStructures, objectStructure];
+    this.changeDetectorRef.markForCheck();
   }
 
   getFormControlFromObjectForm(key: string): AbstractControl {
