@@ -10,7 +10,8 @@
     "build:frontend": "cd thesis-frontend && npm run build:prod",
     "build:backend": "cd thesis-backend && npm run build",
     "install:frontend": "cd thesis-frontend && npm install",
-    "install:backend": "cd thesis-backend && npm install"
+    "install:backend": "cd thesis-backend && npm install",
+    "deploy:frontend": "sudo rm -rf /var/www/html/* && sudo cp -r ./thesis-frontend/dist/thesis-frontend/* /var/www/html"
   },
   "author": "Alexander Hodes",
   "license": "ISC"
