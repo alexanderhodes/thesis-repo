@@ -1,35 +1,25 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  ViewEncapsulation
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AsyncPipe} from '@angular/common';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 import {take} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {ObjectApiService, ObjectStructureApiService} from '../../../core/http';
 import {IMessage, IObject, IObjectStructure} from '../../../shared/interfaces';
 
 @Component({
-  selector: 'ts-create-object',
-  templateUrl: 'create-object.component.html',
-  styleUrls: ['create-object.component.scss'],
-  encapsulation: ViewEncapsulation.Emulated,
+  selector: 'ts-object-detail',
+  templateUrl: 'update-object.component.html',
+  styleUrls: ['update-object.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.Emulated,
   providers: [
     AsyncPipe
   ]
 })
-export class CreateObjectComponent {
+export class UpdateObjectComponent implements OnInit {
 
-  @Output()
-  objectCreated: EventEmitter<IObject>;
-
-  createObjectForm: FormGroup = new FormGroup({
+  updateObjectForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
     deletable: new FormControl(true)
   });
@@ -37,43 +27,66 @@ export class CreateObjectComponent {
   submitted: boolean = false;
   message: IMessage;
 
-  constructor(private objectApiService: ObjectApiService,
-              private objectStructureApiService: ObjectStructureApiService,
-              private asyncPipe: AsyncPipe,
+  object: IObject;
+
+  constructor(private activatedRoute: ActivatedRoute,
+              private router: Router,
               private translateService: TranslateService,
+              private asyncPipe: AsyncPipe,
+              private objectApiService: ObjectApiService,
+              private objectStructureApiService: ObjectStructureApiService,
               private changeDetectorRef: ChangeDetectorRef) {
-    this.objectStructures = [];
-    this.objectCreated = new EventEmitter<IObject>();
   }
 
-  createObject(): void {
+  ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(params => {
+      const name = params.get('name');
+      this.objectApiService.getObjectByName(name).pipe(
+        take(1)
+      ).subscribe((object: IObject) => {
+        this.object = object;
+        this.updateObjectForm.setValue({
+          name: this.object.name,
+          deletable: this.object.deletable
+        });
+        this.changeDetectorRef.detectChanges();
+      });
+      this.objectStructureApiService.getObjectStructuresByObject(name).pipe(
+        take(1)
+      ).subscribe((objectStructures: IObjectStructure[]) => {
+        this.objectStructures = objectStructures;
+        this.changeDetectorRef.detectChanges();
+      });
+    });
+  }
+
+  updateObject(): void {
     this.submitted = true;
-    if (this.createObjectForm.valid) {
+    if (this.updateObjectForm.valid) {
       const object: IObject = {
         name: this.getFormControlFromObjectForm('name').value,
         deletable: this.getFormControlFromObjectForm('deletable').value,
         objectStructure: this.objectStructures
       };
 
-      this.objectApiService.createObject(object)
+      this.objectApiService.updateObject(object.name, object)
         .pipe(take(1))
-        .subscribe((createdObject: IObject) => {
+        .subscribe((updatedObject: IObject) => {
           if (this.objectStructures && this.objectStructures.length) {
             this.objectStructures.forEach((objectStructure: IObjectStructure) => {
-              objectStructure.object = createdObject;
+              objectStructure.object = updatedObject;
             });
+            // ToDo: change this to update
             this.objectStructureApiService.createObjectStructures(this.objectStructures)
               .pipe(take(1))
               .subscribe((createdObjectStructures: IObjectStructure[]) => {
-                createdObject.objectStructure = createdObjectStructures;
-                this.objectCreated.emit(createdObject);
-                this._resetForms();
+                updatedObject.objectStructure = createdObjectStructures;
+                this._resetForm(updatedObject);
               }, (error) => {
                 console.log('error', error);
               });
           } else {
-            this.objectCreated.emit(createdObject);
-            this._resetForms();
+            this._resetForm(updatedObject);
           }
         }, (error) => {
           console.log('error', error);
@@ -110,17 +123,17 @@ export class CreateObjectComponent {
   }
 
   getFormControlFromObjectForm(key: string): AbstractControl {
-    return this.createObjectForm.get(key);
+    return this.updateObjectForm.get(key);
   }
 
-  private _resetForms(): void {
+  private _resetForm(updatedObject: IObject): void {
     this.message = {
       type: 'success',
-      text: this.asyncPipe.transform(this.translateService.get('objects.message.created'))
+      text: this.asyncPipe.transform(this.translateService.get('objects.message.saved'))
     };
-    this.createObjectForm.reset({
-      name: '',
-      deletable: true
+    this.updateObjectForm.reset({
+      name: updatedObject.name,
+      deletable: updatedObject.deletable
     });
     this.submitted = false;
     this.objectStructures = [];

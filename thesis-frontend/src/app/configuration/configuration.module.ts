@@ -7,7 +7,7 @@ import {
   AddObjectStructureComponent,
   ConfigurationComponent,
   CreateObjectComponent,
-  ObjectDetailComponent,
+  UpdateObjectComponent,
   ObjectListComponent,
   ObjectStructureListComponent
 } from './components/public-api';
@@ -18,7 +18,7 @@ const components = [
   AddObjectStructureComponent,
   ConfigurationComponent,
   CreateObjectComponent,
-  ObjectDetailComponent,
+  UpdateObjectComponent,
   ObjectListComponent,
   ObjectStructureListComponent
 ];

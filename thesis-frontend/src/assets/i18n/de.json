@@ -59,6 +59,7 @@
   "objects.title.create-object": "Objekt anlegen",
   "objects.message.no-objects": "Es sind noch keine Objekte angelegt worden.",
   "objects.message.created": "Das Objekt wurde erfolgreich angelegt.",
+  "objects.message.saved": "Das Objekt wurde erfolgreich gespeichert.",
   "objects.text.deletable": "Das Objekt kann zu einem späteren Zeitpunkt gelöscht werden.",
   "objects.text.nullable": "Das Attribut kann einen leeren Wert enthalten.",
   "objects.text.no-object-structures": "Es sind noch keine Objekt-Strukturen vorhanden."
