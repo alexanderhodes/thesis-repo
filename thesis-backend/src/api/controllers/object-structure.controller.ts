@@ -1,12 +1,25 @@
-import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, UseGuards} from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    HttpException,
+    HttpStatus,
+    Param,
+    Post,
+    Put,
+    Query,
+    UseGuards
+} from '@nestjs/common';
 import {ObjectService, ObjectStructureService} from '../../database/services';
-import {IObjectStructure} from '../../shared/interfaces';
-import {ObjectStructureDto} from '../dtos';
+import {IObjectStructure, IUpdateObjectStructureResponse} from '../../shared/interfaces';
+import {ObjectStructureDto, UpdateObjectStructuresDto} from '../dtos';
 import {toObjectStructureEntity} from '../mappers/object-structure.mapper';
 import {toObjectEntity} from '../mappers';
 import {JwtAuthGuard, PermissionsGuard} from '../../authorization/guards';
 import {HasPermissions} from '../../authorization/decorators';
 import {PermissionsEnum} from '../../authorization/constants';
+import {ObjectEntity} from '../../database/entities';
 
 @Controller('object-structure')
 export class ObjectStructureController {
@@ -47,7 +60,7 @@ export class ObjectStructureController {
     async createObjectStructures(@Body() objectStructureDtos: ObjectStructureDto[]): Promise<IObjectStructure[]> {
         const createdObjectStructures: IObjectStructure[] = [];
         for (const createObjectStructure of objectStructureDtos) {
-            const object = toObjectEntity(createObjectStructure.object.name, createObjectStructure.object.deletable, []);
+            const object = toObjectEntity(createObjectStructure.object.name, createObjectStructure.object.deletable);
             const objectStructure = toObjectStructureEntity(
                 object, new Date(), createObjectStructure.datatype, createObjectStructure.deletable,
                 createObjectStructure.field, createObjectStructure.nullable, createObjectStructure.schema,
@@ -65,7 +78,7 @@ export class ObjectStructureController {
     async updateObjectStructure(@Param("id") id: string, @Body() objectStructureDto: ObjectStructureDto): Promise<IObjectStructure> {
         const foundObjectStructure = await this.objectStructureService.findOne(id);
         if (foundObjectStructure) {
-            const object = toObjectEntity(objectStructureDto.object.name, objectStructureDto.object.deletable, []);
+            const object = toObjectEntity(objectStructureDto.object.name, objectStructureDto.object.deletable);
             const objectStructureEntity = toObjectStructureEntity(
                 object, foundObjectStructure.createTimestamp,
                 objectStructureDto.datatype, objectStructureDto.deletable,
@@ -78,6 +91,53 @@ export class ObjectStructureController {
     }
 
     @UseGuards(JwtAuthGuard, PermissionsGuard)
+    @Put()
+    @HasPermissions(PermissionsEnum.CONFIGURATION_UPDATE)
+    async updateMultipleObjectStructures(@Body() updateObjectStructuresDto: UpdateObjectStructuresDto[]): Promise<IUpdateObjectStructureResponse[]> {
+        const updateStructureResponse: IUpdateObjectStructureResponse[] = [];
+        for (const obj of updateObjectStructuresDto) {
+            const object = toObjectEntity(obj.objectStructure.object.name, obj.objectStructure.object.deletable);
+
+            if (obj.type === 'CREATE') {
+                // create object
+                const response = await this._createObjectStructure(obj.objectStructure, object);
+                updateStructureResponse.push(response);
+            } else if (obj.type === 'UPDATE') {
+                // update object
+                const response = await this._updateObjectStructure(obj.objectStructure, object);
+                updateStructureResponse.push(response);
+            } else {
+                // delete object
+                const response = await this._deleteObjectStructure(obj.objectStructure);
+                updateStructureResponse.push(response);
+            }
+        }
+
+        return updateStructureResponse;
+    }
+
+    @UseGuards(JwtAuthGuard, PermissionsGuard)
+    @Delete("multiple/")
+    @HasPermissions(PermissionsEnum.CONFIGURATION_DELETE)
+    async deleteObjectStructures(@Query("objectStructures") ids: string[]): Promise<any> {
+        if (ids) {
+            const results = [];
+            for (const id of ids) {
+                if (id) {
+                    const result = await this.objectStructureService.remove(id);
+
+                    results.push({
+                        id: id,
+                        success: result && result.affected
+                    });
+                }
+            }
+            return results;
+        }
+        throw new HttpException(`Es wurden keine IDs zur Löschung angegeben.`, HttpStatus.BAD_REQUEST);
+    }
+
+    @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Delete(":id")
     @HasPermissions(PermissionsEnum.CONFIGURATION_DELETE)
     async deleteObjectStructure(@Param("id") id: string): Promise<any> {
@@ -86,6 +146,64 @@ export class ObjectStructureController {
             return {};
         }
         throw new HttpException(`Die Objekt-Struktur mit der ID ${id} wurde nicht nicht gefunden.`, HttpStatus.NOT_FOUND);
+    }
+
+    private async _createObjectStructure(objectStructure: ObjectStructureDto, object: ObjectEntity): Promise<IUpdateObjectStructureResponse> {
+        const objectStructureEntity = toObjectStructureEntity(
+            object, new Date(),
+            objectStructure.datatype, objectStructure.deletable,
+            objectStructure.field, objectStructure.nullable,
+            objectStructure.schema, new Date());
+        const createdObjectStructureEntity = await this.objectStructureService.insert(objectStructureEntity);
+        return {
+            message: 'CREATED',
+            objectStructure: createdObjectStructureEntity,
+            response: 'SUCCESS'
+        };
+    }
+
+    private async _updateObjectStructure(objectStructure: ObjectStructureDto, object: ObjectEntity): Promise<IUpdateObjectStructureResponse> {
+        const foundObjectStructure = await this.objectStructureService.findOne(objectStructure.id);
+        if (foundObjectStructure) {
+            const objectStructureEntity = toObjectStructureEntity(
+                object, foundObjectStructure.createTimestamp,
+                objectStructure.datatype, objectStructure.deletable,
+                objectStructure.field, objectStructure.nullable,
+                objectStructure.schema, new Date(), objectStructure.id
+            );
+            const updatedObjectStructure = await this.objectStructureService.update(objectStructureEntity);
+            return {
+                message: `UPDATED ${objectStructure.id}`,
+                objectStructure: updatedObjectStructure,
+                response: 'SUCCESS'
+            };
+        } else {
+            return {
+                message: `UPDATE FAILED ${objectStructure.id}`,
+                objectStructure: null,
+                response: 'ERROR'
+            };
+        }
+    }
+
+    private async _deleteObjectStructure(objectStructure: ObjectStructureDto): Promise<IUpdateObjectStructureResponse> {
+        if (objectStructure.id) {
+            const result = await this.objectStructureService.remove(objectStructure.id);
+            console.log('result', result);
+            if (result) {
+                return {
+                    message: `DELETED ${objectStructure.id}`,
+                    objectStructure: null,
+                    response: 'SUCCESS'
+                };
+            } else {
+                return {
+                    message: `DELETE FAILED ${objectStructure.id}`,
+                    objectStructure: null,
+                    response: 'ERROR'
+                };
+            }
+        }
     }
 
 }

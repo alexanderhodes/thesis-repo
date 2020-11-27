@@ -1,13 +1,11 @@
-import {ObjectEntity, ObjectStructureEntity} from '../../database/entities';
+import {ObjectEntity} from '../../database/entities';
 
 export function toObjectEntity(
     name: string,
-    deletable: boolean,
-    objectStructure: ObjectStructureEntity[]
+    deletable: boolean
 ): ObjectEntity {
     return {
         name: name,
-        deletable: deletable,
-        objectStructure: objectStructure
+        deletable: deletable
     };
 }

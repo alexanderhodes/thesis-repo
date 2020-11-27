@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {take} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {ObjectApiService, ObjectStructureApiService} from '../../../core/http';
-import {IMessage, IObject, IObjectStructure} from '../../../shared/interfaces';
+import {IMessage, IObject, IObjectStructure, IUpdateObjectStructure} from '../../../shared/interfaces';
 
 @Component({
   selector: 'ts-object-detail',
@@ -24,6 +24,7 @@ export class UpdateObjectComponent implements OnInit {
     deletable: new FormControl(true)
   });
   objectStructures: IObjectStructure[];
+  deletedObjectStructures: IObjectStructure[];
   submitted: boolean = false;
   message: IMessage;
 
@@ -36,6 +37,7 @@ export class UpdateObjectComponent implements OnInit {
               private objectApiService: ObjectApiService,
               private objectStructureApiService: ObjectStructureApiService,
               private changeDetectorRef: ChangeDetectorRef) {
+    this.deletedObjectStructures = [];
   }
 
   ngOnInit(): void {
@@ -72,15 +74,17 @@ export class UpdateObjectComponent implements OnInit {
       this.objectApiService.updateObject(object.name, object)
         .pipe(take(1))
         .subscribe((updatedObject: IObject) => {
-          if (this.objectStructures && this.objectStructures.length) {
-            this.objectStructures.forEach((objectStructure: IObjectStructure) => {
-              objectStructure.object = updatedObject;
-            });
-            // ToDo: change this to update
-            this.objectStructureApiService.createObjectStructures(this.objectStructures)
+          console.log('objectStructures', (!this.objectStructures && this.objectStructures.length) || (this.deletedObjectStructures &&
+            this.deletedObjectStructures.length));
+          if ((this.objectStructures && this.objectStructures.length) || (!this.deletedObjectStructures &&
+            this.deletedObjectStructures.length)) {
+            // collect all object structures which should be stored
+            const updateObjectStructures: IUpdateObjectStructure[] = this.createdUpdateObjectStructures(updatedObject);
+            console.log('updateObjectStructures', updateObjectStructures);
+            this.objectStructureApiService.updateObjectStructures(updateObjectStructures)
               .pipe(take(1))
-              .subscribe((createdObjectStructures: IObjectStructure[]) => {
-                updatedObject.objectStructure = createdObjectStructures;
+              .subscribe((updatedObjectStructures) => {
+                console.log('response', updatedObjectStructures);
                 this._resetForm(updatedObject);
               }, (error) => {
                 console.log('error', error);
@@ -108,12 +112,31 @@ export class UpdateObjectComponent implements OnInit {
     }
   }
 
+  private createdUpdateObjectStructures(updatedObject: IObject): IUpdateObjectStructure[] {
+    const updatedObjectStructures: IUpdateObjectStructure[] = [];
+    this.objectStructures.forEach((objectStructure: IObjectStructure) => {
+      objectStructure.object = updatedObject;
+      updatedObjectStructures.push({
+        objectStructure,
+        type: objectStructure.id ? 'UPDATE' : 'CREATE'
+      });
+    });
+    this.deletedObjectStructures.forEach((objectStructure: IObjectStructure) => {
+      updatedObjectStructures.push({
+        objectStructure,
+        type: 'DELETE'
+      });
+    });
+    return updatedObjectStructures;
+  }
+
   onObjectStructureDelete(objectStructure: IObjectStructure): void {
     const index = this.objectStructures.findIndex(structure => {
       return structure.id === objectStructure.id && structure.field === objectStructure.field;
     });
     if (index > -1) {
       this.objectStructures.splice(index, 1);
+      this.deletedObjectStructures.push(objectStructure);
     }
   }
 
@@ -136,7 +159,7 @@ export class UpdateObjectComponent implements OnInit {
       deletable: updatedObject.deletable
     });
     this.submitted = false;
-    this.objectStructures = [];
+    this.deletedObjectStructures = [];
     this.changeDetectorRef.detectChanges();
   }
 

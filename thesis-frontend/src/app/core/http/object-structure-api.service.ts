@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {IObjectStructure} from '../../shared/interfaces';
+import {IObjectStructure, IUpdateObjectStructure, IUpdateObjectStructureResponse} from '../../shared/interfaces';
 
 @Injectable()
 export class ObjectStructureApiService {
@@ -28,8 +28,20 @@ export class ObjectStructureApiService {
     return this.httpClient.put<IObjectStructure>(`object-structure/${id}`, objectStructure);
   }
 
+  updateObjectStructures(objectStructures: IUpdateObjectStructure[]): Observable<IUpdateObjectStructureResponse[]> {
+    return this.httpClient.put<IUpdateObjectStructureResponse[]>(`object-structure`, objectStructures);
+  }
+
   deleteObjectStructure(id: string): Observable<any> {
     return this.httpClient.delete(`object-structure/${id}`);
+  }
+
+  deleteMultipleObjectStructures(ids: string[]): Observable<any> {
+    return this.httpClient.delete('object-structure/multiple/', {
+      params: {
+        objectStructures: ids
+      }
+    });
   }
 
 }

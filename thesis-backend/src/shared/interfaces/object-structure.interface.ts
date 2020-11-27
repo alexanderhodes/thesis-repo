@@ -11,3 +11,9 @@ export interface IObjectStructure {
     updateTimestamp: Date;
     object: IObject;
 }
+
+export interface IUpdateObjectStructureResponse {
+    message?: string;
+    objectStructure: IObjectStructure;
+    response: 'ERROR' | 'SUCCESS';
+}

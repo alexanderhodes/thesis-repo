@@ -1,5 +1,4 @@
-import {Column, Entity, OneToMany, PrimaryColumn} from 'typeorm';
-import {ObjectStructureEntity} from './object-structure.entity';
+import {Column, Entity, PrimaryColumn} from 'typeorm';
 
 @Entity({
     name: 'object'
@@ -12,6 +11,8 @@ export class ObjectEntity {
         default: false
     })
     deletable: boolean;
-    @OneToMany(() => ObjectStructureEntity, objectStructure => objectStructure.object)
-    objectStructure: ObjectStructureEntity[];
+    // @OneToMany(() => ObjectStructureEntity, objectStructure => objectStructure.object, {
+    //     cascade: ['remove']
+    // })
+    // objectStructure: ObjectStructureEntity[];
 }

@@ -15,7 +15,6 @@ export class ObjectService {
         return getConnection()
             .getRepository(ObjectEntity)
             .createQueryBuilder("object")
-            .leftJoinAndSelect("object.objectStructure", "object-structure")
             .getMany();
     }
 
@@ -24,7 +23,6 @@ export class ObjectService {
             .getRepository(ObjectEntity)
             .createQueryBuilder("object")
             .where("object.name = :name", {name: name})
-            .leftJoinAndSelect("object.objectStructure", "object-structure")
             .getOne();
     }
 

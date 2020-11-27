@@ -47,16 +47,6 @@ import {AppConfigModule, ConfigurationService} from './app-config';
             useFactory: (configurationService: ConfigurationService) => configurationService.createTypeOrmConfigFactory()
 //            useFactory: createTypeOrmConfigFactory
         }),
-        // TypeOrmModule.forRoot({
-        //     type: 'postgres',
-        //     host: 'localhost',
-        //     port: 5432,
-        //     username: 'admin',
-        //     password: 'nimda',
-        //     database: 'authentication',
-        //     entities: [ Permission, User ],
-        //     synchronize: true
-        // }),
         AuthorizationModule,
         TestModule,
         BigchainModule,

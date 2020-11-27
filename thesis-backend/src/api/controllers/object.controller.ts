@@ -18,13 +18,12 @@ export class ObjectController {
     async createObject(@Body() createObject: ObjectDto): Promise<IObject> {
         const foundObject = await this.objectService.findOne(createObject.name);
         if (!foundObject) {
-            const objectEntity = toObjectEntity(createObject.name, createObject.deletable, []);
+            const objectEntity = toObjectEntity(createObject.name, createObject.deletable);
             const createdObjectEntity = await this.objectService.insert(objectEntity);
 
             return {
                 name: createdObjectEntity.name,
-                deletable: createdObjectEntity.deletable,
-                assetStructure: []
+                deletable: createdObjectEntity.deletable
             };
         }
         throw new HttpException({
@@ -54,7 +53,7 @@ export class ObjectController {
     async updateObject(@Param("name") name: string, @Body() updateObjectDto: ObjectDto): Promise<IObject> {
         const foundObject = await this.objectService.findOne(name);
         if (foundObject) {
-            const object = toObjectEntity(updateObjectDto.name, updateObjectDto.deletable, []);
+            const object = toObjectEntity(updateObjectDto.name, updateObjectDto.deletable);
             return await this.objectService.update(object);
         }
         throw new HttpException(`Das Objekt mit dem Namen ${name} wurde nicht gefunden.`, HttpStatus.NOT_FOUND);
