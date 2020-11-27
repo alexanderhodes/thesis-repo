@@ -8,10 +8,10 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {AsyncPipe} from '@angular/common';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {take} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {ObjectApiService, ObjectStructureApiService} from '../../../core/http';
-import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {IMessage, IObject, IObjectStructure} from '../../../shared/interfaces';
 
 @Component({
@@ -31,13 +31,6 @@ export class CreateObjectComponent implements OnInit {
 
   createObjectForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    deletable: new FormControl(true)
-  });
-  addObjectStructureForm: FormGroup = new FormGroup({
-    field: new FormControl('', [Validators.required]),
-    datatype: new FormControl('', [Validators.required]),
-    schema: new FormControl('', [Validators.required]),
-    nullable: new FormControl(false),
     deletable: new FormControl(true)
   });
   objectStructures: IObjectStructure[];
@@ -104,45 +97,18 @@ export class CreateObjectComponent implements OnInit {
     }
   }
 
-  addObjectStructure(): void {
-    console.log('adding object-structure', this.addObjectStructureForm.value, this.addObjectStructureForm.valid);
-    if (!this._hasFieldInObjectStructure() && this.addObjectStructureForm.valid) {
-      const objectStructure: IObjectStructure = {
-        field: this.getFormControlFromObjectStructureForm('field').value,
-        datatype: this.getFormControlFromObjectStructureForm('datatype').value,
-        schema: this.getFormControlFromObjectStructureForm('schema').value,
-        nullable: this.getFormControlFromObjectStructureForm('nullable').value,
-        deletable: this.getFormControlFromObjectStructureForm('deletable').value
-      };
-      this.objectStructures.push(objectStructure);
-      this._clearObjectStructureForm();
-    }
-  }
-
   deleteObjectStructure(index: number): void {
     if (this.objectStructures[index]) {
       this.objectStructures.splice(index, 1);
-      // this.changeDetectorRef.detectChanges();
     }
+  }
+
+  onObjectStructureAdded(objectStructure: IObjectStructure): void {
+    this.objectStructures.push(objectStructure);
   }
 
   getFormControlFromObjectForm(key: string): AbstractControl {
     return this.createObjectForm.get(key);
-  }
-
-  getFormControlFromObjectStructureForm(key: string): AbstractControl {
-    return this.addObjectStructureForm.get(key);
-  }
-
-  private _clearObjectStructureForm(): void {
-    this.addObjectStructureForm.reset({
-      field: '',
-      datatype: '',
-      schema: '',
-      nullable: false,
-      deletable: true
-    });
-    this.changeDetectorRef.detectChanges();
   }
 
   private _resetForms(): void {
@@ -156,20 +122,7 @@ export class CreateObjectComponent implements OnInit {
     });
     this.submitted = false;
     this.objectStructures = [];
-    this._clearObjectStructureForm();
-  }
-
-  private _hasFieldInObjectStructure(): boolean {
-    const fieldControl = this.getFormControlFromObjectStructureForm('field');
-    const foundObjectStructure = this.objectStructures.find(structure => structure.field === fieldControl.value);
-    if (foundObjectStructure) {
-      console.log('foundObjectStructure', foundObjectStructure);
-      fieldControl.setErrors({
-        fieldNameExisting: true
-      });
-      return true;
-    }
-    return false;
+    this.changeDetectorRef.detectChanges();
   }
 
 }

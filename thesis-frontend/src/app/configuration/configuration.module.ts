@@ -4,6 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
 import {
+  AddObjectStructureComponent,
   ConfigurationComponent,
   CreateObjectComponent,
   ObjectDetailComponent,
@@ -13,6 +14,7 @@ import {ConfigurationRoutingModule} from './configuration-routing.module';
 import {CoreModule} from '../core';
 
 const components = [
+  AddObjectStructureComponent,
   ConfigurationComponent,
   CreateObjectComponent,
   ObjectDetailComponent,
