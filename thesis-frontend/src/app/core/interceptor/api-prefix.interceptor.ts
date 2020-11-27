@@ -2,21 +2,26 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/com
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ConfigService} from '../services';
+import {BaseInterceptor} from './base.interceptor';
 
 @Injectable()
-export class ApiPrefixInterceptor implements HttpInterceptor {
+export class ApiPrefixInterceptor extends BaseInterceptor implements HttpInterceptor {
 
   readonly #apiPrefix: string;
 
-  constructor(private configService: ConfigService) {
-    this.#apiPrefix = configService.getConfig('apiUrl');
+  constructor(configService: ConfigService) {
+    super(configService);
+    this.#apiPrefix = this.configService.getConfig('apiUrl');
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // do nothing for assets requests
-    if (req.url.indexOf('.json') > 0) {
+    // do nothing for non api requests
+    if (this.isNonApiPattern(req.url)) {
       return next.handle(req);
     }
+    // if (req.url.indexOf('.json') > 0) {
+    //   return next.handle(req);
+    // }
 
     const updatedRequest = req.clone({
       url: `${this.#apiPrefix}/${req.url}`

@@ -3,15 +3,24 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
-import {StateService} from '../services';
+import {ConfigService, StateService} from '../services';
+import {BaseInterceptor} from './base.interceptor';
 
 @Injectable()
-export class HttpErrorInterceptor implements HttpInterceptor {
+export class HttpErrorInterceptor extends BaseInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router,
-              private stateService: StateService) {}
+  constructor(configService: ConfigService,
+              private router: Router,
+              private stateService: StateService) {
+    super(configService);
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // do nothing for non api requests
+    if (this.isNonApiPattern(req.url)) {
+      return next.handle(req);
+    }
+
     return next.handle(req).pipe(
       catchError((error: HttpResponse<any>) => {
         if (error && (error.status === 401 || error.status === 403)) {

@@ -2,16 +2,17 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/com
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
-import {StateService, STORAGE_USER} from '../services';
-import {CleanUpHelper} from '../utils';
+import {ConfigService, StateService, STORAGE_USER} from '../services';
+import {BaseInterceptor} from './base.interceptor';
 
 @Injectable()
-export class HttpTokenInterceptor extends CleanUpHelper implements HttpInterceptor {
+export class HttpTokenInterceptor extends BaseInterceptor implements HttpInterceptor {
 
   #token: string;
 
-  constructor(private stateService: StateService) {
-    super();
+  constructor(configService: ConfigService,
+              private stateService: StateService) {
+    super(configService);
     this.stateService.getItem$(STORAGE_USER)
       .pipe(
         takeUntil(this.onDestroy$)
@@ -23,10 +24,13 @@ export class HttpTokenInterceptor extends CleanUpHelper implements HttpIntercept
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // do nothing for assets requests
-    if (req.url.indexOf('assets/i18n') > 0) {
+    // do nothing for non api requests
+    if (this.isNonApiPattern(req.url)) {
       return next.handle(req);
     }
+    // if (req.url.indexOf('assets/i18n') > 0) {
+    //   return next.handle(req);
+    // }
 
     const updatedRequest = this.#token ? req.clone({
       headers: req.headers.append('Authorization', `Bearer ${this.#token}`)
