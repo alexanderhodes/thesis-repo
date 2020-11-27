@@ -50,6 +50,6 @@ insert into public.role_permissions_permission ("roleName", "permissionName") va
 
 -- insert default user
 insert into public.user ("username", "password", "publicKey") values ('alex','$2b$10$RsMvon91WvCUcOH40q2l4.DAJHzChShQWRnSk2/nQ3.7tGBenph6W','GmqY981bJL6JFN82UrD421bcRxkwV3p2s97ZLf6smzkb');
-insert into public.user_roles_role ("userId", "roleName") values ('8a5ecfc8-7d3a-40cb-95e4-5cfb59e3f889','BOARD');
-insert into public.user_roles_role ("userId", "roleName") values ('8a5ecfc8-7d3a-40cb-95e4-5cfb59e3f889','ADMINISTRATOR');
+insert into public.user_roles_role ("userId", "roleName") values ((select "id" from public.user where "username" = 'alex'),'BOARD');
+insert into public.user_roles_role ("userId", "roleName") values ((select "id" from public.user where "username" = 'alex'),'ADMINISTRATOR');
 
