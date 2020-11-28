@@ -1,0 +1,1 @@
+{"cors":{"origin":["http://localhost:4200","http://localhost:3001","https://DESKTOP-1U7HOH2.localdomain"],"methods":"GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS","preflightContinue":false},"app":{"port":3000,"apiPrefix":"api"}}
