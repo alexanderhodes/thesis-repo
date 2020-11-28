@@ -7,6 +7,7 @@ import {AuthorizationModule} from './authorization';
 import {BigchainModule} from './bigchain';
 import {ApiModule} from './api';
 import {AppConfigModule, ConfigurationService} from './app-config';
+import {CoreModule} from './core';
 
 @Module({
     imports: [
@@ -24,6 +25,7 @@ import {AppConfigModule, ConfigurationService} from './app-config';
         AuthorizationModule,
         TestModule,
         BigchainModule,
+        CoreModule,
         ApiModule
     ],
     controllers: [],
