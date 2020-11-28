@@ -2,6 +2,7 @@ import {NestFactory} from '@nestjs/core';
 import {AppModule} from './app.module';
 import {readFileSync} from 'fs';
 import {fileExistsSync} from 'tsconfig-paths/lib/filesystem';
+import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
 
 declare const module: any;
 
@@ -45,6 +46,17 @@ async function bootstrap() {
     }
     // set default app prefix with api so that it is not necessary in each controller
     app.setGlobalPrefix(config && config.app ? config.app.apiPrefix : 'api');
+
+    // Swagger
+    const options = new DocumentBuilder()
+        .setTitle('Swagger API der Thesis')
+        .setDescription('Beschreibung der Thesis-API')
+        .setVersion('1.0')
+        .setBasePath(config && config.app ? config.app.apiPrefix : 'api')
+        .build();
+    const document = SwaggerModule.createDocument(app, options);
+    SwaggerModule.setup('swagger', app, document);
+
     await app.listen(config && config.app ? config.app.port : 3000);
 
     if (module.hot) {
