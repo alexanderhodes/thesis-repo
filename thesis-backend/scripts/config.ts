@@ -29,7 +29,7 @@ function createConfig(): void {
     // check if file exists
     const fileExists = fileExistsSync(path);
 
-    if (fileExists && !isWindows) {
+    if (fileExists) {
         // read file
         const configFile = readFileSync(path, options);
 
