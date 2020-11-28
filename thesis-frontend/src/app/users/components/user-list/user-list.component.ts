@@ -42,6 +42,10 @@ export class UserListComponent implements OnInit {
       });
   }
 
+  onUserCreated(user: User): void {
+    this.users.push(user);
+  }
+
   toggle(): void {
     this.show = !this.show;
   }

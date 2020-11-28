@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="h-auto px-4 py-2" *ngIf="show">
-    <ts-create-user></ts-create-user>
+    <ts-create-user (userCreated)="onUserCreated($event)"></ts-create-user>
   </div>
 </div>
 

@@ -1,6 +1,14 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewEncapsulation
+} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import {comparePasswordsValidator, CreatedUser, CreateUser, FileService, Role} from '../../../shared';
+import {comparePasswordsValidator, CreatedUser, CreateUser, FileService, Role, User} from '../../../shared';
 import {RolesApiService, UsersApiService} from '../../../core/http';
 
 @Component({
@@ -11,6 +19,9 @@ import {RolesApiService, UsersApiService} from '../../../core/http';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateUserComponent implements OnInit {
+
+  @Output()
+  userCreated: EventEmitter<User>;
 
   createUserForm: FormGroup = new FormGroup({
     username: new FormControl('', [Validators.required]),
@@ -30,6 +41,7 @@ export class CreateUserComponent implements OnInit {
               private fileService: FileService,
               private changeDetectorRef: ChangeDetectorRef) {
     this.roles = [];
+    this.userCreated = new EventEmitter<User>();
   }
 
   ngOnInit() {
@@ -63,6 +75,7 @@ export class CreateUserComponent implements OnInit {
           this.submitted = false;
           this.createdFailure = false;
           this.createdUser = createdUser;
+          this.userCreated.emit(createdUser as User);
           this.changeDetectorRef.detectChanges();
         }, () => {
           this.createdFailure = true;
