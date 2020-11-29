@@ -31,7 +31,7 @@ jobs:
         run: |
           cd thesis-frontend
           npm ci
-          npm run build:ci
+          npm run build:dev
 
       - name: archive build
         uses: actions/upload-artifact@v1
