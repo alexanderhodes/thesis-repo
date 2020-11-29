@@ -1,12 +1,14 @@
 import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, UseGuards} from '@nestjs/common';
+import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
 import {UsersService} from '../../database/services';
 import {KeypairService, PasswordService} from '../../shared/services';
-import {CreatedUserDTO, CreateUserDTO, UserResponseDTO} from '../dtos';
+import {CreatedUserDto, CreateUserDto, UserResponseDto} from '../dtos';
 import {toUserEntity} from '../mappers';
 import {JwtAuthGuard, PermissionsGuard} from '../../authorization/guards';
 import {HasPermissions} from '../../authorization/decorators';
 import {PermissionsEnum} from '../../authorization/constants';
 
+@ApiTags("users")
 @Controller("users")
 export class UsersController {
 
@@ -17,7 +19,8 @@ export class UsersController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @HasPermissions(PermissionsEnum.USER_CREATE)
     @Post()
-    async createUser(@Body() createUser: CreateUserDTO): Promise<CreatedUserDTO> {
+    @ApiBearerAuth()
+    async createUser(@Body() createUser: CreateUserDto): Promise<CreatedUserDto> {
         // has password
         const hashedPassword = await this.passwordService.createHash(createUser.password);
         // create key pair
@@ -45,9 +48,10 @@ export class UsersController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @HasPermissions(PermissionsEnum.USER_READ)
     @Get()
-    async getAllUsers(): Promise<UserResponseDTO[]> {
+    @ApiBearerAuth()
+    async getAllUsers(): Promise<UserResponseDto[]> {
         const users = await this.usersService.findAll();
-        return users.map(user => <UserResponseDTO>{
+        return users.map(user => <UserResponseDto>{
             id: user.id,
             roles: user.roles,
             publicKey: user.publicKey,
@@ -58,7 +62,8 @@ export class UsersController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @HasPermissions(PermissionsEnum.USER_READ)
     @Get(":id")
-    async getUserById(@Param("id") id: string): Promise<UserResponseDTO> {
+    @ApiBearerAuth()
+    async getUserById(@Param("id") id: string): Promise<UserResponseDto> {
         const user = await this.usersService.findOneById(id);
         if (user) {
             return {
@@ -74,6 +79,7 @@ export class UsersController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @HasPermissions(PermissionsEnum.USER_DELETE)
     @Delete(":id")
+    @ApiBearerAuth()
     async deleteUser(@Param("id") id: string) {
         const result = await this.usersService.remove(id);
         if (result && result.affected) {

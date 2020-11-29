@@ -1,14 +1,16 @@
 import {Body, Controller, HttpCode, HttpException, HttpStatus, Param, Post, UseGuards} from '@nestjs/common';
+import {ApiBearerAuth, ApiOkResponse, ApiTags} from '@nestjs/swagger';
 import {JwtAuthGuard, PermissionsGuard} from '../guards';
 import {HasPermissions} from '../decorators';
 import {PermissionsEnum} from '../constants';
-import {UpdateWithPasswordDTO} from '../dtos';
+import {UpdateWithPasswordDto} from '../dtos';
 import {UserEntity} from '../../database/entities';
 import {AuthenticationService} from '../services';
 import {KeypairService} from '../../shared/services';
 import {UsersService} from '../../database/services';
 import {UserWithPermissions} from '../interfaces';
 
+@ApiTags('authentication-functions')
 @Controller('authentication-functions')
 export class AuthenticationFunctionsController {
 
@@ -21,7 +23,8 @@ export class AuthenticationFunctionsController {
     @HasPermissions(PermissionsEnum.USER_UPDATE)
     @HttpCode(200)
     @Post('change-password')
-    async updatePassword(@Body() updateWithPasswordDTO: UpdateWithPasswordDTO): Promise<{[key: string]: any}> {
+    @ApiBearerAuth()
+    async updatePassword(@Body() updateWithPasswordDTO: UpdateWithPasswordDto): Promise<{[key: string]: any}> {
         if (updateWithPasswordDTO.password && updateWithPasswordDTO.user) {
             const user: UserEntity = await this.usersService.findOneById(updateWithPasswordDTO.user);
             if (user) {
@@ -40,6 +43,10 @@ export class AuthenticationFunctionsController {
     @HasPermissions(PermissionsEnum.USER_UPDATE)
     @HttpCode(200)
     @Post('generate-keypair/:user')
+    @ApiOkResponse({
+        type: UserWithPermissions
+    })
+    @ApiBearerAuth()
     async generateKeypair(@Param("user") userId: string): Promise<UserWithPermissions> {
         if (userId) {
             const user: UserEntity = await this.usersService.findOneById(userId);

@@ -1,4 +1,8 @@
+import {ApiProperty} from '@nestjs/swagger';
 
-export interface PermissionDTO {
-    name: string;
+export class PermissionDto {
+    @ApiProperty({
+        type: String
+    })
+    readonly name: string;
 }

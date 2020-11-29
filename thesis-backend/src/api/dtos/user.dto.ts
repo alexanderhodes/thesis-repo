@@ -1,22 +1,32 @@
-import {RoleDTO} from './roles.dto';
+import {ApiProperty} from '@nestjs/swagger';
+import {RoleDto} from './roles.dto';
 
-export interface CreateUserDTO {
-    username: string;
-    password: string;
-    roles: RoleDTO[];
+export class CreateUserDto {
+    @ApiProperty({
+        type: String
+    })
+    readonly username: string;
+    @ApiProperty({
+        type: String
+    })
+    readonly password: string;
+    @ApiProperty({
+        type: [RoleDto]
+    })
+    readonly roles: RoleDto[];
 }
 
-export interface CreatedUserDTO {
+export interface CreatedUserDto {
     id: string;
     username: string;
     privateKey: string;
     publicKey: string;
-    roles: RoleDTO[];
+    roles: RoleDto[];
 }
 
-export interface UserResponseDTO {
+export interface UserResponseDto {
     id: string;
     username: string;
     publicKey: string;
-    roles: RoleDTO[];
+    roles: RoleDto[];
 }

@@ -1,7 +1,18 @@
+import {ApiProperty} from '@nestjs/swagger';
+
 export class UserDto {
-    id: string;
-    username: string;
-    password: string;
+    @ApiProperty({
+        type: String
+    })
+    readonly id: string;
+    @ApiProperty({
+        type: String
+    })
+    readonly username: string;
+    @ApiProperty({
+        type: String
+    })
+    readonly password: string;
 }
 
 export interface UserResponseDTO {
@@ -9,7 +20,13 @@ export interface UserResponseDTO {
     username: string;
 }
 
-export class UpdateWithPasswordDTO {
+export class UpdateWithPasswordDto {
+    @ApiProperty({
+        type: String
+    })
     readonly user: string;
+    @ApiProperty({
+        type: String
+    })
     readonly password: string;
 }

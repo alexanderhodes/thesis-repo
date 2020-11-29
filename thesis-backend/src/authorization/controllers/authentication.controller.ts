@@ -1,4 +1,5 @@
 import {Controller, Get, HttpException, HttpStatus, Post, Request, UseGuards} from '@nestjs/common';
+import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
 import {JwtAuthGuard, LocalAuthGuard} from '../guards';
 import {AuthenticationService} from '../services';
 import {UserResponseDTO} from '../dtos';
@@ -6,6 +7,7 @@ import {LoginResponse} from '../interfaces';
 import {KeypairService} from '../../shared/services';
 import {UsersService} from '../../database/services';
 
+@ApiTags('authentication')
 @Controller('authentication')
 export class AuthenticationController {
 
@@ -26,6 +28,7 @@ export class AuthenticationController {
 
     @UseGuards(JwtAuthGuard)
     @Get('profile')
+    @ApiBearerAuth()
     async getProfile(@Request() req): Promise<UserResponseDTO> {
         const id = req.user ? req.user.id : null;
         const user = await this.usersService.findOneById(id);

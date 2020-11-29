@@ -1,10 +1,12 @@
 import {Controller, Get, NotFoundException, Param, UseGuards} from '@nestjs/common';
+import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
 import {PermissionsService} from '../../database/services';
 import {JwtAuthGuard, PermissionsGuard} from '../../authorization/guards';
 import {HasPermissions} from '../../authorization/decorators';
 import {PermissionsEnum} from '../../authorization/constants';
-import {PermissionDTO} from '../dtos';
+import {PermissionDto} from '../dtos';
 
+@ApiTags('permissions')
 @Controller("permissions")
 export class PermissionsController {
 
@@ -13,12 +15,15 @@ export class PermissionsController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @HasPermissions(PermissionsEnum.USER_READ)
     @Get()
-    findAll(): Promise<PermissionDTO[]> {
+    @ApiBearerAuth()
+    findAll(): Promise<PermissionDto[]> {
         return this.permissionsService.findAll();
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get(":name")
-    async findOneByName(@Param("name") name: string): Promise<PermissionDTO> {
+    @ApiBearerAuth()
+    async findOneByName(@Param("name") name: string): Promise<PermissionDto> {
         const permission = await this.permissionsService.findOne(name);
         if (permission) {
             return permission;

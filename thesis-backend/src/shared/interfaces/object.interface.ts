@@ -1,5 +1,4 @@
-
-export interface IObject {
-    name: string;
-    deletable: boolean;
+export class IObject {
+    readonly name: string;
+    readonly deletable: boolean;
 }

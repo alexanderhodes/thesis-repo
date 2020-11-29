@@ -1,4 +1,5 @@
 import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, UseGuards} from '@nestjs/common';
+import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
 import {ObjectService} from '../../database/services';
 import {ObjectDto} from '../dtos';
 import {toObjectEntity} from '../mappers';
@@ -7,6 +8,7 @@ import {JwtAuthGuard, PermissionsGuard} from '../../authorization/guards';
 import {HasPermissions} from '../../authorization/decorators';
 import {PermissionsEnum} from '../../authorization/constants';
 
+@ApiTags('objects')
 @Controller('objects')
 export class ObjectController {
 
@@ -15,6 +17,7 @@ export class ObjectController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Post()
     @HasPermissions(PermissionsEnum.CONFIGURATION_CREATE)
+    @ApiBearerAuth()
     async createObject(@Body() createObject: ObjectDto): Promise<IObject> {
         const foundObject = await this.objectService.findOne(createObject.name);
         if (!foundObject) {
@@ -33,12 +36,14 @@ export class ObjectController {
 
     @UseGuards(JwtAuthGuard)
     @Get()
+    @ApiBearerAuth()
     getAllObjects(): Promise<IObject[]> {
         return this.objectService.findAll();
     }
 
     @UseGuards(JwtAuthGuard)
     @Get(":name")
+    @ApiBearerAuth()
     async getObjectByName(@Param("name") name: string): Promise<IObject> {
         const object = await this.objectService.findOne(name);
         if (object) {
@@ -50,6 +55,7 @@ export class ObjectController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Put(":name")
     @HasPermissions(PermissionsEnum.CONFIGURATION_UPDATE)
+    @ApiBearerAuth()
     async updateObject(@Param("name") name: string, @Body() updateObjectDto: ObjectDto): Promise<IObject> {
         const foundObject = await this.objectService.findOne(name);
         if (foundObject) {
@@ -62,6 +68,7 @@ export class ObjectController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Delete(":name")
     @HasPermissions(PermissionsEnum.CONFIGURATION_DELETE)
+    @ApiBearerAuth()
     async deleteObject(@Param("name") name: string): Promise<any> {
         const result = await this.objectService.remove(name);
         if (result) {

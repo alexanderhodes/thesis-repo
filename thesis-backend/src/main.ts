@@ -52,7 +52,7 @@ async function bootstrap() {
         .setTitle('Swagger API der Thesis')
         .setDescription('Beschreibung der Thesis-API')
         .setVersion('1.0')
-        .setBasePath(config && config.app ? config.app.apiPrefix : 'api')
+        .addBearerAuth()
         .build();
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('swagger', app, document);

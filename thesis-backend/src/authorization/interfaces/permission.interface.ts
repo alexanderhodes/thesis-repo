@@ -1,4 +1,8 @@
+import {ApiProperty} from '@nestjs/swagger';
 
-export interface Permission {
+export class Permission {
+    @ApiProperty({
+        type: String
+    })
     name: string;
 }

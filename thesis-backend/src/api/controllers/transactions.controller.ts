@@ -1,8 +1,10 @@
 import {Body, Controller, Get, HttpStatus, Param, Patch, Post, Query, Request, UseGuards} from '@nestjs/common';
+import {ApiTags} from '@nestjs/swagger';
 import {TransactionsService} from '../../bigchain/services';
 import {IAsset, IMetaData} from '../../bigchain/interfaces';
 import {JwtAuthGuard} from '../../authorization/guards';
 
+@ApiTags("transactions")
 @Controller("transactions")
 export class TransactionsController {
 
