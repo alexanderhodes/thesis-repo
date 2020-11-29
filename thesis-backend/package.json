@@ -6,8 +6,10 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "prebuild": "rimraf dist && npm run type:createConfig",
-    "build": "nest build",
+    "prebuild": "rimraf dist",
+    "build:dev": "npm run type:createConfig:dev && nest build",
+    "build:local": "npm run type:createConfig:local && nest build",
+    "build:prod": "npm run type:createConfig:prod && nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "cross-env NODE_ENV=development nest start",
     "start:dev:hmr": "cross-env NODE_ENV=development nest build --webpack --webpackPath webpack-hmr.config.js",
@@ -21,7 +23,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeconfig:createConfig": "ts-node -r tsconfig-paths/register scripts/write-typeorm-config.ts",
-    "type:createConfig": "ts-node scripts/config.ts",
+    "type:createConfig:dev": "ts-node scripts/config.ts --dev",
+    "type:createConfig:local": "ts-node scripts/config.ts --local",
+    "type:createConfig:prod": "ts-node scripts/config.ts --prod",
     "typeorm:migration:run": "typeorm -- migration:run -t=false"
   },
   "dependencies": {
