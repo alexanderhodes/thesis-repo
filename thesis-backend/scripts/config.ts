@@ -45,7 +45,7 @@ function createConfig(command: string, isProduction: boolean): void {
                     const hostname = stdout.replace('\n', '');
                     console.log('hostname', hostname);
                     if (hostname) {
-                        const remoteOrigin = `https://${hostname}`;
+                        const remoteOrigin = isProduction ? `https://${hostname}` : `http://${hostname}`;
                         config.cors.origin.push(remoteOrigin);
                     }
                 }

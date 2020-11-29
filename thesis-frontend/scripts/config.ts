@@ -37,7 +37,7 @@ function createConfig(command: string, isProduction: boolean): void {
           const hostname = stdout.replace('\n', '');
           console.log('hostname', hostname);
           if (hostname) {
-            config.apiUrl = `https://${hostname}/api`;
+            config.apiUrl = isProduction ? `https://${hostname}/api` : `http://${hostname}/api`;
           }
         }
         console.log('updated config', config);
