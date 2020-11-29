@@ -35,6 +35,7 @@
   "common.datatype": "Datentyp",
   "common.nullable": "Nullable",
   "common.object-structure": "Objekt-Struktur",
+  "common.last-change": "Zuletzt geändert",
   "login.action.login": "anmelden",
   "login.title": "Anmelden",
   "user.action.generate-key-pair": "Schlüsselpaar generieren",
