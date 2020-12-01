@@ -1,7 +1,7 @@
-export type RelationshipDirection = 'in' | 'out';
-export type RelationshipReturn = 'left' | 'right' | 'relation';
+export type RelationDirectory = 'in' | 'out';
+export type RelationReturn = 'left' | 'right' | 'relation';
 
-export interface INode<T> {
+export interface Node<T> {
     n: {
         identity: any;
         labels: string[]
@@ -9,16 +9,16 @@ export interface INode<T> {
     }
 }
 
-export interface Relationship {
+export interface Relation {
     name: string;
     attributes: { [key: string]: any };
-    direction: RelationshipDirection;
-    left: RelationshipNode,
-    right: RelationshipNode,
-    return: RelationshipReturn[]
+    direction: RelationDirectory;
+    left: RelationNode,
+    right: RelationNode,
+    return: RelationReturn[]
 }
 
-export interface RelationshipNode {
+export interface RelationNode {
     type: string;
     condition: { [key: string]: any }
 }

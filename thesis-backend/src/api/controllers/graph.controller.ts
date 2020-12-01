@@ -1,8 +1,8 @@
 import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post} from '@nestjs/common';
-import {INode, Neo4jService} from '../../neo4j';
-import {IAsset, IOccupation, IQualification, IRelationship} from '../../shared/interfaces';
-import {GraphQueryDto, RelationshipDto} from '../dtos';
-import {toRelationships} from '../mappers';
+import {Neo4jService} from '../../neo4j';
+import {IGraphObject} from '../../shared';
+import {GraphQueryDto, RelationDto} from '../dtos';
+import {toGraphObjects} from '../mappers';
 
 @Controller("graph")
 export class GraphController {
@@ -14,60 +14,28 @@ export class GraphController {
         return this.neo4jService.getDbInfo();
     }
 
-    @Get(':type')
-    async getGraphObjectsByType(@Param("type") type: string): Promise<any[]> {
+    @Get('node/:type')
+    async getGraphObjectsByType(@Param("type") type: string): Promise<IGraphObject[]> {
         const response = await this.neo4jService.findNodesByType(type.toLowerCase());
-        const objects = [];
-        response.records.forEach((record) => {
-            let object;
-            if (type.toLowerCase() === 'occupation') {
-                object = record.toObject() as INode<IOccupation>
-            } else if (type.toLowerCase() === '') {
-                object = record.toObject() as INode<IQualification>
-            } else {
-                object = record.toObject() as INode<IAsset>
-            }
-
-            objects.push({
-                label: object.n.labels,
-                properties: object.n.properties
-            });
-        })
-        return objects;
+        return toGraphObjects(response);
     }
 
     @Post('node/:type')
-    async getGraphObjectsByTypeWithQuery(@Param("type") type: string, @Body() graphQuery: GraphQueryDto): Promise<any[]> {
+    async getGraphObjectsByTypeWithQuery(@Param("type") type: string, @Body() graphQuery: GraphQueryDto): Promise<IGraphObject[]> {
         const response = await this.neo4jService.findNodesByTypeAndQuery(graphQuery);
-        const objects = [];
-        response.records.forEach((record) => {
-            let object;
-            if (type.toLowerCase() === 'occupation') {
-                object = record.toObject() as INode<IOccupation>
-            } else if (type.toLowerCase() === '') {
-                object = record.toObject() as INode<IQualification>
-            } else {
-                object = record.toObject() as INode<IAsset>
-            }
-            if (object.n) {
-                objects.push(object.n.properties);
-            } else {
-                objects.push(object);
-            }
-        })
-        return objects;
+        return toGraphObjects(response);
     }
 
-    @Post("relationship/create")
-    async createRelationship(@Body() relationshipDto: RelationshipDto): Promise<any> {
-        const response = await this.neo4jService.createRelationship(relationshipDto);
-        return toRelationships(response);
+    @Post("relation/create")
+    async createRelation(@Body() relationDto: RelationDto): Promise<IGraphObject[]> {
+        const response = await this.neo4jService.createRelation(relationDto);
+        return toGraphObjects(response);
     }
 
-    @Post("relationship/read")
-    async readRelationShip(@Body() relationshipDto: RelationshipDto): Promise<IRelationship[]> {
-        const response = await this.neo4jService.readRelationship(relationshipDto);
-        return toRelationships(response);
+    @Post("relation/read")
+    async readRelation(@Body() relationDto: RelationDto): Promise<IGraphObject[]> {
+        const response = await this.neo4jService.readRelation(relationDto);
+        return toGraphObjects(response);
     }
 
     @Delete()
@@ -76,12 +44,12 @@ export class GraphController {
     }
 
     @Post("cypher")
-    async getResultByCypherQuery(@Body() query: { cypher: string }): Promise<any> {
+    async getResultByCypherQuery(@Body() query: { cypher: string }): Promise<IGraphObject[]> {
         if (query.cypher.toUpperCase().indexOf('DELETE') === -1 && query.cypher.toUpperCase().indexOf('REMOVE') === -1) {
-            // ToDo: maybe parsing is necessary depending on relationship
-            return this.neo4jService.executeCypherQuery(query.cypher);
+            const response = await this.neo4jService.executeCypherQuery(query.cypher);
+            return toGraphObjects(response);
         }
-        throw new HttpException(`Cypher-Queries mit DELETE dürfen nicht ausgeführt werden`, HttpStatus.BAD_REQUEST);
+        throw new HttpException(`Cypher-Queries mit DELETE oder REMOVE dürfen nicht ausgeführt werden`, HttpStatus.BAD_REQUEST);
     }
 
 }

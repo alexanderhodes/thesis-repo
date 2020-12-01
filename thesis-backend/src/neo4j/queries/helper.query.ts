@@ -1,4 +1,4 @@
-import {RelationshipReturn} from '../interfaces';
+import {RelationReturn} from '../interfaces';
 
 export const WHERE = "WHERE ({{query}})";
 export const ORDER_BY = "ORDER BY {{orderBy}}";
@@ -28,6 +28,6 @@ export function joinArrayElements(elements: string[], prefix: string, as: boolea
     return elements && elements.length ? elements.map(element => `${prefix ? prefix + '.' : ''}${element}${as ? ' as ' + element : ''}`).join(',') : 'n';
 }
 
-export function createReturn(returns: RelationshipReturn[]): string {
+export function createReturn(returns: RelationReturn[]): string {
     return returns && returns.length ? returns.map(r => r === 'left' ? 'a' : (r === 'right' ? 'b' : 'r')).join(',') : '';
 }

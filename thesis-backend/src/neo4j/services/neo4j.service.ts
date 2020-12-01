@@ -6,30 +6,30 @@ import {IAsset} from '../../shared/interfaces';
 import {
     createNodeQueryForAsset,
     createNodeQueryWithQuery,
-    createRelationship,
+    createRelation,
     DROP_NODES_AND_RELATIONS,
-    getNodesByType, readRelationship
+    getNodesByType,
+    readRelation
 } from '../queries';
-import {GraphQuery, Relationship} from '../interfaces';
+import {GraphQuery, Relation} from '../interfaces';
 
 @Injectable()
 export class Neo4jService {
 
     #driver: neo4j.Driver;
-    #session: neo4j.Session;
+//    #session: neo4j.Session;
 
     constructor(private configurationService: ConfigurationService) {
         const path = this.configurationService.get<string>("NEO4J_PATH");
         const user = this.configurationService.get<string>("NEO4J_USER");
         const password = this.configurationService.get<string>("NEO4J_PASSWORD");
         this.#driver = neo4j.driver(path, neo4j.auth.basic(user, password));
-        this.#session = this.#driver.session();
+//        this.#session = this.#driver.session();
     }
 
     // nodes
     async createNode(asset: IAsset): Promise<QueryResult> {
         const query = createNodeQueryForAsset(asset);
-        console.log('query', query);
         return this._executeQuery(query);
     }
 
@@ -43,20 +43,23 @@ export class Neo4jService {
         return this._executeQuery(queryByTypesAndQuery);
     }
 
-    // relationships
-    async createRelationship(relationship: Relationship): Promise<QueryResult> {
-        const relationshipQuery = createRelationship(relationship);
-        return this._executeQuery(relationshipQuery);
+    // relations
+    async createRelation(relation: Relation): Promise<QueryResult> {
+        const relationQuery = createRelation(relation);
+        return this._executeQuery(relationQuery);
     }
 
-    async readRelationship(relationship: Relationship): Promise<QueryResult> {
-        const relationshipQuery = readRelationship(relationship);
-        return this._executeQuery(relationshipQuery);
+    async readRelation(relation: Relation): Promise<QueryResult> {
+        const relationQuery = readRelation(relation);
+        return this._executeQuery(relationQuery);
     }
 
     // general
     async getDbInfo(): Promise<any> {
-        return this.#session.run(`call db.info()`);
+        const session = this.#driver.session();
+        const result = session.run(`call db.info()`)
+        session.close();
+        return result;
     }
 
     async dropNodesAndRelations(): Promise<QueryResult> {
@@ -68,12 +71,14 @@ export class Neo4jService {
     }
 
     private async _executeQuery(query: string): Promise<QueryResult> {
+        const session = this.#driver.session();
         console.log('CYPHER:', query);
-        const transaction = this.#session.beginTransaction();
+        const transaction = session.beginTransaction();
         const result = await transaction.run(query);
         if (transaction.isOpen()) {
             await transaction.commit();
         }
+        session.close();
         return result;
     }
 
