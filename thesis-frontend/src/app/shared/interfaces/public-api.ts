@@ -1,3 +1,4 @@
+export * from './bigchain.interface';
 export * from './guard-data.interface';
 export * from './key-pair.interface';
 export * from './login.interface';

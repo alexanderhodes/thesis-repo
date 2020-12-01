@@ -9,6 +9,7 @@ import {
   TrashComponent
 } from './components';
 import {ButtonDirective, InputDirective} from './directives';
+import {BigchainService} from './services';
 
 const components = [
   ChevronDownComponent,
@@ -23,6 +24,11 @@ const directives = [
   InputDirective,
 ];
 
+const services = [
+  BigchainService
+];
+
+
 @NgModule({
   declarations: [
     ...components,
@@ -36,7 +42,9 @@ const directives = [
   imports: [
     CommonModule
   ],
-  providers: []
+  providers: [
+    ...services
+  ]
 })
 export class SharedModule {
 

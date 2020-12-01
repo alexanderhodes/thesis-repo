@@ -39,6 +39,7 @@ export interface GenerateKeyPairResponse {
 export interface StorageUser {
   accessToken: string;
   permissions: Permission[];
+  publicKey: string;
   username: string;
   roles: Role[];
 }

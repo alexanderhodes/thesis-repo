@@ -13,7 +13,7 @@ import {
   ObjectApiService,
   ObjectStructureApiService,
   PermissionsApiService,
-  RolesApiService,
+  RolesApiService, TransactionsApiService,
   UsersApiService
 } from './http';
 
@@ -41,6 +41,7 @@ const services = [
   ObjectStructureApiService,
   PermissionsApiService,
   RolesApiService,
+  TransactionsApiService,
   UsersApiService
 ];
 
