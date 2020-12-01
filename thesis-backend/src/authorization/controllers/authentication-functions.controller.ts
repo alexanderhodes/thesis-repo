@@ -8,7 +8,7 @@ import {UserEntity} from '../../database/entities';
 import {AuthenticationService} from '../services';
 import {KeypairService} from '../../shared/services';
 import {UsersService} from '../../database/services';
-import {UserWithPermissions} from '../interfaces';
+import {UserWithKeyPair, UserWithPermissions} from '../interfaces';
 
 @ApiTags('authentication-functions')
 @Controller('authentication-functions')
@@ -47,7 +47,7 @@ export class AuthenticationFunctionsController {
         type: UserWithPermissions
     })
     @ApiBearerAuth()
-    async generateKeypair(@Param("user") userId: string): Promise<UserWithPermissions> {
+    async generateKeypair(@Param("user") userId: string): Promise<UserWithKeyPair> {
         if (userId) {
             const user: UserEntity = await this.usersService.findOneById(userId);
             if (user) {

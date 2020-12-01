@@ -1,5 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {LoginResponse, Payload, UserWithPassword, UserWithPermissions} from '../interfaces';
+import {LoginResponse, Payload, UserWithKeyPair, UserWithPassword, UserWithPermissions} from '../interfaces';
 import {JwtService} from '@nestjs/jwt';
 import {UsersService} from '../../database/services';
 import {PermissionsEnum} from '../constants';
@@ -45,6 +45,7 @@ export class AuthenticationService {
         return {
             accessToken: this.jwtService.sign(payload),
             permissions: permissions,
+            publicKey: user.publicKey,
             username: user.username,
             roles: user.roles
         };
@@ -62,6 +63,7 @@ export class AuthenticationService {
         return {
             accessToken: this.jwtService.sign(payload),
             permissions: permissions,
+            publicKey: null,
             username: null,
             roles: []
         };
@@ -72,7 +74,7 @@ export class AuthenticationService {
         return await this.usersService.update(user.id, user);
     }
 
-    async generateKeypairAndUpdate(user: UserEntity): Promise<UserWithPermissions> {
+    async generateKeypairAndUpdate(user: UserEntity): Promise<UserWithKeyPair> {
         // create key pair
         const keypair = this.keypairService.createKeyPair();
         user.publicKey = keypair.publicKey;

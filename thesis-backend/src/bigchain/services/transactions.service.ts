@@ -24,11 +24,22 @@ export class TransactionsService extends BigchainBaseService {
         return this.getConnection().getTransaction(transactionId);
     }
 
-    listTransactions(assetId: string): Promise<ITransaction> {
+    listTransactions(assetId: string): Promise<ITransaction[]> {
         return this.getConnection().listTransactions(assetId);
     }
 
-    createTransaction(asset: IAsset, user: UserEntity, privateKey: string, metadata: IMetaData = null): Promise<ITransaction> {
+    createTransaction(transaction: ITransaction): Promise<ITransaction> {
+        // get connection to bigchaindb
+        const connection = this.getConnection();
+        // Send the transaction off to BigchainDB
+        return connection.postTransactionCommit(transaction)
+            .then((retrievedTx: ITransaction, err) => {
+                console.log('err', err);
+                return connection.getTransaction(retrievedTx.id);
+            });
+    }
+
+    createTransactionOld(asset: IAsset, user: UserEntity, privateKey: string, metadata: IMetaData = null): Promise<ITransaction> {
         // Construct a transaction payload
         const tx = this.driver.Transaction.makeCreateTransaction(
             asset,
@@ -46,8 +57,8 @@ export class TransactionsService extends BigchainBaseService {
         const connection = this.getConnection();
         // Send the transaction off to BigchainDB
         return connection.postTransactionCommit(txSigned)
-            .then((retrievedTx: ITransaction) => {
-                console.log('Transaction', retrievedTx.id, 'successfully posted.')
+            .then((retrievedTx: ITransaction, err) => {
+                console.log('err', err);
                 return connection.getTransaction(retrievedTx.id);
             });
     }

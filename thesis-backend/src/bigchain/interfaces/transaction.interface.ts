@@ -24,9 +24,7 @@ export interface ITransaction {
     ],
     "operation": string,
     "metadata": IMetaData,
-    "asset": {
-        "data": IAsset
-    },
+    "asset": IAsset,
     "version": string,
     "id": string
 }
