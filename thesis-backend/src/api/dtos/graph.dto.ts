@@ -1,9 +1,13 @@
+export type RelationshipDirection = 'in' | 'out';
+export type RelationshipReturn = 'left' | 'right' | 'relation';
 
 export class RelationshipDto {
     readonly name: string;
     readonly attributes: { [key: string]: any };
+    readonly direction: RelationshipDirection;
     readonly left: RelationshipNodeDto;
     readonly right: RelationshipNodeDto;
+    readonly return: RelationshipReturn[]
 }
 
 export class RelationshipNodeDto {

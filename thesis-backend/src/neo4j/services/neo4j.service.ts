@@ -8,7 +8,7 @@ import {
     createNodeQueryWithQuery,
     createRelationship,
     DROP_NODES_AND_RELATIONS,
-    getNodesByType
+    getNodesByType, readRelationship
 } from '../queries';
 import {GraphQuery, Relationship} from '../interfaces';
 
@@ -46,6 +46,11 @@ export class Neo4jService {
     // relationships
     async createRelationship(relationship: Relationship): Promise<QueryResult> {
         const relationshipQuery = createRelationship(relationship);
+        return this._executeQuery(relationshipQuery);
+    }
+
+    async readRelationship(relationship: Relationship): Promise<QueryResult> {
+        const relationshipQuery = readRelationship(relationship);
         return this._executeQuery(relationshipQuery);
     }
 

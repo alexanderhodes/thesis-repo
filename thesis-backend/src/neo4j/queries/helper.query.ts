@@ -1,3 +1,5 @@
+import {RelationshipReturn} from '../interfaces';
+
 export const WHERE = "WHERE ({{query}})";
 export const ORDER_BY = "ORDER BY {{orderBy}}";
 export const LIMIT = "LIMIT {{limit}}";
@@ -24,4 +26,8 @@ export function joinKeyValuePair(elements: { [key: string]: any }, separator: ':
 
 export function joinArrayElements(elements: string[], prefix: string, as: boolean = false): string {
     return elements && elements.length ? elements.map(element => `${prefix ? prefix + '.' : ''}${element}${as ? ' as ' + element : ''}`).join(',') : 'n';
+}
+
+export function createReturn(returns: RelationshipReturn[]): string {
+    return returns && returns.length ? returns.map(r => r === 'left' ? 'a' : (r === 'right' ? 'b' : 'r')).join(',') : '';
 }

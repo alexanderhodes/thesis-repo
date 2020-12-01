@@ -1,7 +1,8 @@
 import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post} from '@nestjs/common';
 import {INode, Neo4jService} from '../../neo4j';
-import {IAsset, IOccupation, IQualification} from '../../shared/interfaces';
+import {IAsset, IOccupation, IQualification, IRelationship} from '../../shared/interfaces';
 import {GraphQueryDto, RelationshipDto} from '../dtos';
+import {toRelationships} from '../mappers';
 
 @Controller("graph")
 export class GraphController {
@@ -57,10 +58,16 @@ export class GraphController {
         return objects;
     }
 
-    @Post("relationship/")
+    @Post("relationship/create")
     async createRelationship(@Body() relationshipDto: RelationshipDto): Promise<any> {
         const response = await this.neo4jService.createRelationship(relationshipDto);
-        return response.records;
+        return toRelationships(response);
+    }
+
+    @Post("relationship/read")
+    async readRelationShip(@Body() relationshipDto: RelationshipDto): Promise<IRelationship[]> {
+        const response = await this.neo4jService.readRelationship(relationshipDto);
+        return toRelationships(response);
     }
 
     @Delete()
@@ -69,7 +76,7 @@ export class GraphController {
     }
 
     @Post("cypher")
-    async getResultByCypherQuery(@Body() query: { cypher: string }) {
+    async getResultByCypherQuery(@Body() query: { cypher: string }): Promise<any> {
         if (query.cypher.toUpperCase().indexOf('DELETE') === -1 && query.cypher.toUpperCase().indexOf('REMOVE') === -1) {
             // ToDo: maybe parsing is necessary depending on relationship
             return this.neo4jService.executeCypherQuery(query.cypher);
