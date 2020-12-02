@@ -1,7 +1,9 @@
+import {Namespace} from '../../shared/types';
+
 export type RelationDirection = 'in' | 'out';
 export type RelationReturn = 'left' | 'right' | 'relation';
 
-export class RelationDto {
+export class GraphRelationDto {
     readonly name: string;
     readonly attributes: { [key: string]: any };
     readonly direction: RelationDirection;
@@ -11,7 +13,7 @@ export class RelationDto {
 }
 
 export class RelationNodeDto {
-    readonly type: string;
+    readonly namespace: Namespace;
     readonly condition: { [key: string]: any }
 }
 

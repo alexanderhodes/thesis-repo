@@ -2,31 +2,31 @@ import {MetaDataDto} from './meta-data.dto';
 import {AssetDto} from './asset.dto';
 
 export class TransactionDto {
-    inputs: [
+    readonly inputs: [
         {
-            owners_before: string[],
-            fulfills: null,
-            fulfillment: string
+            readonly owners_before: string[],
+            readonly fulfills: null,
+            readonly fulfillment: string
         }
     ];
-    outputs: [
+    readonly outputs: [
         {
-            public_keys: string[],
-            condition: {
-                details: {
-                    type: string,
-                    public_key: string
+            readonly public_keys: string[],
+            readonly condition: {
+                readonly details: {
+                    readonly type: string,
+                    readonly public_key: string
                 },
-                uri: string
+                readonly uri: string
             },
-            amount: string
+            readonly amount: string
         }
     ];
-    operation: string;
-    metadata: MetaDataDto;
-    asset: {
-        data: AssetDto;
+    readonly operation: string;
+    readonly metadata: MetaDataDto;
+    readonly asset: {
+        readonly data: AssetDto;
     };
-    version: string;
-    id: string;
+    readonly version: string;
+    readonly id: string;
 }

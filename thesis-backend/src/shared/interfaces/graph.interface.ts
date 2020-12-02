@@ -5,7 +5,7 @@ export interface INode {
     properties: { [key: string]: any };
 }
 
-export interface IRelation {
+export interface IGraphRelation {
     name: string;
     properties: { [key: string]: any };
 }
@@ -22,5 +22,5 @@ export interface ISegment {
 
 export interface IGraphObject {
     type: IGraphObjectType;
-    data: IPath | INode | IRelation;
+    data: IPath | INode | IGraphRelation;
 }

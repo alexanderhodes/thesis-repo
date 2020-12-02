@@ -1,4 +1,7 @@
+export type TransactionType = 'create' | 'update' | 'delete';
 
 export class MetaDataDto {
-    [key: string]: any;
+    readonly transactionType: TransactionType;
+    readonly initialTransaction: string;
+    readonly [key: string]: any;
 }

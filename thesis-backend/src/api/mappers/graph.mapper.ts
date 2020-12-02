@@ -1,5 +1,5 @@
 import {QueryResult} from 'neo4j-driver';
-import {IGraphObject, INode, IPath, IRelation, ISegment} from '../../shared/interfaces';
+import {IGraphObject, INode, IGraphRelation, ISegment} from '../../shared/interfaces/graph.interface';
 
 export function toGraphObjects(response: QueryResult): IGraphObject[] {
     const graphObjects: IGraphObject[] = [];
@@ -49,7 +49,7 @@ export function toNode(object: any): INode {
     };
 }
 
-export function toRelation(object: any): IRelation {
+export function toRelation(object: any): IGraphRelation {
     return {
         name: object.type,
         properties: object.properties

@@ -1,44 +1,59 @@
 import {Namespace, Status} from '../../shared/types';
+import {RelationDirectory, RelationNode, RelationReturn} from '../../neo4j/interfaces';
 
 export class AssetDto {
-    namespace: Namespace;
-    type: string;
-    [key: string]: any;
-    data: {
-        identifier: string;
-        name: string;
-        description: string;
-        disambiguatingDescription: string;
-        status: Status;
-        url: string;
-        [key: string]: any;
+    readonly namespace: Namespace;
+    readonly data: {
+        readonly [key: string]: any;
     };
 }
 
-export class OccupationDto extends AssetDto {
-   data: {
-       identifier: string;
-       name: string;
-       description: string;
-       disambiguatingDescription: string;
-       occupationalCategory: string;
-       hierarchy: Hierarchy[];
-       narrowerOccupations: OccupationDto[];
-       status: Status;
-       url: string;
-       skills: QualificationDto[];
-   }
+export class ResourceDto extends AssetDto {
+    readonly data: {
+        readonly identifier: string;
+        readonly name: string;
+        readonly description: string;
+        readonly disambiguatingDescription: string;
+        readonly status: Status;
+        readonly url: string;
+    }
 }
 
-export interface QualificationDto extends AssetDto {
-    data: {
-        identifier: string;
-        name: string;
-        description: string;
-        disambiguatingDescription: string;
-        status: Status;
-        url: string;
-    }
+export class OccupationDto extends ResourceDto {
+   readonly data: {
+       readonly identifier: string;
+       readonly name: string;
+       readonly description: string;
+       readonly disambiguatingDescription: string;
+       readonly occupationalCategory: string;
+       readonly hierarchy: Hierarchy[];
+       readonly narrowerOccupations: OccupationDto[];
+       readonly status: Status;
+       readonly url: string;
+       readonly skills: QualificationDto[];
+   };
+}
+
+export class QualificationDto extends ResourceDto {
+    readonly data: {
+        readonly identifier: string;
+        readonly name: string;
+        readonly description: string;
+        readonly disambiguatingDescription: string;
+        readonly status: Status;
+        readonly url: string;
+    };
+}
+
+export class RelationDto extends AssetDto {
+    readonly data: {
+        readonly name: string;
+        readonly attributes: { [key: string]: any };
+        readonly direction: RelationDirectory;
+        readonly left: RelationNode,
+        readonly right: RelationNode,
+        readonly return?: RelationReturn[]
+    };
 }
 
 export class Hierarchy {

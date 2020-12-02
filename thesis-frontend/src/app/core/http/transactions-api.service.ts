@@ -17,12 +17,4 @@ export class TransactionsApiService {
     return this.httpClient.post<Transaction>(`transactions`, transaction);
   }
 
-  createOccupationTransaction(occupation: Occupation, keyPair: KeyPair): Observable<Transaction> {
-    return this.createTransaction(occupation, keyPair);
-  }
-
-  createQualificationTransaction(qualification: Qualification, keyPair: KeyPair): Observable<Transaction> {
-    return this.createTransaction(qualification, keyPair);
-  }
-
 }

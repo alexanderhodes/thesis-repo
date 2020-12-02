@@ -1,26 +1,28 @@
+import {Namespace} from '../../shared/types';
+
 export type RelationDirectory = 'in' | 'out';
 export type RelationReturn = 'left' | 'right' | 'relation';
 
 export interface Node<T> {
     n: {
         identity: any;
-        labels: string[]
-        properties: T
-    }
+        labels: string[];
+        properties: T;
+    };
 }
 
 export interface Relation {
     name: string;
     attributes: { [key: string]: any };
     direction: RelationDirectory;
-    left: RelationNode,
-    right: RelationNode,
-    return: RelationReturn[]
+    left: RelationNode;
+    right: RelationNode;
+    return?: RelationReturn[];
 }
 
 export interface RelationNode {
-    type: string;
-    condition: { [key: string]: any }
+    namespace: Namespace;
+    condition: { [key: string]: any };
 }
 
 export interface GraphQuery {

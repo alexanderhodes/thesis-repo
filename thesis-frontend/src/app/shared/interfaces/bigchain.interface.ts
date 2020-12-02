@@ -31,10 +31,24 @@ export interface Transaction {
 export type Namespace = 'occupation' | 'qualification' | 'relation' | string;
 export type Status = string;
 
+export type RelationDirectory = 'in' | 'out';
+export type RelationReturn = 'left' | 'right' | 'relation';
+export type TransactionType = 'create' | 'update' | 'delete';
+
+export interface MetaData {
+  transactionType: TransactionType;
+  initialTransaction: string;
+  [key: string]: any;
+}
+
 export interface Asset {
   namespace: Namespace;
-  type: string;
-  [key: string]: any;
+  data: {
+    [key: string]: any;
+  };
+}
+
+export interface Resource extends Asset {
   data: {
     identifier: string;
     name: string;
@@ -42,15 +56,10 @@ export interface Asset {
     disambiguatingDescription: string;
     status: Status;
     url: string;
-    [key: string]: any;
   };
 }
 
-export interface MetaData {
-  [key: string]: any;
-}
-
-export interface Occupation extends Asset {
+export interface Occupation extends Resource {
   data: {
     identifier: string;
     name: string;
@@ -65,7 +74,7 @@ export interface Occupation extends Asset {
   };
 }
 
-export interface Qualification extends Asset {
+export interface Qualification extends Resource {
   data: {
     identifier: string;
     name: string;
@@ -74,6 +83,22 @@ export interface Qualification extends Asset {
     status: Status;
     url: string;
   };
+}
+
+export interface Relation extends Asset {
+  data: {
+    name: string;
+    attributes: { [key: string]: any };
+    direction: RelationDirectory;
+    left: RelationNode;
+    right: RelationNode;
+    return?: RelationReturn[];
+  };
+}
+
+export interface RelationNode {
+  namespace: Namespace;
+  condition: { [key: string]: any };
 }
 
 export interface Hierarchy {

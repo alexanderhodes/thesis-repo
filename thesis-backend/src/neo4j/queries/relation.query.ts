@@ -14,8 +14,8 @@ export function createRelation(relation: Relation): string {
     const returns = createReturn(relation.return);
 
     return CREATE_RELATION
-        .replace('{{typeA}}', relation.left.type)
-        .replace('{{typeB}}', relation.right.type)
+        .replace('{{typeA}}', relation.left.namespace)
+        .replace('{{typeB}}', relation.right.namespace)
         .replace('{{conditionA}}', conditionA)
         .replace('{{conditionB}}', conditionB)
         .replace('{{direction1}}', relation.direction === 'out' ? '->' : '<-')
@@ -32,11 +32,11 @@ export function readRelation(relation: Relation): string {
     const returns = createReturn(relation.return);
 
     return READ_RELATION
-        .replace('{{typeA}}', relation.left.type)
-        .replace('{{typeB}}', relation.right.type ? ':' + relation.right.type : '')
+        .replace('{{typeA}}', relation.left.namespace)
+        .replace('{{typeB}}', relation.right.namespace ? ':' + relation.right.namespace : '')
         .replace('{{conditionA}}', conditionA.length ? `{${conditionA}}` : '')
         .replace('{{conditionB}}', conditionB.length ? `{${conditionB}}` : '')
-        .replace('{{conditionB}}', relation.right.type && conditionB.length ? `{${conditionB}}` : '')
+        .replace('{{conditionB}}', relation.right.namespace && conditionB.length ? `{${conditionB}}` : '')
         .replace('{{direction1}}', relation.direction === 'out' ? '->' : '<-')
         .replace('{{direction2}}', '-')
         .replace('{{typeRelation}}', relation.name)
