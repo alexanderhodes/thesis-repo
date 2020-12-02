@@ -74,7 +74,7 @@ export class UpdateObjectComponent implements OnInit {
       this.objectApiService.updateObject(object.name, object)
         .pipe(take(1))
         .subscribe((updatedObject: IObject) => {
-          if ((!this.objectStructures && this.objectStructures.length > 0) || (this.deletedObjectStructures &&
+          if ((this.objectStructures && this.objectStructures.length > 0) || (this.deletedObjectStructures &&
             this.deletedObjectStructures.length > 0)) {
             // collect all object structures which should be stored
             const updateObjectStructures: IUpdateObjectStructure[] = this.createdUpdateObjectStructures(updatedObject);
