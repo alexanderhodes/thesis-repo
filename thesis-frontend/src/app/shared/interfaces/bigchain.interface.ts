@@ -44,6 +44,7 @@ export interface MetaData {
 export interface Asset {
   namespace: Namespace;
   data: {
+    name: string;
     [key: string]: any;
   };
 }

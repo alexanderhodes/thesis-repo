@@ -4,6 +4,7 @@ import {RelationDirectory, RelationNode, RelationReturn} from '../../neo4j/inter
 export interface IAsset {
     namespace: Namespace;
     data: {
+        name: string;
         [key: string]: any;
     };
 }

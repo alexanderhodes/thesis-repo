@@ -4,6 +4,7 @@ import {RelationDirectory, RelationNode, RelationReturn} from '../../neo4j/inter
 export class AssetDto {
     readonly namespace: Namespace;
     readonly data: {
+        readonly name: string;
         readonly [key: string]: any;
     };
 }

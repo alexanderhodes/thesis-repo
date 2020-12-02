@@ -17,6 +17,7 @@ export function createNodeQuery(assetId: string, asset: { [key: string]: any }, 
 }
 
 export function createNodeQueryForAsset(asset: IAsset): string {
+    console.log('asset', asset);
     return createNodeQuery(asset.data.name, asset.data, asset.namespace);
 }
 

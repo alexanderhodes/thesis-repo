@@ -3,7 +3,15 @@ import {take, takeUntil} from 'rxjs/operators';
 import {ObjectStructureApiService, TransactionsApiService} from '../../../core/http';
 import {CleanUpHelper} from '../../../core/utils';
 import {StateService, STORAGE_USER} from '../../../core/services';
-import {IObjectStructure, KeyPair, Occupation, Relation, StorageUser} from '../../../shared/interfaces';
+import {
+  IObjectStructure,
+  KeyPair,
+  Occupation,
+  Qualification,
+  Relation,
+  Resource,
+  StorageUser
+} from '../../../shared/interfaces';
 
 @Component({
   selector: 'ts-occupations',
@@ -146,6 +154,90 @@ export class OccupationsComponent extends CleanUpHelper implements OnInit {
         .subscribe(response => {
           console.log('response', response);
         }, (error) => console.log('error', error));
+    }
+  }
+
+  createQualifications(): void {
+    const qualifications: Qualification[] = [];
+    qualifications.push({
+      namespace: 'qualification',
+      data: {
+        identifier: 'configure-interface',
+        name: 'Benutzerschnittstelle konzipieren',
+        description: 'Entwicklung von Software- oder Gerätekomponenten, die eine Interaktion zwischen Menschen und Systemen oder Maschinen ermöglichen, unter Verwendung geeigneter Techniken, Sprachen und Werkzeuge zur Optimierung der Interaktion während der Nutzung des Systems oder der Maschine.',
+        disambiguatingDescription: '',
+        status: 'released',
+        url: 'http://data.europa.eu/esco/skill/fd33c66c-70c4-40e6-b87c-5495bd3bf26e'
+      }
+    });
+    qualifications.push({
+      namespace: 'qualification',
+      data: {
+        identifier: 'configure-interface',
+        name: 'technische Anforderungen definieren',
+        description: 'Festlegen technischer Eigenschaften von Waren, Materialien, Methoden, Verfahren, Diensten, Systemen, Softwarelösungen und Funktionalitäten, indem die besonderen Bedürfnisse, die gemäß den Kundenanforderungen erfüllt werden müssen, ermittelt und berücksichtigt werden.',
+        disambiguatingDescription: 'technische Anforderungen festlegen',
+        status: 'released',
+        url: 'http://data.europa.eu/esco/skill/d9e5349e-8791-49c2-8ba4-839fdd1606c2'
+      }
+    });
+
+    const privateKey = '8CDnuWXXDPRB8Zn8bd22U52qhLAfaU3NZZeYDrHZA14m';
+    console.log('public-key', this.#publicKey);
+    if (this.#publicKey) {
+      const keyPair: KeyPair = {
+        privateKey,
+        publicKey: this.#publicKey
+      };
+      qualifications.forEach(qualification => {
+        this.transactionApiService.createTransaction(qualification, keyPair)
+          .pipe(take(1))
+          .subscribe(response => {
+            console.log('response', response);
+          }, (error) => console.log('error', error));
+      });
+    }
+  }
+
+  createSkills(): void {
+    const skills: Resource[] = [];
+    skills.push({
+      namespace: 'skill',
+      data: {
+        identifier: 'C++',
+        description: 'C++',
+        disambiguatingDescription: '',
+        name: 'C++',
+        status: 'released',
+        url: ''
+      }
+    });
+    skills.push({
+      namespace: 'skill',
+      data: {
+        identifier: 'Angular',
+        description: 'Angular',
+        disambiguatingDescription: '',
+        name: 'Angular',
+        status: 'released',
+        url: ''
+      }
+    });
+
+    const privateKey = '8CDnuWXXDPRB8Zn8bd22U52qhLAfaU3NZZeYDrHZA14m';
+    console.log('public-key', this.#publicKey);
+    if (this.#publicKey) {
+      const keyPair: KeyPair = {
+        privateKey,
+        publicKey: this.#publicKey
+      };
+      skills.forEach(skill => {
+        this.transactionApiService.createTransaction(skill, keyPair)
+          .pipe(take(1))
+          .subscribe(response => {
+            console.log('response', response);
+          }, (error) => console.log('error', error));
+      });
     }
   }
 

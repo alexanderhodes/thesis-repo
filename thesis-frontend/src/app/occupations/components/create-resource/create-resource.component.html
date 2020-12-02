@@ -1,0 +1,120 @@
+<div>Object anlegen</div>
+<div class="grid grid-cols-12 pb-3">
+  <div class="col-start-4 col-span-6">
+
+    <div class="relative">
+      <select (change)="selectResourceType($event)"
+              class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+        <option [ngValue]="null">{{ 'common.select' | translate }}</option>
+        <option *ngFor="let resourceType of resourceTypes" [ngValue]="resourceType">
+          {{ resourceType.description }}
+        </option>
+      </select>
+      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+        </svg>
+      </div>
+    </div>
+
+
+    <ng-container *ngIf="createForm">
+      <form [formGroup]="createForm" (ngSubmit)="createResource()">
+        <ng-container *ngIf="selectedResourceType === 'qualification' || selectedResourceType === 'occupation'; else custom">
+          <div class="grid grid-cols-12">
+            <div class="col-span-6 px-2 pt-3">
+              <label for="identifier" class="text-black">Identifier *</label>
+              <input id="identifier" ts-input formControlName="identifier">
+              <ng-container *ngIf="(submitted || getFormControl('identifier').touched) && getFormControl('identifier').invalid">
+                <ts-error-message *ngIf="getFormControl('identifier').errors.required">
+                  Bitte geben Sie einen Wert ein.
+                </ts-error-message>
+              </ng-container>
+            </div>
+            <div class="col-span-6 px-2 pt-3">
+              <label for="name" class="text-black">Name *</label>
+              <input id="name" ts-input formControlName="name">
+              <ng-container *ngIf="(submitted || getFormControl('name').touched) && getFormControl('name').invalid">
+                <ts-error-message *ngIf="getFormControl('name').errors.required">
+                  Bitte geben Sie einen Wert ein.
+                </ts-error-message>
+              </ng-container>
+            </div>
+            <div class="col-span-6 px-2 pt-3">
+              <label for="description" class="text-black">Beschreibung *</label>
+              <input id="description" ts-input formControlName="description">
+              <ng-container *ngIf="(submitted || getFormControl('description').touched) && getFormControl('description').invalid">
+                <ts-error-message *ngIf="getFormControl('description').errors.required">
+                  Bitte geben Sie einen Wert ein.
+                </ts-error-message>
+              </ng-container>
+            </div>
+            <div class="col-span-6 px-2 pt-3">
+              <label for="disambiguatingDescription" class="text-black">Weitere Beschreibung</label>
+              <input id="disambiguatingDescription" ts-input formControlName="disambiguatingDescription">
+              <ng-container *ngIf="(submitted || getFormControl('disambiguatingDescription').touched) && getFormControl('disambiguatingDescription').invalid">
+                <ts-error-message *ngIf="getFormControl('disambiguatingDescription').errors.required">
+                  Bitte geben Sie einen Wert ein.
+                </ts-error-message>
+              </ng-container>
+            </div>
+            <div class="col-span-6 px-2 pt-3">
+              <label for="url" class="text-black">URL *</label>
+              <input id="url" ts-input formControlName="url">
+              <ng-container *ngIf="(submitted || getFormControl('name').touched) && getFormControl('name').invalid">
+                <ts-error-message *ngIf="getFormControl('name').errors.required">
+                  Bitte geben Sie einen Wert ein.
+                </ts-error-message>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #custom>
+          <div class="grid grid-cols-12">
+            <div class="col-span-6 px-2 pt-3">
+              <label for="name" class="text-black">Name *</label>
+              <input id="name" ts-input formControlName="name">
+              <ng-container *ngIf="(submitted || getFormControl('name').touched) && getFormControl('name').invalid">
+                <ts-error-message *ngIf="getFormControl('name').errors.required">
+                  Bitte geben Sie einen Wert ein.
+                </ts-error-message>
+              </ng-container>
+            </div>
+          </div>
+        </ng-template>
+        <ng-container *ngFor="let objectStructure of objectStructures">
+          <div class="grid grid-cols-12">
+            <div class="col-span-6 px-2 pt-3">
+              <label [attr.for]="objectStructure.field">{{ objectStructure.field }} {{ !objectStructure.nullable ? '*' : '' }}</label>
+              <ng-container *ngIf="objectStructure.datatype === 'boolean'; else normalInput">
+                <div class="flex items-start">
+                  <div class="flex-items-center h-5">
+                    <input [id]="objectStructure.field" type="checkbox" class="h-4 w-4 border-gray-300 rounded"
+                           [formControlName]="objectStructure.field">
+                  </div>
+                  <div class="ml-3">
+                    <p>{{ objectStructure.field }}</p>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-template #normalInput>
+                <input [id]="objectStructure.field" ts-input [formControlName]="objectStructure.field"
+                       [attr.type]="objectStructure.datatype === 'number' ? 'number' : 'text'">
+                <ng-container *ngIf="!objectStructure.nullable">
+                  <ng-container *ngIf="(submitted || getFormControl(objectStructure.field).touched) && getFormControl(objectStructure.field).invalid">
+                    <ts-error-message *ngIf="getFormControl(objectStructure.field).errors.required">
+                      Bitte geben Sie einen Wert ein.
+                    </ts-error-message>
+                  </ng-container>
+                </ng-container>
+              </ng-template>
+            </div>
+          </div>
+        </ng-container>
+        <div class="w-100 text-center pt-3">
+          <button ts-button-tertiary type="submit">anlegen</button>
+        </div>
+      </form>
+    </ng-container>
+  </div>
+</div>

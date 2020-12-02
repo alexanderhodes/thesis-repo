@@ -1,2 +1,2 @@
-export * from './create-occupation/public-api';
+export * from './create-resource/public-api';
 export * from './occupations/public-api';
