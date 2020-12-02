@@ -1,3 +1,4 @@
+export * from './graph-api.service';
 export * from './login-api.service';
 export * from './object-api.service';
 export * from './object-structure-api.service';

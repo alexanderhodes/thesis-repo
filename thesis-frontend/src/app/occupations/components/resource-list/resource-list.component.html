@@ -1,0 +1,37 @@
+<div *ngFor="let object of objects" class="pb-3">
+  <div class="text-bold text-black text-3xl">{{ object.type }}</div>
+  <table class="table-auto w-full">
+    <thead>
+    <tr class="border-t-4 border-black">
+      <th class="px-4 py-2 text-left h-auto">
+        <span class="text-lg">Name</span>
+      </th>
+      <th class="px-4 py-2 text-left h-auto">
+        <span class="text-lg">Aktionen</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let asset of object.data; index as i; last as last" class="border-t-2 border-black"
+        [ngClass]="{'border-b-2': last}">
+      <td class="px-4 py-2">{{ asset.data.name }}</td>
+      <td class="px-4 py-2">
+        <button [routerLink]="[object.type, asset.data.name ]" ts-button-tertiary class="my-1">
+          zur Detailansicht
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+
+<!--  <div class="grid grid-cols-12">-->
+<!--    <div class="col-span-3 border border-black p-2 mx-3 my-3" *ngFor="let asset of object.data">-->
+<!--      <ng-container *ngFor="let item of asset.data | keyvalue">-->
+<!--        <div class="text-black font-bold">{{ item.key }}</div>-->
+<!--        <div class="">{{ item.value | slice:0:30 }}</div>-->
+<!--      </ng-container>-->
+<!--    </div>-->
+<!--  </div>-->
+</div>
+

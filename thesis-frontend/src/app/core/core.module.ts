@@ -9,6 +9,7 @@ import {ApiPrefixInterceptor, HttpErrorInterceptor, HttpTokenInterceptor} from '
 import {HasPermissionDirective, HasRoleDirective} from './directives';
 import {ConfigService, RoleService} from './services';
 import {
+  GraphApiService,
   LoginApiService,
   ObjectApiService,
   ObjectStructureApiService,
@@ -36,6 +37,7 @@ const services = [
 //  PermissionService,
   ConfigService,
   RoleService,
+  GraphApiService,
   LoginApiService,
   ObjectApiService,
   ObjectStructureApiService,
