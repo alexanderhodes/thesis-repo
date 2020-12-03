@@ -1,5 +1,5 @@
 import {Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
-import {ObjectEntity} from './objectEntity';
+import {ObjectEntity} from './object-entity';
 
 @Entity({
     name: 'object-structure'
