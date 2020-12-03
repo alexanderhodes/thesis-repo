@@ -2,11 +2,12 @@ import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, P
 import {RelationService, RelationStructureService} from '../../database/services';
 import {JwtAuthGuard, PermissionsGuard} from '../../authorization/guards';
 import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
-import {IDbRelationStructure} from '../../shared/interfaces';
+import {IDbRelationStructure, IUpdateRelationStructureResponse} from '../../shared/interfaces';
 import {HasPermissions} from '../../authorization/decorators';
 import {PermissionsEnum} from '../../authorization/constants';
-import {DbRelationStructureDto} from '../dtos';
+import {DbRelationStructureDto, UpdateRelationStructuresDto} from '../dtos';
 import {toRelationEntity, toRelationStructureEntity} from '../mappers';
+import {RelationEntity} from '../../database/entities';
 
 @ApiTags('relation-structure')
 @Controller('relation-structure')
@@ -76,6 +77,33 @@ export class RelationStructureController {
     }
 
     @UseGuards(JwtAuthGuard, PermissionsGuard)
+    @Put()
+    @HasPermissions(PermissionsEnum.CONFIGURATION_UPDATE)
+    @ApiBearerAuth()
+    async updateMultipleRelationStructures(@Body() updateRelationStructureDtos: UpdateRelationStructuresDto[]): Promise<IUpdateRelationStructureResponse[]> {
+        const updateRelationStructureResponse: IUpdateRelationStructureResponse[] = [];
+        for (const rel of updateRelationStructureDtos) {
+            const relation = toRelationEntity(rel.relationStructure.relation.name);
+
+            if (rel.type === 'CREATE') {
+                // create object
+                const response = await this._createRelationStructure(rel.relationStructure, relation);
+                updateRelationStructureResponse.push(response);
+            } else if (rel.type === 'UPDATE') {
+                // update object
+                const response = await this._updateRelationStructure(rel.relationStructure, relation);
+                updateRelationStructureResponse.push(response);
+            } else {
+                // delete object
+                const response = await this._deleteRelationStructure(rel.relationStructure);
+                updateRelationStructureResponse.push(response);
+            }
+        }
+
+        return updateRelationStructureResponse;
+    }
+
+    @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Delete(":id")
     @HasPermissions(PermissionsEnum.CONFIGURATION_DELETE)
     @ApiBearerAuth()
@@ -85,6 +113,60 @@ export class RelationStructureController {
             return {};
         }
         throw new HttpException(`Die Beziehungs-Struktur mit der ID ${id} wurde nicht nicht gefunden.`, HttpStatus.NOT_FOUND);
+    }
+
+    private async _createRelationStructure(relationStructure: DbRelationStructureDto, relation: RelationEntity): Promise<IUpdateRelationStructureResponse> {
+        const relationStructureEntity = toRelationStructureEntity(
+            relation, relationStructure.field, new Date(),
+            new Date(), relationStructure.id)
+        const createdRelationStructure = await this.relationStructureService.insert(relationStructureEntity);
+        return {
+            message: 'CREATED',
+            relationStructure: createdRelationStructure,
+            response: 'SUCCESS'
+        };
+    }
+
+    private async _updateRelationStructure(relationStructure: DbRelationStructureDto, relation: RelationEntity): Promise<IUpdateRelationStructureResponse> {
+        const foundRelationStructure = await this.relationStructureService.findOne(relationStructure.id);
+        if (foundRelationStructure) {
+            const relationStructureEntity = toRelationStructureEntity(
+                relation, relationStructure.field, foundRelationStructure.createTimestamp,
+                new Date(), relationStructure.id)
+
+            const updateRelationStructure = await this.relationStructureService.update(relationStructureEntity);
+            return {
+                message: `UPDATED ${relationStructure.id}`,
+                relationStructure: updateRelationStructure,
+                response: 'SUCCESS'
+            };
+        } else {
+            return {
+                message: `UPDATE FAILED ${relationStructure.id}`,
+                relationStructure: null,
+                response: 'ERROR'
+            };
+        }
+    }
+
+    private async _deleteRelationStructure(relationStructure: DbRelationStructureDto): Promise<IUpdateRelationStructureResponse> {
+        if (relationStructure.id) {
+            const result = await this.relationStructureService.remove(relationStructure.id);
+            console.log('result', result);
+            if (result) {
+                return {
+                    message: `DELETED ${relationStructure.id}`,
+                    relationStructure: null,
+                    response: 'SUCCESS'
+                };
+            } else {
+                return {
+                    message: `DELETE FAILED ${relationStructure.id}`,
+                    relationStructure: null,
+                    response: 'ERROR'
+                };
+            }
+        }
     }
 
 }

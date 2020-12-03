@@ -1,0 +1,51 @@
+<div class="text-xl mt-3">Beziehungen</div>
+
+<div class="border-2 border-black" [ngClass]="{'pb-3 mb-4 mt-2': show, 'my-2': !show}">
+  <div class="flex justify-between text-lg py-1 px-4 cursor-pointer" (click)="toggle()"
+       [ngClass]="{'bg-black text-white': !show, 'bg-white text-black border-b-2 border-black': show}">
+    <div class="font-bold">
+      Beziehung anlegen
+    </div>
+    <div class="h-4">
+      <ts-chevron-down *ngIf="!show" [color]="'white'" [sideClasses]="'w-auto'"
+                       style="margin-top: 6px"></ts-chevron-down>
+      <ts-chevron-up *ngIf="show" [color]="'black'" [sideClasses]="'w-auto'" style="margin-top: 6px"></ts-chevron-up>
+    </div>
+  </div>
+  <div class="h-auto px-4 py-2" *ngIf="show">
+    <ts-create-relation (relationCreated)="onRelationCreated($event)"></ts-create-relation>
+  </div>
+</div>
+
+<table class="table-auto w-full">
+  <thead>
+  <tr class="border-t-4 border-black">
+    <th class="px-4 py-2 text-left">
+      <div class="h-auto">Beziehung</div>
+    </th>
+    <th class="px-4 py-2 text-left">
+      <div class="h-auto">{{ 'common.actions' | translate }}</div>
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let relation of relations; last as last" class="border-t-2 border-black" [ngClass]="{'border-b-2': last}">
+    <td class="px-4 py-2">
+      {{ relation.name }}
+    </td>
+    <td class="px-4 py-2">
+      <button ts-button-tertiary class="my-1 mr-3" [routerLink]="['relation', relation.name]">
+        {{ 'common.change' | translate }}
+      </button>
+      <button ts-button-tertiary class="my-1" (click)="deleteRelation(relation)">
+        {{ 'common.delete' | translate }}
+      </button>
+    </td>
+  </tr>
+  <tr *ngIf="relations && relations.length === 0">
+    <td colspan="2">
+      Es sind noch keine Beziehungen angelegt worden.
+    </td>
+  </tr>
+  </tbody>
+</table>

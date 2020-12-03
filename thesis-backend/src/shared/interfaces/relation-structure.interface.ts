@@ -7,3 +7,9 @@ export interface IDbRelationStructure {
     updateTimestamp: Date;
     relation: IDbRelation;
 }
+
+export interface IUpdateRelationStructureResponse {
+    message?: string;
+    relationStructure: IDbRelationStructure;
+    response: 'ERROR' | 'SUCCESS';
+}

@@ -1,0 +1,24 @@
+<table class="table-auto w-full">
+  <thead>
+  <tr class="border-t-4 border-black">
+    <th class="px-4 py-2 text-left h-auto text-lg">{{ 'common.field' | translate }}</th>
+    <th class="px-4 py-2 text-left h-auto text-lg">{{ 'common.actions' | translate }}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let relationStructure of relationStructures; index as index; last as last" class="border-t-2 border-black"
+      [ngClass]="{'border-b-2': last}">
+    <td class="px-4 py-2">{{ relationStructure.field }}</td>
+    <td class="px-4 py-2">
+      <button (click)="deleteRelationStructure(relationStructure)" ts-button-primary class="my-1">
+        {{ 'common.delete' | translate }}
+      </button>
+    </td>
+  </tr>
+  <tr *ngIf="relationStructures && relationStructures.length === 0">
+    <td colspan="2">Es sind noch keine Felder für die Beziehung angelegt worden.</td>
+  </tr>
+  </tbody>
+</table>
+
+

@@ -24,7 +24,7 @@ export class ObjectListComponent implements OnInit {
       .subscribe((objects: IObject[]) => {
         this.objects = objects;
         this.changeDetectorRef.detectChanges();
-      }, (error) => {
+      }, () => {
         this.objects = [];
       });
   }

@@ -5,22 +5,32 @@ import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
 import {
   AddObjectStructureComponent,
+  AddRelationStructureComponent,
   ConfigurationComponent,
   CreateObjectComponent,
-  UpdateObjectComponent,
+  CreateRelationComponent,
   ObjectListComponent,
-  ObjectStructureListComponent
+  ObjectStructureListComponent,
+  RelationListComponent,
+  RelationStructureListComponent,
+  UpdateObjectComponent,
+  UpdateRelationComponent
 } from './components/public-api';
 import {ConfigurationRoutingModule} from './configuration-routing.module';
 import {CoreModule} from '../core';
 
 const components = [
   AddObjectStructureComponent,
+  AddRelationStructureComponent,
   ConfigurationComponent,
   CreateObjectComponent,
-  UpdateObjectComponent,
+  CreateRelationComponent,
   ObjectListComponent,
-  ObjectStructureListComponent
+  ObjectStructureListComponent,
+  RelationListComponent,
+  RelationStructureListComponent,
+  UpdateObjectComponent,
+  UpdateRelationComponent
 ];
 
 const services = [];

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ConfigurationComponent, UpdateObjectComponent} from './components/public-api';
+import {ConfigurationComponent, UpdateObjectComponent, UpdateRelationComponent} from './components/public-api';
 
 const routes: Routes = [
   {
@@ -10,6 +10,10 @@ const routes: Routes = [
   {
     path: 'object/:name',
     component: UpdateObjectComponent
+  },
+  {
+    path: 'relation/:name',
+    component: UpdateRelationComponent
   }
 ];
 

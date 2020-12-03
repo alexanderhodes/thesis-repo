@@ -1,0 +1,40 @@
+<form [formGroup]="createRelationForm" (ngSubmit)="createRelation()">
+  <div class="grid grid-cols-12">
+    <div class="col-span-3 col-start-4 mt-2 px-2">
+      <label for="object-name" class="text-black">Beziehung</label>
+      <input id="object-name" ts-input formControlName="name">
+      <ng-container
+        *ngIf="(submitted || getFormControl('name').touched) && getFormControl('name').invalid">
+        <ts-error-message *ngIf="getFormControl('name').errors.required">
+          Bitte geben Sie einen Namen für die Beziehung ein.
+        </ts-error-message>
+      </ng-container>
+    </div>
+    <div class="col-span-6 col-start-4 mt-2 px-2">
+      <ts-add-relation-structure (addedRelationStructure)="onRelationStructureAdded($event)"
+                                 [relationStructures]="relationStructures">
+        <div class="col-span-6 mt-2 px-2">
+          <ts-relation-structure-list [relationStructures]="relationStructures"
+                                      (deletedRelationStructure)="onRelationStructureDelete($event)"></ts-relation-structure-list>
+        </div>
+      </ts-add-relation-structure>
+    </div>
+    <div class="col-span-6 col-start-4 mt-3" *ngIf="message">
+      <ng-container *ngIf="message.type === 'error'; else successMessage">
+        <ts-error-message>{{ message.text }}</ts-error-message>
+      </ng-container>
+      <ng-template #successMessage>
+        <ts-success-message>{{ message.text }}</ts-success-message>
+      </ng-template>
+    </div>
+    <div class="col-span-6 col-start-4 mt-3">
+      <div class="grid grid-cols-12">
+        <div class="col-span-12 text-center">
+          <button type="submit" ts-button-tertiary>
+            {{ 'common.create' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

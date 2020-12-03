@@ -1,0 +1,25 @@
+<form [formGroup]="addRelationStructureForm" (ngSubmit)="addRelationStructure()">
+  <div class="font-bold">Aufbau der Beziehung</div>
+  <div class="grid grid-cols-6">
+    <div class="col-span-3 mt-2 px-2">
+      <label for="field" class="text-black">{{ 'common.field' | translate }}</label>
+      <input id="field" ts-input formControlName="field">
+      <ng-container
+        *ngIf="getFormControl('field').touched && getFormControl('field').invalid">
+        <ts-error-message *ngIf="getFormControl('field').errors.required">
+          {{ 'common.error.field-missing' | translate }}
+        </ts-error-message>
+        <ts-error-message *ngIf="getFormControl('field').errors.fieldNameExisting">
+          {{ 'common.error.field-already-existing' | translate:{ field: getFormControl('field').value } }}
+        </ts-error-message>
+      </ng-container>
+    </div>
+    <div class="col-span-3 mt-6 pt-2 px-2">
+      <button type="submit" ts-button-tertiary class="text-center">
+        {{ 'common.add' | translate }}
+      </button>
+    </div>
+    <ng-content></ng-content>
+  </div>
+</form>
+
