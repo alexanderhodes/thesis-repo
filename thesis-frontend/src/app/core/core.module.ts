@@ -9,12 +9,15 @@ import {ApiPrefixInterceptor, HttpErrorInterceptor, HttpTokenInterceptor} from '
 import {HasPermissionDirective, HasRoleDirective} from './directives';
 import {ConfigService, RoleService} from './services';
 import {
+  DbRelationApiService,
+  DbRelationStructureApiService,
   GraphApiService,
   LoginApiService,
   ObjectApiService,
   ObjectStructureApiService,
   PermissionsApiService,
-  RolesApiService, TransactionsApiService,
+  RolesApiService,
+  TransactionsApiService,
   UsersApiService
 } from './http';
 
@@ -42,6 +45,8 @@ const services = [
   ObjectApiService,
   ObjectStructureApiService,
   PermissionsApiService,
+  DbRelationApiService,
+  DbRelationStructureApiService,
   RolesApiService,
   TransactionsApiService,
   UsersApiService

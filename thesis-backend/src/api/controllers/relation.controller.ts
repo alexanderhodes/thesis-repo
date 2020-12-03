@@ -4,9 +4,9 @@ import {JwtAuthGuard, PermissionsGuard} from '../../authorization/guards';
 import {HasPermissions} from '../../authorization/decorators';
 import {PermissionsEnum} from '../../authorization/constants';
 import {ApiBearerAuth} from '@nestjs/swagger';
-import {DbRelationDto, ObjectDto, RelationDto} from '../dtos';
-import {IDbRelation, IObject} from '../../shared/interfaces';
-import {toObjectEntity, toRelationEntity} from '../mappers';
+import {DbRelationDto} from '../dtos';
+import {IDbRelation} from '../../shared/interfaces';
+import {toRelationEntity} from '../mappers';
 
 @Controller('relations')
 @Controller('relations')
