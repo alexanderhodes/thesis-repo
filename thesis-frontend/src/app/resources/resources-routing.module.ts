@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {OccupationsComponent, ResourceDetailComponent} from './components/public-api';
+import {ResourceOverviewComponent, ResourceDetailComponent} from './components/public-api';
 
 const routes: Routes = [
   {
     path: '',
-    component: OccupationsComponent
+    component: ResourceOverviewComponent
   },
   {
     path: ':node/:name',
@@ -21,6 +21,6 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ]
 })
-export class OccupationsRoutingModule {
+export class ResourcesRoutingModule {
 
 }

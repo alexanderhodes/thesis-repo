@@ -22,17 +22,8 @@ const routes: Routes = [
     }
   },
   {
-    path: 'occupations',
-    loadChildren: () => import('./occupations').then(m => m.OccupationsModule),
-    canActivate: [PermissionRouteGuard],
-    data: {
-      roles: [],
-      permissions: [PermissionsEnum.ASSETS_READ]
-    }
-  },
-  {
-    path: 'qualifications',
-    loadChildren: () => import('./qualifications').then(m => m.QualificationsModule),
+    path: 'resources',
+    loadChildren: () => import('./resources').then(m => m.ResourcesModule),
     canActivate: [PermissionRouteGuard],
     data: {
       roles: [],
@@ -54,4 +45,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

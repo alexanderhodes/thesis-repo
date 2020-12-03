@@ -3,16 +3,19 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
-import {QualificationsComponent} from './components/public-api';
-import {QualificationsApiService} from './services/qualifications-api.service';
-import {QualificationsRoutingModule} from './qualifications-routing.module';
+import {
+  CreateResourceComponent,
+  ResourceOverviewComponent,
+  ResourceDetailComponent,
+  ResourceListComponent
+} from './components/public-api';
+import {ResourcesRoutingModule} from './resources-routing.module';
 
 const components = [
-  QualificationsComponent
-];
-
-const services = [
-  QualificationsApiService
+  CreateResourceComponent,
+  ResourceOverviewComponent,
+  ResourceDetailComponent,
+  ResourceListComponent
 ];
 
 @NgModule({
@@ -26,12 +29,10 @@ const services = [
     ReactiveFormsModule,
     RouterModule,
     SharedModule,
-    QualificationsRoutingModule
+    ResourcesRoutingModule
   ],
-  providers: [
-    ...services
-  ]
+  providers: []
 })
-export class QualificationsModule {
+export class ResourcesModule {
 
 }

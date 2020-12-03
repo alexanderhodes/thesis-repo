@@ -14,13 +14,13 @@ import {
 } from '../../../shared/interfaces';
 
 @Component({
-  selector: 'ts-occupations',
-  templateUrl: 'occupations.component.html',
-  styleUrls: ['occupations.component.scss'],
+  selector: 'ts-resource-overview',
+  templateUrl: 'resource-overview.component.html',
+  styleUrls: ['resource-overview.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.Emulated
 })
-export class OccupationsComponent extends CleanUpHelper implements OnInit {
+export class ResourceOverviewComponent extends CleanUpHelper implements OnInit {
 
   #publicKey: string;
   objectStructure: IObjectStructure[];
