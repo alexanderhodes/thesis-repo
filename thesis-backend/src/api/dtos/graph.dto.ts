@@ -1,15 +1,15 @@
 import {Namespace} from '../../shared/types';
 
-export type RelationDirection = 'in' | 'out';
+export type RelationDirection = 'in' | 'out' | 'both';
 export type RelationReturn = 'left' | 'right' | 'relation';
 
 export class GraphRelationDto {
-    readonly name: string;
-    readonly attributes: { [key: string]: any };
+    readonly name?: string;
+    readonly attributes?: { [key: string]: any };
     readonly direction: RelationDirection;
     readonly left: RelationNodeDto;
-    readonly right: RelationNodeDto;
-    readonly return: RelationReturn[]
+    readonly right?: RelationNodeDto;
+    readonly return?: RelationReturn[]
 }
 
 export class RelationNodeDto {

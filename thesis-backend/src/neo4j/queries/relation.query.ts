@@ -4,7 +4,7 @@ import {createReturn, joinKeyValuePair} from './helper.query';
 const CREATE_RELATION
     = `MATCH (a:{{typeA}}), (b:{{typeB}}) WHERE {{conditionA}} AND {{conditionB}} CREATE (a) {{direction1}} [r:{{relation}} {{{relationAttributes}}}] {{direction2}} (b) RETURN {{return}}`;
 const READ_RELATION
-    = `MATCH (a:{{typeA}} {{conditionA}} ) {{direction1}} [r:{{typeRelation}} {{conditionR}} ] {{direction2}} (b{{typeB}} {{conditionB}} ) RETURN {{return}}`
+    = `MATCH (a:{{typeA}} {{conditionA}} ) {{direction1}} [r{{typeRelation}} {{conditionR}} ] {{direction2}} (b{{typeB}} {{conditionB}} ) RETURN {{return}}`
 const DEFAULT_RETURN = 'a,b,r';
 
 export function createRelation(relation: Relation): string {
@@ -18,7 +18,7 @@ export function createRelation(relation: Relation): string {
         .replace('{{typeB}}', relation.right.namespace)
         .replace('{{conditionA}}', conditionA)
         .replace('{{conditionB}}', conditionB)
-        .replace('{{direction1}}', relation.direction === 'out' ? '->' : '<-')
+        .replace('{{direction1}}', relation.direction === 'out' ? '->' : relation.direction === 'in' ? '<-' : '-')
         .replace('{{direction2}}', '-')
         .replace('{{relation}}', relation.name)
         .replace('{{relationAttributes}}', relationAttributes)
@@ -27,19 +27,19 @@ export function createRelation(relation: Relation): string {
 
 export function readRelation(relation: Relation): string {
     const conditionA = joinKeyValuePair(relation.left.condition, ':');
-    const conditionB = joinKeyValuePair(relation.right.condition, ':');
+    const conditionB = relation.right ? joinKeyValuePair(relation.right.condition, ':') : '';
     const conditionR = joinKeyValuePair(relation.attributes, ':');
     const returns = createReturn(relation.return);
 
     return READ_RELATION
         .replace('{{typeA}}', relation.left.namespace)
-        .replace('{{typeB}}', relation.right.namespace ? ':' + relation.right.namespace : '')
+        .replace('{{typeB}}', relation.right && relation.right.namespace ? ':' + relation.right.namespace : '')
         .replace('{{conditionA}}', conditionA.length ? `{${conditionA}}` : '')
         .replace('{{conditionB}}', conditionB.length ? `{${conditionB}}` : '')
-        .replace('{{conditionB}}', relation.right.namespace && conditionB.length ? `{${conditionB}}` : '')
-        .replace('{{direction1}}', relation.direction === 'out' ? '->' : '<-')
+        .replace('{{conditionB}}', relation.right && relation.right.namespace && conditionB.length ? `{${conditionB}}` : '')
+        .replace('{{direction1}}', relation.direction === 'out' ? '->' : relation.direction === 'in' ? '<-' : '-')
         .replace('{{direction2}}', '-')
-        .replace('{{typeRelation}}', relation.name)
+        .replace('{{typeRelation}}', relation.name ? ':' + relation.name : '')
         .replace('{{conditionR}}', conditionR.length ? `{${conditionR}}` : '')
         .replace('{{return}}', returns.length ? returns : DEFAULT_RETURN);
 }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {GraphObject, GraphQuery} from '../../shared/interfaces';
+import {GraphObject, GraphQuery, GraphRelation, GraphRelationQuery} from '../../shared/interfaces';
 
 @Injectable()
 export class GraphApiService {
@@ -14,6 +14,10 @@ export class GraphApiService {
 
   getNodesByQuery(type: string, query: GraphQuery): Observable<GraphObject[]> {
     return this.httpClient.post<GraphObject[]>(`graph/node/${type}`, query);
+  }
+
+  getRelationsByQuery(query: GraphRelationQuery): Observable<GraphObject[]> {
+    return this.httpClient.post<GraphObject[]>('graph/relation/read', query);
   }
 
 }

@@ -3,7 +3,7 @@
     <div class="col-span-6 col-start-4 text-3xl">{{ asset.data.name }}</div>
     <div *ngFor="let item of asset.data | keyvalue" class="col-span-6 col-start-4">
       <div class="font-bold">{{ item.key }}</div>
-      <div>{{ item.value }}</div>
+      <div>{{ item.value && item.value.length ? item.value : '&nbsp;' }}</div>
     </div>
   </div>
 </ng-container>

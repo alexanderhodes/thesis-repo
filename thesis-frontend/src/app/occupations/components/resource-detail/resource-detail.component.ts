@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {GraphApiService} from '../../../core/http';
-import {Asset, GraphObject, GraphQuery, Node} from '../../../shared/interfaces';
+import {Asset, GraphObject, GraphQuery, GraphRelationQuery, Node} from '../../../shared/interfaces';
 import {take} from 'rxjs/operators';
 
 @Component({
@@ -47,6 +47,21 @@ export class ResourceDetailComponent implements OnInit {
         }
       }, (error) => {
         console.log('error', error);
+      });
+
+    const relationsQuery: GraphRelationQuery = {
+      left: {
+        namespace: nodeParam,
+        condition: {
+          name: nameParam
+        }
+      },
+      direction: 'both'
+    };
+    this.graphApiService.getRelationsByQuery(relationsQuery)
+      .pipe(take(1))
+      .subscribe((graphObjects: GraphObject[]) => {
+        console.log('graphObjects', graphObjects);
       });
   }
 

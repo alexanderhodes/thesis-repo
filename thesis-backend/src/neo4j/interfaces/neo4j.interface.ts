@@ -1,6 +1,6 @@
 import {Namespace} from '../../shared/types';
 
-export type RelationDirectory = 'in' | 'out';
+export type RelationDirectory = 'in' | 'out' | 'both';
 export type RelationReturn = 'left' | 'right' | 'relation';
 
 export interface Node<T> {
@@ -12,11 +12,11 @@ export interface Node<T> {
 }
 
 export interface Relation {
-    name: string;
-    attributes: { [key: string]: any };
+    name?: string;
+    attributes?: { [key: string]: any };
     direction: RelationDirectory;
     left: RelationNode;
-    right: RelationNode;
+    right?: RelationNode;
     return?: RelationReturn[];
 }
 

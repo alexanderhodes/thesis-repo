@@ -31,7 +31,7 @@ export interface Transaction {
 export type Namespace = 'occupation' | 'qualification' | 'relation' | string;
 export type Status = string;
 
-export type RelationDirectory = 'in' | 'out';
+export type RelationDirection = 'in' | 'out' | 'both';
 export type RelationReturn = 'left' | 'right' | 'relation';
 export type TransactionType = 'create' | 'update' | 'delete';
 
@@ -90,7 +90,7 @@ export interface Relation extends Asset {
   data: {
     name: string;
     attributes: { [key: string]: any };
-    direction: RelationDirectory;
+    direction: RelationDirection;
     left: RelationNode;
     right: RelationNode;
     return?: RelationReturn[];

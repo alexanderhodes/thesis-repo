@@ -1,3 +1,5 @@
+import {Namespace, RelationDirection, RelationNode, RelationReturn} from './bigchain.interface';
+
 export type GraphObjectType = 'node' | 'relation' | 'path';
 
 export interface Node {
@@ -31,4 +33,13 @@ export interface GraphQuery {
   condition?: { [key: string]: any };
   orderBy?: string[];
   limit?: number;
+}
+
+export interface GraphRelationQuery {
+  name?: string;
+  attributes?: { [key: string]: any };
+  direction: RelationDirection;
+  left: RelationNode;
+  right?: RelationNode;
+  return?: RelationReturn[];
 }
