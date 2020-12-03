@@ -6,9 +6,13 @@ import {AuthorizationModule} from '../authorization';
 import {BigchainModule} from '../bigchain';
 import {
     AssetsController,
-    BlocksController, ObjectController, ObjectStructureController,
+    BlocksController,
     GraphController,
+    ObjectController,
+    ObjectStructureController,
     PermissionsController,
+    RelationController,
+    RelationStructureController,
     RolesController,
     TransactionsController,
     UsersController
@@ -22,6 +26,8 @@ const controllers = [
     ObjectStructureController,
     GraphController,
     PermissionsController,
+    RelationController,
+    RelationStructureController,
     RolesController,
     TransactionsController,
     UsersController

@@ -4,6 +4,8 @@ export * from './meta-data.dto';
 export * from './object.dto';
 export * from './object-structure.dto';
 export * from './permission.dto';
+export * from './relation.dto';
+export * from './relation-structure.dto';
 export * from './roles.dto';
 export * from './transaction.dto';
 export * from './user.dto';
