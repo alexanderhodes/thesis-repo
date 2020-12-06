@@ -1,9 +1,9 @@
 import {HttpService, Injectable} from '@nestjs/common';
-import {BigchainBaseService} from './bigchain-base.service';
-import {ConfigurationService} from '../../app-config/services';
 import {InjectModel} from '@nestjs/mongoose';
-import {Blocks} from '../models';
 import {Model} from 'mongoose';
+import {BigchainBaseService} from './bigchain-base.service';
+import {ConfigurationService} from '../../app-config';
+import {Blocks} from '../models';
 
 @Injectable()
 export class BlocksService extends BigchainBaseService {

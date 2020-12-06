@@ -1,4 +1,4 @@
-import {RelationEntity} from '../../database/entities';
+import {RelationEntity} from '../../database';
 
 export function toRelationEntity(
     name: string

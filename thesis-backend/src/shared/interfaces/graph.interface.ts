@@ -2,7 +2,10 @@ export type IGraphObjectType = 'node' | 'relation' | 'path';
 
 export interface INode {
     name: string;
-    properties: { [key: string]: any };
+    properties: {
+        uuid?: string;
+        [key: string]: any ;
+    };
 }
 
 export interface IGraphRelation {

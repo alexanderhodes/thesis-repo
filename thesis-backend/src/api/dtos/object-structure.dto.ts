@@ -1,5 +1,5 @@
-import {IObject} from '../../shared/interfaces';
 import {ApiProperty} from '@nestjs/swagger';
+import {IObject} from '../../shared';
 
 export type UpdateObjectStructureType = 'CREATE' | 'UPDATE' | 'DELETE';
 

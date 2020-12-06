@@ -1,4 +1,4 @@
-import {Namespace} from '../../shared/types';
+import {Namespace} from '../../shared';
 
 export type RelationDirectory = 'in' | 'out' | 'both';
 export type RelationReturn = 'left' | 'right' | 'relation';

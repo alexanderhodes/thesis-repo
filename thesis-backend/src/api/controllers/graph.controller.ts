@@ -1,13 +1,14 @@
 import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post} from '@nestjs/common';
 import {Neo4jService} from '../../neo4j';
-import {IGraphObject} from '../../shared';
+import {IGraphObject, RemoteService} from '../../shared';
 import {GraphQueryDto, GraphRelationDto} from '../dtos';
 import {toGraphObjects} from '../mappers';
 
 @Controller("graph")
 export class GraphController {
 
-    constructor(private neo4jService: Neo4jService) {}
+    constructor(private neo4jService: Neo4jService,
+                private remoteService: RemoteService) {}
 
     @Get()
     getDbInfo(): Promise<any> {
@@ -24,6 +25,16 @@ export class GraphController {
     async getGraphObjectsByTypeWithQuery(@Param("type") type: string, @Body() graphQuery: GraphQueryDto): Promise<IGraphObject[]> {
         const response = await this.neo4jService.findNodesByTypeAndQuery(graphQuery);
         return toGraphObjects(response);
+    }
+
+    @Post('node/:type/remote')
+    async getGraphObjectByTypeWithQuery(@Param("type") type: string, @Body() graphQuery: GraphQueryDto): Promise<any> {
+        const response = await this.neo4jService.findNodesByTypeAndQuery(graphQuery);
+        const remoteQueries = this.remoteService.queryRemote('POST', `api/graph/node/${type}`, graphQuery);
+        remoteQueries.forEach(query => {
+            query.then(result => console.log('result', result)).catch(err => console.log('error', err));
+        });
+        return response;
     }
 
     @Post("relation/create")

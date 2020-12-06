@@ -1,4 +1,4 @@
-import {PermissionEntity, RoleEntity} from '../../database/entities';
+import {PermissionEntity, RoleEntity} from '../../database';
 
 export interface Payload {
     sub: string;

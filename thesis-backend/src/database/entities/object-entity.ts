@@ -11,8 +11,4 @@ export class ObjectEntity {
         default: false
     })
     deletable: boolean;
-    // @OneToMany(() => ObjectStructureEntity, objectStructure => objectStructure.object, {
-    //     cascade: ['remove']
-    // })
-    // objectStructure: ObjectStructureEntity[];
 }

@@ -1,4 +1,4 @@
-import {IAsset, IOccupation, IQualification} from '../../shared/interfaces';
+import {IAsset, IOccupation, IQualification} from '../../shared';
 import {joinArrayElements, joinKeyValuePair, LIMIT, ORDER_BY, WHERE} from './helper.query';
 import {GraphQuery} from '../interfaces';
 

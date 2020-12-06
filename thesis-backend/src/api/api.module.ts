@@ -18,6 +18,7 @@ import {
     UsersController
 } from './controllers';
 import {Neo4jModule} from '../neo4j';
+import {CoreModule} from '../core';
 
 const controllers = [
     AssetsController,

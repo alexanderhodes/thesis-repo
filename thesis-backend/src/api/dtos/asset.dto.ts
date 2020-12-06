@@ -1,9 +1,10 @@
-import {Namespace, Status} from '../../shared/types';
-import {RelationDirectory, RelationNode, RelationReturn} from '../../neo4j/interfaces';
+import {Namespace, Status} from '../../shared';
+import {RelationDirectory, RelationNode, RelationReturn} from '../../neo4j';
 
 export class AssetDto {
     readonly namespace: Namespace;
     readonly data: {
+        readonly uuid: string;
         readonly name: string;
         readonly [key: string]: any;
     };
@@ -11,6 +12,7 @@ export class AssetDto {
 
 export class ResourceDto extends AssetDto {
     readonly data: {
+        readonly uuid: string;
         readonly identifier: string;
         readonly name: string;
         readonly description: string;
@@ -22,6 +24,7 @@ export class ResourceDto extends AssetDto {
 
 export class OccupationDto extends ResourceDto {
    readonly data: {
+       readonly uuid: string;
        readonly identifier: string;
        readonly name: string;
        readonly description: string;
@@ -37,6 +40,7 @@ export class OccupationDto extends ResourceDto {
 
 export class QualificationDto extends ResourceDto {
     readonly data: {
+        readonly uuid: string;
         readonly identifier: string;
         readonly name: string;
         readonly description: string;
@@ -48,6 +52,7 @@ export class QualificationDto extends ResourceDto {
 
 export class RelationDto extends AssetDto {
     readonly data: {
+        readonly uuid: string;
         readonly name: string;
         readonly attributes: { [key: string]: any };
         readonly direction: RelationDirectory;

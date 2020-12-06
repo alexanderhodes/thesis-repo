@@ -1,5 +1,5 @@
-import {Permission} from './permission.interface';
 import {ApiProperty} from '@nestjs/swagger';
+import {Permission} from './permission.interface';
 
 export class Role {
     @ApiProperty({

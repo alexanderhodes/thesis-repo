@@ -1,5 +1,5 @@
 import {QueryResult} from 'neo4j-driver';
-import {IGraphObject, INode, IGraphRelation, ISegment} from '../../shared/interfaces/graph.interface';
+import {IGraphObject, INode, IGraphRelation, ISegment} from '../../shared';
 
 export function toGraphObjects(response: QueryResult): IGraphObject[] {
     const graphObjects: IGraphObject[] = [];

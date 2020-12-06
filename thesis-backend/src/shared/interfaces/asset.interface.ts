@@ -1,9 +1,10 @@
 import {Namespace, Status} from '../types';
-import {RelationDirectory, RelationNode, RelationReturn} from '../../neo4j/interfaces';
+import {RelationDirectory, RelationNode, RelationReturn} from '../../neo4j';
 
 export interface IAsset {
     namespace: Namespace;
     data: {
+        uuid: string;
         name: string;
         [key: string]: any;
     };
@@ -11,6 +12,7 @@ export interface IAsset {
 
 export interface IResource extends IAsset {
     data: {
+        uuid: string;
         identifier: string;
         name: string;
         description: string;
@@ -22,6 +24,7 @@ export interface IResource extends IAsset {
 
 export interface IOccupation extends IResource {
     data: {
+        uuid: string;
         identifier: string;
         name: string;
         description: string;
@@ -37,6 +40,7 @@ export interface IOccupation extends IResource {
 
 export interface IQualification extends IResource {
     data: {
+        uuid: string;
         identifier: string;
         name: string;
         description: string;

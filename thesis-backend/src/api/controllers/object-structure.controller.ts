@@ -12,15 +12,12 @@ import {
     UseGuards
 } from '@nestjs/common';
 import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
-import {ObjectService, ObjectStructureService} from '../../database/services';
-import {IObjectStructure, IUpdateObjectStructureResponse} from '../../shared/interfaces';
+import {ObjectEntity, ObjectService, ObjectStructureService} from '../../database';
+import {IObjectStructure, IUpdateObjectStructureResponse} from '../../shared';
 import {ObjectStructureDto, UpdateObjectStructuresDto} from '../dtos';
 import {toObjectStructureEntity} from '../mappers/object-structure.mapper';
 import {toObjectEntity} from '../mappers';
-import {JwtAuthGuard, PermissionsGuard} from '../../authorization/guards';
-import {HasPermissions} from '../../authorization/decorators';
-import {PermissionsEnum} from '../../authorization/constants';
-import {ObjectEntity} from '../../database/entities';
+import {HasPermissions, JwtAuthGuard, PermissionsEnum, PermissionsGuard} from '../../authorization';
 
 @ApiTags('object-structure')
 @Controller('object-structure')

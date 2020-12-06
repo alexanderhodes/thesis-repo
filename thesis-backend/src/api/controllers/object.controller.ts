@@ -1,12 +1,10 @@
 import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, UseGuards} from '@nestjs/common';
 import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
-import {ObjectService} from '../../database/services';
+import {ObjectService} from '../../database';
 import {ObjectDto} from '../dtos';
 import {toObjectEntity} from '../mappers';
-import {IObject} from '../../shared/interfaces';
-import {JwtAuthGuard, PermissionsGuard} from '../../authorization/guards';
-import {HasPermissions} from '../../authorization/decorators';
-import {PermissionsEnum} from '../../authorization/constants';
+import {IObject} from '../../shared';
+import {HasPermissions, JwtAuthGuard, PermissionsEnum, PermissionsGuard} from '../../authorization';
 
 @ApiTags('objects')
 @Controller('objects')

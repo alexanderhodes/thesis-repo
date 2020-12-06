@@ -1,6 +1,6 @@
 import {PassportStrategy} from '@nestjs/passport';
-import {Strategy} from 'passport-local';
 import {Injectable, UnauthorizedException} from '@nestjs/common';
+import {Strategy} from 'passport-local';
 import {AuthenticationService} from './authentication.service';
 
 @Injectable()

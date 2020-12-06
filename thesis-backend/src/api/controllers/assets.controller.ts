@@ -1,6 +1,6 @@
 import {Controller, Get, Query} from '@nestjs/common';
 import {ApiTags} from '@nestjs/swagger';
-import {AssetsService} from '../../bigchain/services';
+import {AssetsService} from '../../bigchain';
 
 @ApiTags("assets")
 @Controller("assets")

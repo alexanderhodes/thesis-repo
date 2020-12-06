@@ -1,10 +1,9 @@
 import {Body, Controller, Get, HttpStatus, Param, Patch, Post, Query, Request, UseGuards} from '@nestjs/common';
 import {ApiTags} from '@nestjs/swagger';
-import {TransactionsService} from '../../bigchain/services';
-import {IMetaData, ITransaction} from '../../bigchain/interfaces';
-import {JwtAuthGuard} from '../../authorization/guards';
+import {IMetaData, ITransaction, TransactionsService} from '../../bigchain';
+import {JwtAuthGuard} from '../../authorization';
 import {RelationDto, TransactionDto} from '../dtos';
-import {Neo4jService} from '../../neo4j/services';
+import {Neo4jService} from '../../neo4j';
 
 @ApiTags("transactions")
 @Controller("transactions")

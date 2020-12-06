@@ -1,20 +1,22 @@
 import {Injectable} from '@nestjs/common';
 import {TypeOrmModuleOptions} from '@nestjs/typeorm';
+import {ConfigService} from '@nestjs/config';
 import {
+    InsertPermissions1601456259497Migration,
     ObjectEntity,
     ObjectStructureEntity,
     PermissionEntity,
-    RelationEntity, RelationStructureEntity,
+    RelationEntity,
+    RelationStructureEntity,
     RoleEntity,
     UserEntity
-} from '../../database/entities';
-import {InsertPermissions1601456259497Migration} from '../../database/migrations';
-import {ConfigService} from '@nestjs/config';
+} from '../../database';
 
 @Injectable()
 export class ConfigurationService {
 
-    constructor(private configService: ConfigService) {}
+    constructor(private configService: ConfigService) {
+    }
 
     get<T = any>(
         propertyPath: string,
@@ -53,4 +55,8 @@ export class ConfigurationService {
         };
     }
 
+    createNodesConfig(): string[] {
+        const urls = this.get<string>('NODE_URLS');
+        return urls ? urls.split(',') : [];
+    }
 }

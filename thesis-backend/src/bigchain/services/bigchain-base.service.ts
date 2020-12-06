@@ -1,5 +1,5 @@
 import {HttpService, Injectable} from '@nestjs/common';
-import {ConfigurationService} from '../../app-config/services';
+import {ConfigurationService} from '../../app-config';
 import driver = require('bigchaindb-driver');
 
 @Injectable()

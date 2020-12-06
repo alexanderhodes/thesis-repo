@@ -1,8 +1,8 @@
 import {Injectable} from '@nestjs/common';
 import * as neo4j from "neo4j-driver";
 import {QueryResult} from "neo4j-driver";
-import {ConfigurationService} from '../../app-config/services';
-import {IAsset} from '../../shared/interfaces';
+import {ConfigurationService} from '../../app-config';
+import {IAsset} from '../../shared';
 import {
     createNodeQueryForAsset,
     createNodeQueryWithQuery,

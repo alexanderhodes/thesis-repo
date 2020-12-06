@@ -1,10 +1,9 @@
 import {Injectable} from '@nestjs/common';
-import {LoginResponse, Payload, UserWithKeyPair, UserWithPassword, UserWithPermissions} from '../interfaces';
 import {JwtService} from '@nestjs/jwt';
-import {UsersService} from '../../database/services';
+import {LoginResponse, Payload, UserWithKeyPair, UserWithPassword, UserWithPermissions} from '../interfaces';
+import {PermissionEntity, UserEntity, UsersService} from '../../database';
 import {PermissionsEnum} from '../constants';
-import {PermissionEntity, UserEntity} from '../../database/entities';
-import {KeypairService, PasswordService} from '../../shared/services';
+import {KeypairService, PasswordService} from '../../shared';
 
 @Injectable()
 export class AuthenticationService {

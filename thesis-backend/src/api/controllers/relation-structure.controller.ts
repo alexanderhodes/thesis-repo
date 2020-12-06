@@ -1,13 +1,10 @@
 import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, UseGuards} from '@nestjs/common';
-import {RelationService, RelationStructureService} from '../../database/services';
-import {JwtAuthGuard, PermissionsGuard} from '../../authorization/guards';
 import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
-import {IDbRelationStructure, IUpdateRelationStructureResponse} from '../../shared/interfaces';
-import {HasPermissions} from '../../authorization/decorators';
-import {PermissionsEnum} from '../../authorization/constants';
+import {RelationEntity, RelationService, RelationStructureService} from '../../database';
+import {HasPermissions, JwtAuthGuard, PermissionsEnum, PermissionsGuard} from '../../authorization';
+import {IDbRelationStructure, IUpdateRelationStructureResponse} from '../../shared';
 import {DbRelationStructureDto, UpdateRelationStructuresDto} from '../dtos';
 import {toRelationEntity, toRelationStructureEntity} from '../mappers';
-import {RelationEntity} from '../../database/entities';
 
 @ApiTags('relation-structure')
 @Controller('relation-structure')

@@ -4,10 +4,9 @@ import {JwtAuthGuard, PermissionsGuard} from '../guards';
 import {HasPermissions} from '../decorators';
 import {PermissionsEnum} from '../constants';
 import {UpdateWithPasswordDto} from '../dtos';
-import {UserEntity} from '../../database/entities';
+import {UserEntity, UsersService} from '../../database';
 import {AuthenticationService} from '../services';
-import {KeypairService} from '../../shared/services';
-import {UsersService} from '../../database/services';
+import {KeypairService} from '../../shared';
 import {UserWithKeyPair, UserWithPermissions} from '../interfaces';
 
 @ApiTags('authentication-functions')

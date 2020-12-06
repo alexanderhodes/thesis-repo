@@ -1,11 +1,11 @@
 import {HttpService, Injectable} from '@nestjs/common';
-import {BigchainBaseService} from './bigchain-base.service';
-import {ConfigurationService} from '../../app-config/services';
-import {IAsset, IMetaData, ITransaction} from '../interfaces';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
+import {BigchainBaseService} from './bigchain-base.service';
+import {ConfigurationService} from '../../app-config';
+import {IAsset, IMetaData, ITransaction} from '../interfaces';
 import {Transactions} from '../models';
-import {UserEntity} from '../../database/entities';
+import {UserEntity} from '../../database';
 
 @Injectable()
 export class TransactionsService extends BigchainBaseService {

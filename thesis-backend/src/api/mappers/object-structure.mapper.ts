@@ -1,4 +1,4 @@
-import {ObjectEntity, ObjectStructureEntity} from '../../database/entities';
+import {ObjectEntity, ObjectStructureEntity} from '../../database';
 
 export function toObjectStructureEntity(
     object: ObjectEntity,

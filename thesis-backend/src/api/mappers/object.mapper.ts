@@ -1,4 +1,4 @@
-import {ObjectEntity} from '../../database/entities';
+import {ObjectEntity} from '../../database';
 
 export function toObjectEntity(
     name: string,

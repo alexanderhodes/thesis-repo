@@ -2,7 +2,7 @@ import {HttpService, Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from "mongoose";
 import {BigchainBaseService} from './bigchain-base.service';
-import {ConfigurationService} from '../../app-config/services';
+import {ConfigurationService} from '../../app-config';
 import {IAsset} from '../interfaces';
 import {Assets} from '../models';
 

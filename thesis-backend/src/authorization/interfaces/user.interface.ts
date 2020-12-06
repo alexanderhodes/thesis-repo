@@ -1,6 +1,6 @@
-import {Role} from './role.interface';
-import {IKeyPair} from '../../shared/interfaces';
 import {ApiProperty} from '@nestjs/swagger';
+import {Role} from './role.interface';
+import {IKeyPair} from '../../shared';
 
 export class UserWithPermissions {
     @ApiProperty({

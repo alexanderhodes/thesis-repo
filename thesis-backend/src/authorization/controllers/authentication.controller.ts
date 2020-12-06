@@ -4,8 +4,8 @@ import {JwtAuthGuard, LocalAuthGuard} from '../guards';
 import {AuthenticationService} from '../services';
 import {UserResponseDTO} from '../dtos';
 import {LoginResponse} from '../interfaces';
-import {KeypairService} from '../../shared/services';
-import {UsersService} from '../../database/services';
+import {KeypairService} from '../../shared';
+import {UsersService} from '../../database';
 
 @ApiTags('authentication')
 @Controller('authentication')

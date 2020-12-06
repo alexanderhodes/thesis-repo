@@ -1,10 +1,8 @@
 import {Controller, Get, NotFoundException, Param, UseGuards} from '@nestjs/common';
 import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
-import {RolesService} from '../../database/services';
+import {RolesService} from '../../database';
 import {RoleDto} from '../dtos';
-import {JwtAuthGuard, PermissionsGuard} from '../../authorization/guards';
-import {HasPermissions} from '../../authorization/decorators';
-import {PermissionsEnum} from '../../authorization/constants';
+import {HasPermissions, JwtAuthGuard, PermissionsEnum, PermissionsGuard} from '../../authorization';
 
 @ApiTags('roles')
 @Controller("roles")
