@@ -32,8 +32,9 @@ export class ObjectController {
         }, HttpStatus.CONFLICT);
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Get()
+    @HasPermissions(PermissionsEnum.ASSETS_READ)
     @ApiBearerAuth()
     getAllObjects(): Promise<IObject[]> {
         return this.objectService.findAll();

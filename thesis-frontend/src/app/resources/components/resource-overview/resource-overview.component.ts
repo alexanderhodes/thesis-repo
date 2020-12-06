@@ -1,22 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {take, takeUntil} from 'rxjs/operators';
-import {
-  CleanUpHelper,
-  ObjectStructureApiService,
-  StateService,
-  STORAGE_USER,
-  TransactionsApiService
-} from '../../../core';
-import {
-  IObjectStructure,
-  KeyPair,
-  Occupation,
-  Qualification,
-  Relation,
-  Resource,
-  StorageUser,
-  UuidService
-} from '../../../shared';
+import {CleanUpHelper, StateService, STORAGE_USER, TransactionsApiService} from '../../../core';
+import {KeyPair, Occupation, Qualification, Relation, Resource, StorageUser, UuidService} from '../../../shared';
 
 @Component({
   selector: 'ts-resource-overview',
@@ -28,10 +13,8 @@ import {
 export class ResourceOverviewComponent extends CleanUpHelper implements OnInit {
 
   #publicKey: string;
-  objectStructure: IObjectStructure[];
 
   constructor(private transactionApiService: TransactionsApiService,
-              private objectStructureApiService: ObjectStructureApiService,
               private uuidService: UuidService,
               private stateService: StateService) {
     super();
@@ -42,15 +25,6 @@ export class ResourceOverviewComponent extends CleanUpHelper implements OnInit {
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: StorageUser) => {
         this.#publicKey = data && data.publicKey ? data.publicKey : null;
-      });
-    this.objectStructureApiService.getObjectStructuresByObject('occupation')
-      .pipe(take(1))
-      .subscribe((objectStructures: IObjectStructure[]) => {
-        console.log('objectStructures', objectStructures);
-        this.objectStructure = objectStructures;
-      }, (error) => {
-        console.log('error', error);
-        this.objectStructure = [];
       });
   }
 

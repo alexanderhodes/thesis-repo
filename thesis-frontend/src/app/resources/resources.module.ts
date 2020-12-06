@@ -10,6 +10,7 @@ import {
   ResourceListComponent
 } from './components/public-api';
 import {ResourcesRoutingModule} from './resources-routing.module';
+import {CoreModule} from '../core';
 
 const components = [
   CreateResourceComponent,
@@ -29,7 +30,8 @@ const components = [
     ReactiveFormsModule,
     RouterModule,
     SharedModule,
-    ResourcesRoutingModule
+    ResourcesRoutingModule,
+    CoreModule
   ],
   providers: []
 })
