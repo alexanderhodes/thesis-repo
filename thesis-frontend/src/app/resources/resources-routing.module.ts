@@ -8,7 +8,7 @@ const routes: Routes = [
     component: ResourceOverviewComponent
   },
   {
-    path: ':node/:name',
+    path: ':node/:uuid',
     component: ResourceDetailComponent
   }
 ];

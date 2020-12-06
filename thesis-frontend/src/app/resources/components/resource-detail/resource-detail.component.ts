@@ -23,9 +23,9 @@ export class ResourceDetailComponent implements OnInit {
   ngOnInit(): void {
     console.log('params', this.activatedRoute.snapshot.params);
     const nodeParam = this.activatedRoute.snapshot.params.node;
-    const nameParam = this.activatedRoute.snapshot.params.name;
+    const uuidParam = this.activatedRoute.snapshot.params.uuid;
 
-    const query: GraphQuery = {node: nodeParam, condition: {name: nameParam}};
+    const query: GraphQuery = {node: nodeParam, condition: {uuid: uuidParam}};
 
     this.graphApiService.getNodesByQuery(nodeParam, query)
       .pipe(take(1))
@@ -54,7 +54,7 @@ export class ResourceDetailComponent implements OnInit {
       left: {
         namespace: nodeParam,
         condition: {
-          name: nameParam
+          name: uuidParam
         }
       },
       direction: 'both'
