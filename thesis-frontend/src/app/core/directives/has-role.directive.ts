@@ -1,11 +1,11 @@
-import {Directive, Input, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
+import {Directive, ElementRef, Input, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
 import {takeUntil} from 'rxjs/operators';
 import {CleanUpHelper} from '../utils';
 import {RoleService} from '../services';
 import {RolesEnum} from '../enums';
 
 @Directive({
-  selector: '[hasRole]'
+  selector: '[tsHasRole]'
 })
 export class HasRoleDirective extends CleanUpHelper implements OnInit {
 
@@ -13,6 +13,7 @@ export class HasRoleDirective extends CleanUpHelper implements OnInit {
 
   constructor(private viewContainer: ViewContainerRef,
               private templateRef: TemplateRef<any>,
+              private elementRef: ElementRef,
               private roleService: RoleService) {
     super();
   }
@@ -25,10 +26,9 @@ export class HasRoleDirective extends CleanUpHelper implements OnInit {
     });
   }
 
-  @Input()
+  @Input('tsHasRole')
   set role(value: RolesEnum | string) {
     this.#_role = value;
-    this._toggleVisibility();
   }
 
   private _toggleVisibility(): void {

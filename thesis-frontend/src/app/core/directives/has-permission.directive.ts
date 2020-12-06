@@ -28,7 +28,6 @@ export class HasPermissionDirective extends CleanUpHelper implements OnInit {
   @Input('tsHasPermission')
   set permission(value: PermissionsEnum | string) {
     this.#_permission = value;
-    this._toggleVisibility();
   }
 
   private _toggleVisibility(): void {

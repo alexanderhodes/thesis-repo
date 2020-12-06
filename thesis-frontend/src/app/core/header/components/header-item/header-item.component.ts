@@ -3,13 +3,12 @@ import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@ang
 @Component({
   selector: 'ts-header-item',
   template: `
-    <ng-container *tsHasPermission="permission">
-      <div [routerLink]="[routerLink]" [routerLinkActive]="['font-bold']"
-           [routerLinkActiveOptions]="{exact: false}"
-           class="text-white cursor-pointer hover:underline inline-block mr-3">
-        <ng-content></ng-content>
-      </div>
-    </ng-container>
+    <div *tsHasPermission="permission"
+         [routerLink]="[routerLink]" [routerLinkActive]="['font-bold']"
+         [routerLinkActiveOptions]="{exact: false}"
+         class="text-white cursor-pointer hover:underline inline-block mr-3">
+      <ng-content></ng-content>
+    </div>
   `,
   styles: [''],
   changeDetection: ChangeDetectionStrategy.OnPush,
