@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {BigchainService} from '../../shared/services';
-import {Asset, KeyPair, Occupation, Qualification, Transaction} from '../../shared/interfaces';
+import {Asset, KeyPair, Transaction} from '../../shared/interfaces';
 
 @Injectable()
 export class TransactionsApiService {

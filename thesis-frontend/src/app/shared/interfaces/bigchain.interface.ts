@@ -44,6 +44,7 @@ export interface MetaData {
 export interface Asset {
   namespace: Namespace;
   data: {
+    uuid: string;
     name: string;
     [key: string]: any;
   };
@@ -51,6 +52,7 @@ export interface Asset {
 
 export interface Resource extends Asset {
   data: {
+    uuid: string;
     identifier: string;
     name: string;
     description: string;
@@ -62,6 +64,7 @@ export interface Resource extends Asset {
 
 export interface Occupation extends Resource {
   data: {
+    uuid: string;
     identifier: string;
     name: string;
     description: string;
@@ -77,6 +80,7 @@ export interface Occupation extends Resource {
 
 export interface Qualification extends Resource {
   data: {
+    uuid: string;
     identifier: string;
     name: string;
     description: string;
@@ -88,6 +92,7 @@ export interface Qualification extends Resource {
 
 export interface Relation extends Asset {
   data: {
+    uuid: string;
     name: string;
     attributes: { [key: string]: any };
     direction: RelationDirection;

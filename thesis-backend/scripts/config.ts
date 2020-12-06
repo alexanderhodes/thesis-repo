@@ -46,7 +46,11 @@ function createConfig(command: string, isProduction: boolean): void {
                     console.log('hostname', hostname);
                     if (hostname) {
                         const remoteOrigin = isProduction ? `https://${hostname}` : `http://${hostname}`;
-                        config.cors.origin.push(remoteOrigin);
+                        // just add origin if it is not already added
+                        const foundOrigin = config.cors.origin.find(origin => origin === remoteOrigin);
+                        if (!foundOrigin) {
+                            config.cors.origin.push(remoteOrigin);
+                        }
                     }
                 }
                 console.log('updated config', config);

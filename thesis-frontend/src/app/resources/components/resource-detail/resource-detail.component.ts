@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {GraphApiService} from '../../../core/http';
+import {GraphApiService, TransactionsApiService} from '../../../core/http';
 import {Asset, GraphObject, GraphQuery, GraphRelationQuery, Node} from '../../../shared/interfaces';
 import {take} from 'rxjs/operators';
 
