@@ -1,10 +1,13 @@
-import {Namespace, RelationDirection, RelationNode, RelationReturn} from './bigchain.interface';
+import {RelationDirection, RelationNode, RelationReturn} from './bigchain.interface';
 
 export type GraphObjectType = 'node' | 'relation' | 'path';
 
 export interface Node {
   name: string;
-  properties: { [key: string]: any };
+  properties: {
+    uuid: string;
+    [key: string]: any ;
+  };
 }
 
 export interface GraphRelation {

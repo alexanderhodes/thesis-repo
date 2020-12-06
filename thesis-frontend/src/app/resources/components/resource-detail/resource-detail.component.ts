@@ -33,7 +33,8 @@ export class ResourceDetailComponent implements OnInit {
         if (graphObjects && graphObjects.length > 0) {
           const node = (graphObjects[0].data as Node);
           const data = {
-            name: node.name
+            name: node.name,
+            uuid: node.properties.uuid
           };
           Object.keys(node.properties).forEach(key => {
             data[key] = node.properties[key];

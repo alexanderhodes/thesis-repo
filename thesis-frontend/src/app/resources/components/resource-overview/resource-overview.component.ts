@@ -7,7 +7,16 @@ import {
   STORAGE_USER,
   TransactionsApiService
 } from '../../../core';
-import {IObjectStructure, KeyPair, Occupation, Qualification, Relation, Resource, StorageUser} from '../../../shared';
+import {
+  IObjectStructure,
+  KeyPair,
+  Occupation,
+  Qualification,
+  Relation,
+  Resource,
+  StorageUser,
+  UuidService
+} from '../../../shared';
 
 @Component({
   selector: 'ts-resource-overview',
@@ -23,6 +32,7 @@ export class ResourceOverviewComponent extends CleanUpHelper implements OnInit {
 
   constructor(private transactionApiService: TransactionsApiService,
               private objectStructureApiService: ObjectStructureApiService,
+              private uuidService: UuidService,
               private stateService: StateService) {
     super();
   }
@@ -48,6 +58,7 @@ export class ResourceOverviewComponent extends CleanUpHelper implements OnInit {
     const softwareDeveloper: Occupation = {
       namespace: 'occupation',
       data: {
+        uuid: this.uuidService.generateV4Uuid(),
         identifier: '2512.3',
         name: 'Softwareentwickler',
         description: `Softwareentwickler implementieren oder programmieren Softwaresystemen jeder Art auf der Grundlage von Spezifikationen bzw. Entwürfen unter Einsatz von Programmiersprachen, Tools und Plattformen.`,
@@ -63,6 +74,7 @@ export class ResourceOverviewComponent extends CleanUpHelper implements OnInit {
     const softwareAnalytiker: Occupation = {
       namespace: 'occupation',
       data: {
+        uuid: this.uuidService.generateV4Uuid(),
         identifier: '2512.1',
         name: 'Softwareanalytiker',
         description: `Softwareanalytiker ermitteln und priorisieren Nutzeranforderungen, erstellen und dokumentieren Softwarespezifikationen, testen ihre Anwendung und überprüfen sie während der Softwareentwicklung. Sie fungieren als Schnittstelle zwischen Software-Anbietern und dem Software-Entwicklungsteam.`,
@@ -78,6 +90,7 @@ export class ResourceOverviewComponent extends CleanUpHelper implements OnInit {
     const softwareArchitect: Occupation = {
       namespace: 'occupation',
       data: {
+        uuid: this.uuidService.generateV4Uuid(),
         identifier: '2512.2',
         name: 'Softwarearchitekt',
         description: `Softwarearchitekten erstellen das technische Konzept und das funktionale Modell eines Softwaresystems auf der Grundlage funktionaler Spezifikationen. Außerdem gestalten sie die Architektur des Systems oder verschiedene Module und Komponenten im Einklang mit den Anforderungen der Unternehmen oder Kunden, der technischen Plattform, der Computersprache oder der Entwicklungsumgebung.`,
@@ -93,6 +106,7 @@ export class ResourceOverviewComponent extends CleanUpHelper implements OnInit {
     const developerForUserInterface: Occupation = {
       namespace: 'occupation',
       data: {
+        uuid: this.uuidService.generateV4Uuid(),
         identifier: '2512.4',
         name: 'Entwickler von Benutzeroberflächen/Entwicklerin von Benutzeroberflächen',
         description: `Entwickler von Benutzeroberflächen gestalten die Benutzeroberfläche eines Softwaresystems durch den Einsatz von Entwicklungstechnologien für das Frontend. Sie programmieren, dokumentieren und pflegen die Benutzerschnittstelle eines Softwaresystems.`,
@@ -110,6 +124,7 @@ export class ResourceOverviewComponent extends CleanUpHelper implements OnInit {
     const relation: Relation = {
       namespace: 'relation',
       data: {
+        uuid: this.uuidService.generateV4Uuid(),
         attributes: {
           relation: true,
           name: 'works well with Softwareentwickler'
@@ -158,6 +173,7 @@ export class ResourceOverviewComponent extends CleanUpHelper implements OnInit {
     qualifications.push({
       namespace: 'qualification',
       data: {
+        uuid: this.uuidService.generateV4Uuid(),
         identifier: 'configure-interface',
         name: 'Benutzerschnittstelle konzipieren',
         description: 'Entwicklung von Software- oder Gerätekomponenten, die eine Interaktion zwischen Menschen und Systemen oder Maschinen ermöglichen, unter Verwendung geeigneter Techniken, Sprachen und Werkzeuge zur Optimierung der Interaktion während der Nutzung des Systems oder der Maschine.',
@@ -169,6 +185,7 @@ export class ResourceOverviewComponent extends CleanUpHelper implements OnInit {
     qualifications.push({
       namespace: 'qualification',
       data: {
+        uuid: this.uuidService.generateV4Uuid(),
         identifier: 'configure-interface',
         name: 'technische Anforderungen definieren',
         description: 'Festlegen technischer Eigenschaften von Waren, Materialien, Methoden, Verfahren, Diensten, Systemen, Softwarelösungen und Funktionalitäten, indem die besonderen Bedürfnisse, die gemäß den Kundenanforderungen erfüllt werden müssen, ermittelt und berücksichtigt werden.',
@@ -200,6 +217,7 @@ export class ResourceOverviewComponent extends CleanUpHelper implements OnInit {
     skills.push({
       namespace: 'skill',
       data: {
+        uuid: this.uuidService.generateV4Uuid(),
         identifier: 'C++',
         description: 'C++',
         disambiguatingDescription: '',
@@ -211,6 +229,7 @@ export class ResourceOverviewComponent extends CleanUpHelper implements OnInit {
     skills.push({
       namespace: 'skill',
       data: {
+        uuid: this.uuidService.generateV4Uuid(),
         identifier: 'Angular',
         description: 'Angular',
         disambiguatingDescription: '',

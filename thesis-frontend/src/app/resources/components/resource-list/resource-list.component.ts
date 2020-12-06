@@ -57,7 +57,8 @@ export class ResourceListComponent implements OnInit {
           object.data = graphObjects.map(graphObject => {
             const node = (graphObject.data as Node);
             const data = {
-              name: node.name
+              name: node.name,
+              uuid: node.properties.uuid
             };
             Object.keys(node.properties).forEach(key => {
               data[key] = node.properties[key];
