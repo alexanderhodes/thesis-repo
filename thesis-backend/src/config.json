@@ -2,7 +2,10 @@
   "cors": {
     "origin": [
       "http://localhost:4200",
-      "http://localhost:3001"
+      "http://localhost:3001",
+      "/\\.megasrv\\.de$/",
+      "/\\.quicksrv\\.de$/",
+      "/\\.goodsrv\\.de$/"
     ],
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     "preflightContinue": false
