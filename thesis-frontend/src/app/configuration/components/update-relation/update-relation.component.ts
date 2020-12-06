@@ -1,11 +1,11 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import {DbRelation, DbRelationStructure, IMessage, IObject, UpdateRelationStructure} from '../../../shared/interfaces';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TranslateService} from '@ngx-translate/core';
 import {AsyncPipe} from '@angular/common';
-import {DbRelationApiService, DbRelationStructureApiService} from '../../../core/http';
 import {take} from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
+import {DbRelation, DbRelationStructure, IMessage, IObject, UpdateRelationStructure} from '../../../shared';
+import {DbRelationApiService, DbRelationStructureApiService} from '../../../core';
 
 @Component({
   selector: 'ts-update-relation',

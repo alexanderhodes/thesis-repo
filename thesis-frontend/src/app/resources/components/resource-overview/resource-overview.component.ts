@@ -1,17 +1,13 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {take, takeUntil} from 'rxjs/operators';
-import {ObjectStructureApiService, TransactionsApiService} from '../../../core/http';
-import {CleanUpHelper} from '../../../core/utils';
-import {StateService, STORAGE_USER} from '../../../core/services';
 import {
-  IObjectStructure,
-  KeyPair,
-  Occupation,
-  Qualification,
-  Relation,
-  Resource,
-  StorageUser
-} from '../../../shared/interfaces';
+  CleanUpHelper,
+  ObjectStructureApiService,
+  StateService,
+  STORAGE_USER,
+  TransactionsApiService
+} from '../../../core';
+import {IObjectStructure, KeyPair, Occupation, Qualification, Relation, Resource, StorageUser} from '../../../shared';
 
 @Component({
   selector: 'ts-resource-overview',

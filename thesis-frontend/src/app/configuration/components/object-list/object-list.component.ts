@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {take} from 'rxjs/operators';
-import {ObjectApiService} from '../../../core/http';
-import {IObject} from '../../../shared/interfaces';
+import {ObjectApiService} from '../../../core';
+import {IObject} from '../../../shared';
 
 @Component({
   selector: 'ts-objects',

@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
-import {DbRelationStructure} from '../../../shared/interfaces';
+import {DbRelationStructure} from '../../../shared';
 
 @Component({
   selector: 'ts-relation-structure-list',

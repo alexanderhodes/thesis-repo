@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {DbRelationStructure, UpdateRelationStructure, UpdateRelationStructureResponse} from '../../shared/interfaces';
+import {DbRelationStructure, UpdateRelationStructure, UpdateRelationStructureResponse} from '../../shared';
 
 @Injectable()
 export class DbRelationStructureApiService {

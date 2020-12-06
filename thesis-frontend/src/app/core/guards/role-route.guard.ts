@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
-import {GuardData} from '../../shared/interfaces';
+import {GuardData} from '../../shared';
 import {RoleService} from '../services';
 
 @Injectable()

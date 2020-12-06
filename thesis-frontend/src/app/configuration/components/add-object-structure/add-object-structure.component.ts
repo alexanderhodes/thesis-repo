@@ -8,7 +8,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import {IObjectStructure} from '../../../shared/interfaces';
+import {IObjectStructure} from '../../../shared';
 
 @Component({
   selector: 'ts-add-object-structure',

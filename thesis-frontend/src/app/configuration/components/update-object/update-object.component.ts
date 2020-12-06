@@ -4,8 +4,8 @@ import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/form
 import {ActivatedRoute, Router} from '@angular/router';
 import {take} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
-import {ObjectApiService, ObjectStructureApiService} from '../../../core/http';
-import {IMessage, IObject, IObjectStructure, IUpdateObjectStructure} from '../../../shared/interfaces';
+import {ObjectApiService, ObjectStructureApiService} from '../../../core';
+import {IMessage, IObject, IObjectStructure, IUpdateObjectStructure} from '../../../shared';
 
 @Component({
   selector: 'ts-object-detail',

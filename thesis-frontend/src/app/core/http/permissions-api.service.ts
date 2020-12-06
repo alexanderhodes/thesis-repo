@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Permission} from '../../shared/interfaces';
+import {Permission} from '../../shared';
 
 @Injectable()
 export class PermissionsApiService {

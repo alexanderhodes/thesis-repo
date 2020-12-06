@@ -7,10 +7,6 @@ const routes: Routes = [
     path: '',
     component: UserListComponent
   },
-  // {
-  //   path: 'create',
-  //   component: CreateUserComponent
-  // },
   {
     path: ':id',
     component: UserDetailComponent

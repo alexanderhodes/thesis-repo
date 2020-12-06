@@ -5,7 +5,7 @@ import {AsyncPipe} from '@angular/common';
 import {TranslateService} from '@ngx-translate/core';
 import {take} from 'rxjs/operators';
 import {CreatedUser, CreateUser, FileService, GenerateKeyPairResponse, KeyPair, Role, User} from '../../../shared';
-import {RolesApiService, UsersApiService} from '../../../core/http';
+import {RolesApiService, UsersApiService} from '../../../core';
 
 @Component({
   selector: 'ts-user-detail',

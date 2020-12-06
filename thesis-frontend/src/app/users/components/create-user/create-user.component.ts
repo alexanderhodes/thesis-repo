@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {comparePasswordsValidator, CreatedUser, CreateUser, FileService, Role, User} from '../../../shared';
-import {RolesApiService, UsersApiService} from '../../../core/http';
+import {RolesApiService, UsersApiService} from '../../../core';
 
 @Component({
   selector: 'ts-create-user',

@@ -1,10 +1,15 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {take, takeUntil} from 'rxjs/operators';
-import {ObjectApiService, ObjectStructureApiService, TransactionsApiService} from '../../../core/http';
-import {Asset, IObject, IObjectStructure, KeyPair, StorageUser, Transaction} from '../../../shared/interfaces';
-import {StateService, STORAGE_USER} from '../../../core/services';
-import {CleanUpHelper} from '../../../core/utils';
+import {
+  CleanUpHelper,
+  ObjectApiService,
+  ObjectStructureApiService,
+  StateService,
+  STORAGE_USER,
+  TransactionsApiService
+} from '../../../core';
+import {Asset, IObject, IObjectStructure, KeyPair, StorageUser, Transaction, UuidService} from '../../../shared';
 
 @Component({
   selector: 'ts-create-resource',
@@ -26,6 +31,7 @@ export class CreateResourceComponent extends CleanUpHelper implements OnInit {
               private objectStructureApiService: ObjectStructureApiService,
               private stateService: StateService,
               private objectApiService: ObjectApiService,
+              private uuidService: UuidService,
               private changeDetectorRef: ChangeDetectorRef) {
     super();
   }
@@ -72,6 +78,7 @@ export class CreateResourceComponent extends CleanUpHelper implements OnInit {
         namespace: this.selectedResourceType,
         data: this.createForm.value
       };
+      asset.data.uuid = this.uuidService.generateV4Uuid();
       const privateKey = '8CDnuWXXDPRB8Zn8bd22U52qhLAfaU3NZZeYDrHZA14m';
       const keyPair: KeyPair = {
         privateKey,

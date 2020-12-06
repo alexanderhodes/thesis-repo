@@ -7,8 +7,8 @@ import {
   Output,
   ViewEncapsulation
 } from '@angular/core';
-import {DbRelationStructure} from '../../../shared/interfaces';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {DbRelationStructure} from '../../../shared';
 
 @Component({
   selector: 'ts-add-relation-structure',

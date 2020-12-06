@@ -2,7 +2,7 @@ import {Injectable, OnDestroy} from '@angular/core';
 import {takeUntil} from 'rxjs/operators';
 import {ReplaySubject} from 'rxjs';
 import {StateService, STORAGE_USER} from './state.service';
-import {Permission, StorageUser} from '../../shared/interfaces';
+import {Permission, StorageUser} from '../../shared';
 import {CleanUpHelper} from '../utils';
 import {PermissionsEnum} from '../enums';
 

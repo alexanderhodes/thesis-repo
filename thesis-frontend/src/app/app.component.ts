@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {takeUntil} from 'rxjs/operators';
-import {StateService, STORAGE_USER} from './core/services';
-import {CleanUpHelper} from './core/utils';
-import {LoginApiService} from './core/http';
+import {CleanUpHelper, LoginApiService, StateService, STORAGE_USER} from './core';
 
 @Component({
   selector: 'ts-root',

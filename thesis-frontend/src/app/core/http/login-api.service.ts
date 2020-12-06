@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {LoginCredentials} from '../../shared/interfaces';
+import {LoginCredentials} from '../../shared';
 
 @Injectable()
 export class LoginApiService {

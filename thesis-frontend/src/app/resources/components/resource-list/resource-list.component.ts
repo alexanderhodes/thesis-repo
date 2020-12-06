@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {GraphApiService, ObjectApiService} from '../../../core/http';
 import {take} from 'rxjs/operators';
-import {Asset, GraphObject, IObject, Node} from '../../../shared/interfaces';
+import {GraphApiService, ObjectApiService} from '../../../core';
+import {Asset, GraphObject, IObject, Node} from '../../../shared';
 
 @Component({
   selector: 'ts-resource-list',

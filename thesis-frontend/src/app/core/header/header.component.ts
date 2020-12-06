@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
 import {StateService, STORAGE_USER} from '../services';
 import {CleanUpHelper} from '../utils';
-import {StorageUser} from '../../shared/interfaces';
+import {StorageUser} from '../../shared';
 
 @Component({
   selector: 'ts-header',

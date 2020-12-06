@@ -6,12 +6,12 @@ import {
   Output,
   ViewEncapsulation
 } from '@angular/core';
-import {DbRelation, DbRelationStructure, IMessage} from '../../../shared/interfaces';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import {DbRelationApiService, DbRelationStructureApiService} from '../../../core/http';
 import {AsyncPipe} from '@angular/common';
-import {TranslateService} from '@ngx-translate/core';
 import {take} from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
+import {DbRelation, DbRelationStructure, IMessage} from '../../../shared';
+import {DbRelationApiService, DbRelationStructureApiService} from '../../../core';
 
 @Component({
   selector: 'ts-create-relation',

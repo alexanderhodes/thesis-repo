@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {DbRelation} from '../../shared/interfaces';
+import {DbRelation} from '../../shared';
 
 @Injectable()
 export class DbRelationApiService {

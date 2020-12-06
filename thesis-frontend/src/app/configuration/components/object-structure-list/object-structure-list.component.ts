@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
-import {IObjectStructure} from '../../../shared/interfaces';
+import {IObjectStructure} from '../../../shared';
 
 @Component({
   selector: 'ts-object-structure-list',

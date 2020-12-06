@@ -10,8 +10,8 @@ import {AsyncPipe} from '@angular/common';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {take} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
-import {ObjectApiService, ObjectStructureApiService} from '../../../core/http';
-import {IMessage, IObject, IObjectStructure} from '../../../shared/interfaces';
+import {ObjectApiService, ObjectStructureApiService} from '../../../core';
+import {IMessage, IObject, IObjectStructure} from '../../../shared';
 
 @Component({
   selector: 'ts-create-object',

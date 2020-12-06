@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {DbRelation} from '../../../shared/interfaces';
-import {DbRelationApiService} from '../../../core/http';
 import {take} from 'rxjs/operators';
+import {DbRelation} from '../../../shared';
+import {DbRelationApiService} from '../../../core';
 
 @Component({
   selector: 'ts-relation-list',

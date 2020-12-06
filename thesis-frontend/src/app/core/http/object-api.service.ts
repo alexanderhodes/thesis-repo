@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {IObject} from '../../shared/interfaces';
+import {IObject} from '../../shared';
 
 @Injectable()
 export class ObjectApiService {

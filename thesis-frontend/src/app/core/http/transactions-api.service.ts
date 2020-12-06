@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {BigchainService} from '../../shared/services';
-import {Asset, KeyPair, Transaction} from '../../shared/interfaces';
+import {Asset, BigchainService, KeyPair, Transaction} from '../../shared';
 
 @Injectable()
 export class TransactionsApiService {
