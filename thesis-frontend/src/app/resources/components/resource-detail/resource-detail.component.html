@@ -1,6 +1,9 @@
 <ng-container *ngIf="asset">
   <div class="grid grid-cols-12">
-    <div class="col-span-6 col-start-4 text-3xl">{{ asset.data.name }}</div>
+    <div class="col-span-6 col-start-4 text-3xl">
+      {{ custom ? asset.namespace : ('common.'+asset.namespace+'-single') | translate }}:
+      {{ asset.data.name }}
+    </div>
     <div *ngFor="let item of asset.data | keyvalue" class="col-span-6 col-start-4">
       <ng-container *ngIf="item.key !== 'uuid'">
         <div class="font-bold">{{ item.key }}</div>

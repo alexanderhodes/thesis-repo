@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
 import {take} from 'rxjs/operators';
 import {GraphApiService, ObjectApiService} from '../../../core';
 import {Asset, GraphObject, IObject, Node} from '../../../shared';
@@ -12,15 +13,16 @@ import {Asset, GraphObject, IObject, Node} from '../../../shared';
 })
 export class ResourceListComponent implements OnInit {
 
-  objects: { type: string, data: Asset[] }[];
+  objects: { type: string, data: Asset[], custom: boolean }[];
 
   constructor(private objectApiService: ObjectApiService,
               private graphApiService: GraphApiService,
+              private router: Router,
               private changeDetectorRef: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
-    this.objects = [{type: 'occupation', data: []}, {type: 'qualification', data: []}];
+    this.objects = [{type: 'occupation', data: [], custom: false }, {type: 'qualification', data: [], custom: false }];
 
     this.objectApiService.getAllObjects()
       .pipe(take(1))
@@ -28,7 +30,7 @@ export class ResourceListComponent implements OnInit {
         objects.forEach((object) => {
           const found = this.objects.find(objectType => objectType.type === object.name);
           if (!found) {
-            this.objects.push({type: object.name, data: []});
+            this.objects.push({type: object.name, data: [], custom: true});
           }
         });
         this._loadResources();
@@ -37,15 +39,6 @@ export class ResourceListComponent implements OnInit {
         this._loadResources();
         this.changeDetectorRef.detectChanges();
       });
-  }
-
-  getPropertyKeys(object: { type: string, data: Asset[] }): string[] {
-    const keys = [];
-    if (object.data && object.data.length > 0) {
-      Object.keys(object.data[0].data).forEach(key => keys.push(key));
-    }
-    console.log('keys', keys);
-    return keys;
   }
 
   private _loadResources(): void {

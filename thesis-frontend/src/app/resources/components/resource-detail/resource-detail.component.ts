@@ -14,6 +14,7 @@ import {Asset, GraphObject, GraphQuery, GraphRelationQuery, Node} from '../../..
 export class ResourceDetailComponent implements OnInit {
 
   asset: Asset;
+  custom: boolean = false;
 
   constructor(private graphApiService: GraphApiService,
               private activatedRoute: ActivatedRoute,
@@ -21,9 +22,10 @@ export class ResourceDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('params', this.activatedRoute.snapshot.params);
     const nodeParam = this.activatedRoute.snapshot.params.node;
     const uuidParam = this.activatedRoute.snapshot.params.uuid;
+    this.custom = this.activatedRoute.snapshot.queryParamMap.has('custom') ?
+      !this.activatedRoute.snapshot.queryParamMap.get('custom') : true;
 
     const query: GraphQuery = {node: nodeParam, condition: {uuid: uuidParam}};
 
@@ -33,14 +35,14 @@ export class ResourceDetailComponent implements OnInit {
         if (graphObjects && graphObjects.length > 0) {
           const node = (graphObjects[0].data as Node);
           const data = {
-            name: node.name,
+            name: node.properties.name,
             uuid: node.properties.uuid
           };
           Object.keys(node.properties).forEach(key => {
             data[key] = node.properties[key];
           });
           this.asset = {
-            namespace: graphObjects[0].type,
+            namespace: node.name,
             data
           };
           console.log('asset', this.asset);
