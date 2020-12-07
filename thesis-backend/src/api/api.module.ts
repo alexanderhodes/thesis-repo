@@ -7,8 +7,6 @@ import {BigchainModule} from '../bigchain';
 import {
     AssetsController,
     BlocksController,
-    ObjectController,
-    ObjectStructureController,
     RelationController,
     RelationStructureController,
     TransactionsController
@@ -18,8 +16,6 @@ import {GraphModule} from '../graph';
 const controllers = [
     AssetsController,
     BlocksController,
-    ObjectController,
-    ObjectStructureController,
     RelationController,
     RelationStructureController,
     TransactionsController

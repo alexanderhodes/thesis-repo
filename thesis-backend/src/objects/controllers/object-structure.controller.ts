@@ -15,8 +15,7 @@ import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
 import {ObjectEntity, ObjectService, ObjectStructureService} from '../../database';
 import {IObjectStructure, IUpdateObjectStructureResponse} from '../../shared';
 import {ObjectStructureDto, UpdateObjectStructuresDto} from '../dtos';
-import {toObjectStructureEntity} from '../mappers/object-structure.mapper';
-import {toObjectEntity} from '../mappers';
+import {toObjectEntity, toObjectStructureEntity} from '../mappers';
 import {HasPermissions, JwtAuthGuard, PermissionsEnum, PermissionsGuard} from '../../authorization';
 
 @ApiTags('object-structure')

@@ -10,6 +10,14 @@ import {AppConfigModule, ConfigurationService} from './app-config';
 import {CoreModule} from './core';
 import {GraphModule} from './graph';
 import {UsersModule} from './users';
+import {ObjectsModule} from './objects';
+
+const featureModules = [
+   BigchainModule,
+   GraphModule,
+   ObjectsModule,
+   UsersModule
+];
 
 @Module({
     imports: [
@@ -24,13 +32,10 @@ import {UsersModule} from './users';
             inject: [ConfigurationService],
             useFactory: (configurationService: ConfigurationService) => configurationService.createTypeOrmConfigFactory()
         }),
-        AuthorizationModule,
         TestModule,
-        BigchainModule,
         CoreModule,
         ApiModule,
-        GraphModule,
-        UsersModule
+        ...featureModules
     ],
     controllers: [],
     providers: [],
