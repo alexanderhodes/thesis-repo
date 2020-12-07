@@ -1,5 +1,5 @@
 import {Namespace, Status} from '../types';
-import {RelationDirectory, RelationNode, RelationReturn} from '../../neo4j';
+import {RelationDirection, RelationNode, RelationReturn} from '../../graph';
 
 export interface IAsset {
     namespace: Namespace;
@@ -53,7 +53,7 @@ export interface IQualification extends IResource {
 export interface IRelation extends IAsset {
     name: string;
     attributes: { [key: string]: any };
-    direction: RelationDirectory;
+    direction: RelationDirection;
     left: RelationNode,
     right: RelationNode,
     return: RelationReturn[]

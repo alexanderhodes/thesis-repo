@@ -1,5 +1,5 @@
 import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post} from '@nestjs/common';
-import {Neo4jService} from '../../neo4j';
+import {GraphService} from '../services';
 import {IGraphObject, RemoteService} from '../../shared';
 import {GraphQueryDto, GraphRelationDto} from '../dtos';
 import {toGraphObjects} from '../mappers';
@@ -7,7 +7,7 @@ import {toGraphObjects} from '../mappers';
 @Controller("graph")
 export class GraphController {
 
-    constructor(private neo4jService: Neo4jService,
+    constructor(private neo4jService: GraphService,
                 private remoteService: RemoteService) {}
 
     @Get()

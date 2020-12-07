@@ -1,5 +1,5 @@
 import {Namespace, Status} from '../../shared';
-import {RelationDirectory, RelationNode, RelationReturn} from '../../neo4j';
+import {RelationDirection, RelationNode, RelationReturn} from '../../graph';
 
 export class AssetDto {
     readonly namespace: Namespace;
@@ -55,7 +55,7 @@ export class RelationDto extends AssetDto {
         readonly uuid: string;
         readonly name: string;
         readonly attributes: { [key: string]: any };
-        readonly direction: RelationDirectory;
+        readonly direction: RelationDirection;
         readonly left: RelationNode,
         readonly right: RelationNode,
         readonly return?: RelationReturn[]

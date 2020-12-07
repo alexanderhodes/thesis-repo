@@ -1,5 +1,4 @@
 export * from './asset.dto';
-export * from './graph.dto';
 export * from './meta-data.dto';
 export * from './object.dto';
 export * from './object-structure.dto';

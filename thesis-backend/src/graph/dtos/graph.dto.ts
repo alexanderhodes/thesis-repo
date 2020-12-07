@@ -1,7 +1,5 @@
 import {Namespace} from '../../shared';
-
-export type RelationDirection = 'in' | 'out' | 'both';
-export type RelationReturn = 'left' | 'right' | 'relation';
+import {RelationDirection, RelationReturn} from '../interfaces';
 
 export class GraphRelationDto {
     readonly name?: string;

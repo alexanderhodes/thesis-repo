@@ -2,7 +2,6 @@ export * from './assets.controller';
 export * from './blocks.controller';
 export * from './object.controller';
 export * from './object-structure.controller';
-export * from './graph.controller';
 export * from './permissions.controller';
 export * from './relation.controller';
 export * from './relation-structure.controller';

@@ -14,7 +14,7 @@ import {
 import {GraphQuery, Relation} from '../interfaces';
 
 @Injectable()
-export class Neo4jService {
+export class GraphService {
 
     #driver: neo4j.Driver;
 //    #session: neo4j.Session;

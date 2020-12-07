@@ -7,7 +7,6 @@ import {BigchainModule} from '../bigchain';
 import {
     AssetsController,
     BlocksController,
-    GraphController,
     ObjectController,
     ObjectStructureController,
     PermissionsController,
@@ -17,7 +16,7 @@ import {
     TransactionsController,
     UsersController
 } from './controllers';
-import {Neo4jModule} from '../neo4j';
+import {GraphModule} from '../graph';
 import {CoreModule} from '../core';
 
 const controllers = [
@@ -25,7 +24,6 @@ const controllers = [
     BlocksController,
     ObjectController,
     ObjectStructureController,
-    GraphController,
     PermissionsController,
     RelationController,
     RelationStructureController,
@@ -40,7 +38,7 @@ const controllers = [
         AuthorizationModule,
         BigchainModule,
         DatabaseModule,
-        Neo4jModule,
+        GraphModule,
         SharedModule
     ],
     exports: [
