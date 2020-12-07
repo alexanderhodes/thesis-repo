@@ -1,4 +1,4 @@
-import {IAsset, IOccupation, IQualification} from '../../shared';
+import {IAsset} from '../../shared';
 import {joinArrayElements, joinKeyValuePair, LIMIT, ORDER_BY, WHERE} from './helper.query';
 import {GraphQuery} from '../interfaces';
 
@@ -18,14 +18,6 @@ export function createNodeQuery(assetId: string, asset: { [key: string]: any }, 
 
 export function createNodeQueryForAsset(asset: IAsset): string {
     return createNodeQuery(asset.data.uuid, asset.data, asset.namespace);
-}
-
-export function createNodeQueryForOccupation(occupation: IOccupation): string {
-    return createNodeQueryForAsset(occupation);
-}
-
-export function createNodeQueryForQualification(qualification: IQualification): string {
-    return createNodeQueryForAsset(qualification);
 }
 
 export function createNodeQueryWithQuery(graphQuery: GraphQuery): string {
