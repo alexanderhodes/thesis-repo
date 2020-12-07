@@ -9,27 +9,20 @@ import {
     BlocksController,
     ObjectController,
     ObjectStructureController,
-    PermissionsController,
     RelationController,
     RelationStructureController,
-    RolesController,
-    TransactionsController,
-    UsersController
+    TransactionsController
 } from './controllers';
 import {GraphModule} from '../graph';
-import {CoreModule} from '../core';
 
 const controllers = [
     AssetsController,
     BlocksController,
     ObjectController,
     ObjectStructureController,
-    PermissionsController,
     RelationController,
     RelationStructureController,
-    RolesController,
-    TransactionsController,
-    UsersController
+    TransactionsController
 ];
 
 @Module({

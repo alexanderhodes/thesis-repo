@@ -8,6 +8,8 @@ import {BigchainModule} from './bigchain';
 import {ApiModule} from './api';
 import {AppConfigModule, ConfigurationService} from './app-config';
 import {CoreModule} from './core';
+import {GraphModule} from './graph';
+import {UsersModule} from './users';
 
 @Module({
     imports: [
@@ -26,7 +28,9 @@ import {CoreModule} from './core';
         TestModule,
         BigchainModule,
         CoreModule,
-        ApiModule
+        ApiModule,
+        GraphModule,
+        UsersModule
     ],
     controllers: [],
     providers: [],

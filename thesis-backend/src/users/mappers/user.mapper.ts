@@ -1,4 +1,4 @@
-import {UserEntity} from '../../database/entities';
+import {UserEntity} from '../../database';
 import {RoleDto} from '../dtos';
 
 export function toUserEntity(username: string,
