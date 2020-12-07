@@ -1,16 +1,18 @@
 import {Body, Controller, Get, HttpStatus, Param, Patch, Post, Query, Request, UseGuards} from '@nestjs/common';
 import {ApiTags} from '@nestjs/swagger';
-import {IMetaData, ITransaction, TransactionsService} from '../../bigchain';
+import {IMetaData, ITransaction} from '../interfaces';
 import {JwtAuthGuard} from '../../authorization';
 import {RelationDto, TransactionDto} from '../dtos';
 import {GraphService} from '../../graph';
+import {TransactionsService} from '../services';
 
 @ApiTags("transactions")
 @Controller("transactions")
 export class TransactionsController {
 
     constructor(private transactionsService: TransactionsService,
-                private neo4jService: GraphService) {}
+                private neo4jService: GraphService) {
+    }
 
     @Get()
     getAllTransactions(): Promise<any> {

@@ -4,7 +4,6 @@ import {ScheduleModule} from "@nestjs/schedule";
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {TestModule} from './test';
 import {BigchainModule} from './bigchain';
-import {ApiModule} from './api';
 import {AppConfigModule, ConfigurationService} from './app-config';
 import {CoreModule} from './core';
 import {GraphModule} from './graph';
@@ -35,7 +34,6 @@ const featureModules = [
         }),
         TestModule,
         CoreModule,
-        ApiModule,
         ...featureModules
     ],
     controllers: [],

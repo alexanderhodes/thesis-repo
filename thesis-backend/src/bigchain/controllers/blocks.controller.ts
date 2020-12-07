@@ -1,6 +1,6 @@
 import {Controller, Get} from '@nestjs/common';
 import {ApiTags} from '@nestjs/swagger';
-import {BlocksService} from '../../bigchain';
+import {BlocksService} from '../services';
 
 @ApiTags("blocks")
 @Controller("blocks")
