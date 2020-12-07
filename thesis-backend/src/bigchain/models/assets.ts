@@ -1,5 +1,6 @@
 import {Document} from 'mongoose';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
+import {IAsset} from '../../shared';
 
 @Schema()
 export class Assets extends Document {
@@ -7,7 +8,7 @@ export class Assets extends Document {
     @Prop()
     _id: string;
     @Prop()
-    data: any;
+    data: IAsset;
     @Prop()
     id: string;
 

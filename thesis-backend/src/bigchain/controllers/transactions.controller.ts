@@ -1,10 +1,10 @@
-import {Body, Controller, Get, HttpStatus, Param, Patch, Post, Query, Request, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post, UseGuards} from '@nestjs/common';
 import {ApiTags} from '@nestjs/swagger';
-import {IMetaData, ITransaction} from '../interfaces';
 import {JwtAuthGuard} from '../../authorization';
 import {RelationDto, TransactionDto} from '../dtos';
 import {GraphService} from '../../graph';
 import {TransactionsService} from '../services';
+import {ITransaction} from '../../shared';
 
 @ApiTags("transactions")
 @Controller("transactions")
@@ -19,8 +19,8 @@ export class TransactionsController {
         return this.transactionsService.find();
     }
 
-    @Get()
-    getTransactionsForAsset(@Query("asset") asset): Promise<any> {
+    @Get("asset/:asset")
+    getTransactionsForAsset(@Param("asset") asset): Promise<any> {
         return this.transactionsService.listTransactions(asset);
     }
 
@@ -47,21 +47,21 @@ export class TransactionsController {
         return transactionResult;
     }
 
-    @UseGuards(JwtAuthGuard)
-    @Patch(":privateKey")
-    transferTransaction(@Request() req,
-                        @Body() transaction: any,
-                        @Param("privateKey") privateKey) {
-        const user = req.user;
-        if (user) {
-            const metaData: IMetaData = {
-                'time': Date.now(),
-                'pk': privateKey,
-                'user': user
-            };
-            return this.transactionsService.updateTransaction(transaction, user, privateKey, metaData);
-        }
-        return HttpStatus.BAD_REQUEST;
-    }
+//    @UseGuards(JwtAuthGuard)
+//    @Patch(":privateKey")
+//    transferTransaction(@Request() req,
+//                        @Body() transaction: any,
+//                        @Param("privateKey") privateKey) {
+//        const user = req.user;
+//        if (user) {
+//            const metaData: IMetadata = {
+//                'time': Date.now(),
+//                'pk': privateKey,
+//                'user': user
+//            };
+//            return this.transactionsService.updateTransaction(transaction, user, privateKey, metaData);
+//        }
+//        return HttpStatus.BAD_REQUEST;
+//    }
 
 }

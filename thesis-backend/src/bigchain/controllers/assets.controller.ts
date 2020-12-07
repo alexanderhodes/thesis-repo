@@ -1,4 +1,4 @@
-import {Controller, Get, Query} from '@nestjs/common';
+import {Controller, Get, Param, Query} from '@nestjs/common';
 import {ApiTags} from '@nestjs/swagger';
 import {AssetsService} from '../services';
 
@@ -13,10 +13,9 @@ export class AssetsController {
         return this.assetsService.find();
     }
 
-    @Get()
-    getAssetsBySearch(@Query("search") search: string,
-                      @Query("limit") limit: string) {
-        return this.assetsService.searchAssets(search, +limit);
+    @Get(":uuid")
+    getAssetByUuid(@Param("uuid") uuid: string): Promise<any> {
+        return this.assetsService.findByUuid(uuid);
     }
 
 }

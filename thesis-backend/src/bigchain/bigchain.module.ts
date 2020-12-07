@@ -1,9 +1,18 @@
 import {HttpModule, Module} from '@nestjs/common';
 import {AppConfigModule} from '../app-config';
 import {AssetsController, BlocksController, TransactionsController} from './controllers';
-import {AssetsService, BigchainBaseService, BlocksService, TransactionsService} from './services';
+import {AssetsService, BigchainBaseService, BlocksService, MetadataService, TransactionsService} from './services';
 import {MongooseModule} from '@nestjs/mongoose';
-import {Assets, AssetSchema, Blocks, BlocksSchema, Transactions, TransactionsSchema} from './models';
+import {
+    Assets,
+    AssetSchema,
+    Blocks,
+    BlocksSchema,
+    Metadata,
+    MetadataSchema,
+    Transactions,
+    TransactionsSchema
+} from './models';
 import {AuthorizationModule} from '../authorization';
 import {GraphModule} from '../graph';
 
@@ -16,6 +25,7 @@ const services = [
     AssetsService,
     BigchainBaseService,
     BlocksService,
+    MetadataService,
     TransactionsService
 ];
 
@@ -28,6 +38,7 @@ const services = [
         MongooseModule.forFeature([
             { name: Assets.name, schema: AssetSchema },
             { name: Blocks.name, schema: BlocksSchema },
+            { name: Metadata.name, schema: MetadataSchema },
             { name: Transactions.name, schema: TransactionsSchema }
         ]),
     ],

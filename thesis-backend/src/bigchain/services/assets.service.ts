@@ -3,8 +3,8 @@ import {InjectModel} from '@nestjs/mongoose';
 import {Model} from "mongoose";
 import {BigchainBaseService} from './bigchain-base.service';
 import {ConfigurationService} from '../../app-config';
-import {IAsset} from '../interfaces';
 import {Assets} from '../models';
+import {IAsset} from '../../shared';
 
 @Injectable()
 export class AssetsService extends BigchainBaseService {
@@ -21,6 +21,14 @@ export class AssetsService extends BigchainBaseService {
 
     async find(): Promise<Assets[]> {
         return this.assetModel.find();
+    }
+
+    async findByUuid(uuid: string): Promise<Assets> {
+        return this.assetModel.findOne({ "data.data.uuid": uuid});
+    }
+
+    async findAllByUuid(uuid: string): Promise<Assets[]> {
+        return this.assetModel.find({ "data.data.uuid": uuid});
     }
 
 }

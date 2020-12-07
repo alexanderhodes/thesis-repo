@@ -11,14 +11,13 @@ export function createNodeQuery(assetId: string, asset: { [key: string]: any }, 
     // replace all non letter characters with nothing
     const id = assetId.replace(/[\W_]+/g, '');
     return CREATE_NODE
-        .replace('{{id}}', id)
+        .replace('{{id}}', `id${id}`)
         .replace('{{type}}', type)
         .replace('{{attributes}}', attributes);
 }
 
 export function createNodeQueryForAsset(asset: IAsset): string {
-    console.log('asset', asset);
-    return createNodeQuery(asset.data.name, asset.data, asset.namespace);
+    return createNodeQuery(asset.data.uuid, asset.data, asset.namespace);
 }
 
 export function createNodeQueryForOccupation(occupation: IOccupation): string {

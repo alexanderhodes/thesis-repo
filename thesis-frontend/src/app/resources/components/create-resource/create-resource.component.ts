@@ -1,4 +1,11 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit, Output,
+  ViewEncapsulation
+} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {take, takeUntil} from 'rxjs/operators';
 import {
@@ -20,6 +27,9 @@ import {Asset, IObject, IObjectStructure, KeyPair, StorageUser, Transaction, Uui
 })
 export class CreateResourceComponent extends CleanUpHelper implements OnInit {
 
+  @Output()
+  resourceCreated: EventEmitter<Asset>;
+
   createForm: FormGroup;
   selectedResourceType: string;
   objectStructures: IObjectStructure[] = [];
@@ -34,6 +44,7 @@ export class CreateResourceComponent extends CleanUpHelper implements OnInit {
               private uuidService: UuidService,
               private changeDetectorRef: ChangeDetectorRef) {
     super();
+    this.resourceCreated = new EventEmitter<Asset>();
   }
 
   ngOnInit(): void {
@@ -88,13 +99,13 @@ export class CreateResourceComponent extends CleanUpHelper implements OnInit {
         .pipe(take(1))
         .subscribe((createdTransaction: Transaction) => {
           console.log('createdTransaction', createdTransaction);
-          this.submitted = true;
+          this.resourceCreated.emit(createdTransaction.asset.data);
+          this.submitted = false;
           this.createForm.reset({});
+          this.changeDetectorRef.detectChanges();
         }, (error) => {
           console.log('err', error);
         });
-      this.createForm.reset({});
-      this.changeDetectorRef.detectChanges();
     }
   }
 

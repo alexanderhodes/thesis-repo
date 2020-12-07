@@ -1,4 +1,4 @@
 <ng-container *tsHasPermission="'ASSETS_CREATE'">
-  <ts-create-resource></ts-create-resource>
+  <ts-create-resource (resourceCreated)="onResourceCreated($event)"></ts-create-resource>
 </ng-container>
 <ts-resource-list></ts-resource-list>

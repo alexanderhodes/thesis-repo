@@ -1,4 +1,4 @@
-import {MetaDataDto} from './meta-data.dto';
+import {MetadataDto} from './metadata.dto';
 import {AssetDto} from './asset.dto';
 
 export class TransactionDto {
@@ -23,9 +23,9 @@ export class TransactionDto {
         }
     ];
     readonly operation: string;
-    readonly metadata: MetaDataDto;
+    readonly metadata: MetadataDto;
     readonly asset: {
-        readonly data: AssetDto;
+        data: AssetDto;
     };
     readonly version: string;
     readonly id: string;

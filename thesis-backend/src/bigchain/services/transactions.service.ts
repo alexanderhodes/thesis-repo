@@ -3,15 +3,17 @@ import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {BigchainBaseService} from './bigchain-base.service';
 import {ConfigurationService} from '../../app-config';
-import {IAsset, IMetaData, ITransaction} from '../interfaces';
 import {Transactions} from '../models';
 import {UserEntity} from '../../database';
+import {IMetadata, ITransaction} from '../../shared';
+import {AssetsService} from './assets.service';
 
 @Injectable()
 export class TransactionsService extends BigchainBaseService {
 
     constructor(configurationService: ConfigurationService,
                 httpService: HttpService,
+                private assetsService: AssetsService,
                 @InjectModel(Transactions.name) private transactionsModel: Model<Transactions>) {
         super(configurationService, httpService);
     }
@@ -24,8 +26,16 @@ export class TransactionsService extends BigchainBaseService {
         return this.getConnection().getTransaction(transactionId);
     }
 
-    listTransactions(assetId: string): Promise<ITransaction[]> {
-        return this.getConnection().listTransactions(assetId);
+    async listTransactions(assetUuid: string): Promise<ITransaction[]> {
+        const assets = await this.assetsService.findAllByUuid(assetUuid);
+        const transactions = [];
+
+        for (const asset of assets) {
+            const transaction = await this.getTransaction(asset.id);
+            transactions.push(transaction);
+        }
+
+        return transactions;
     }
 
     createTransaction(transaction: ITransaction): Promise<ITransaction> {
@@ -39,31 +49,7 @@ export class TransactionsService extends BigchainBaseService {
             });
     }
 
-    createTransactionOld(asset: IAsset, user: UserEntity, privateKey: string, metadata: IMetaData = null): Promise<ITransaction> {
-        // Construct a transaction payload
-        const tx = this.driver.Transaction.makeCreateTransaction(
-            asset,
-            metadata,
-            // A transaction needs an output
-            [
-                this.driver.Transaction.makeOutput(this.driver.Transaction.makeEd25519Condition(user.publicKey))
-            ],
-            user.publicKey
-        );
-
-        // Sign the transaction with private keys
-        const txSigned = this.driver.Transaction.signTransaction(tx, privateKey);
-        // get connection to bigchaindb
-        const connection = this.getConnection();
-        // Send the transaction off to BigchainDB
-        return connection.postTransactionCommit(txSigned)
-            .then((retrievedTx: ITransaction, err) => {
-                console.log('err', err);
-                return connection.getTransaction(retrievedTx.id);
-            });
-    }
-
-    updateTransaction(createdTransaction: any, user: UserEntity, privateKey: string, metadata: IMetaData = null): Promise<ITransaction> {
+    updateTransaction(createdTransaction: any, user: UserEntity, privateKey: string, metadata: IMetadata = null): Promise<ITransaction> {
         const tx = this.driver.Transaction.makeTransferTransaction(
             [{ tx: createdTransaction, output_index: 0 }],
             [
