@@ -2,7 +2,6 @@ import {Injectable} from '@nestjs/common';
 import {TypeOrmModuleOptions} from '@nestjs/typeorm';
 import {ConfigService} from '@nestjs/config';
 import {
-    InsertPermissions1601456259497Migration,
     ObjectEntity,
     ObjectStructureEntity,
     PermissionEntity,
@@ -42,7 +41,7 @@ export class ConfigurationService {
             synchronize: true,
             migrationsTableName: 'migrations',
 //            migrations: [__dirname + '/../../**/database/migrations/*.migration.{ts,js}'],
-            migrations: [InsertPermissions1601456259497Migration],
+            migrations: [],
             cli: {
                 migrationsDir: __dirname + '/../../**/database/migrations/'
             }

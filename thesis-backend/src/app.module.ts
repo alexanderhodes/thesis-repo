@@ -2,7 +2,6 @@ import {Module} from '@nestjs/common';
 import {MongooseModule} from "@nestjs/mongoose";
 import {ScheduleModule} from "@nestjs/schedule";
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {TestModule} from './test';
 import {BigchainModule} from './bigchain';
 import {AppConfigModule, ConfigurationService} from './app-config';
 import {CoreModule} from './core';
@@ -32,7 +31,6 @@ const featureModules = [
             inject: [ConfigurationService],
             useFactory: (configurationService: ConfigurationService) => configurationService.createTypeOrmConfigFactory()
         }),
-        TestModule,
         CoreModule,
         ...featureModules
     ],

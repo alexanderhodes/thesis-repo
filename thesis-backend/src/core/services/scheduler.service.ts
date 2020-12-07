@@ -1,13 +1,13 @@
-import {Injectable, Logger} from "@nestjs/common";
-import {Cron} from "@nestjs/schedule";
+import {Injectable, Logger} from '@nestjs/common';
+import {Cron} from '@nestjs/schedule';
 
 @Injectable()
-export class TasksService {
+export class SchedulerService {
 
     readonly #logger: Logger;
 
     constructor() {
-        this.#logger = new Logger(TasksService.name);
+        this.#logger = new Logger(SchedulerService.name);
     }
 
     @Cron('45 * * * * *')
