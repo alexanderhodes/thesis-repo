@@ -10,7 +10,7 @@ import {
     RoleEntity,
     UserEntity
 } from '../../database';
-import {INodeConfig} from '../../shared';
+import {IRemoteConfig} from '../../shared';
 import {createNodeConfigs} from '../utils';
 
 @Injectable()
@@ -56,16 +56,10 @@ export class ConfigurationService {
         };
     }
 
-    createNodesConfig(): string[] {
-        const urls = this.get<string>('NODE_URLS');
-        return urls ? urls.split(',') : [];
-    }
-
-    createRemoteConfig(): { protocol: string, nodes: INodeConfig[] } {
+    createRemoteConfig(): IRemoteConfig {
         const protocol = this.get<string>('NODE_PROTOCOL');
         const nodeUrls = this.get<string>('NODE_URLS');
         const nodes = createNodeConfigs(nodeUrls);
-        console.log('nodes', nodes);
         return { protocol, nodes: nodes };
     }
 }

@@ -38,12 +38,18 @@ export class GraphController {
         const graphQueries = [
             {
                 host: 'local',
+                name: 'local',
                 data: toGraphObjects(response),
                 error: false
             }
         ];
         remoteQueries.forEach(query => {
-            graphQueries.push({ host: query.config.baseURL, data: toGraphObjects(query.data), error: !!query.error });
+            graphQueries.push({
+                host: query.config.baseURL,
+                name: this.remoteService.getNodeNameForBaseURL(query.config.baseURL),
+                data: toGraphObjects(query.data),
+                error: !!query.error
+            });
         })
         return graphQueries;
     }
