@@ -9,5 +9,6 @@ export * from './object-structure.interface';
 export * from './permission.interface';
 export * from './relation.interface';
 export * from './relation-structure.interface';
+export * from './remote.interface';
 export * from './role.interface';
 export * from './user.interface';

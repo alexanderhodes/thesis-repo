@@ -1,6 +1,6 @@
-export interface IRemoteResponse {
+export interface IRemoteResponse<T> {
     host: string;
     name: string;
-    data: any[];
+    data: T[];
     error: boolean;
 }
