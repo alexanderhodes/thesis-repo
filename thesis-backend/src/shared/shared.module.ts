@@ -1,19 +1,14 @@
-import {HttpModule, Module} from '@nestjs/common';
-import {KeypairService, PasswordService, RemoteService} from './services';
-import {AppConfigModule} from '../app-config';
+import {Module} from '@nestjs/common';
+import {KeypairService, PasswordService} from './services';
 
 const controllers = [];
 const services = [
     KeypairService,
-    PasswordService,
-    RemoteService
+    PasswordService
 ];
 
 @Module({
-    imports: [
-        HttpModule,
-        AppConfigModule
-    ],
+    imports: [],
     exports: [
         ...services
     ],

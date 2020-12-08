@@ -3,6 +3,9 @@ import {IGraphObject, INode, IGraphRelation, ISegment} from '../../shared';
 
 export function toGraphObjects(response: QueryResult): IGraphObject[] {
     const graphObjects: IGraphObject[] = [];
+    if (!response || !response.records || response.records.length === 0) {
+        return [];
+    }
     response.records.forEach(record => {
         if (record && record['_fields']) {
             record['_fields'].forEach(field => {

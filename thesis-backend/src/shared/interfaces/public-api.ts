@@ -1,4 +1,5 @@
 export * from './asset.interface';
+export * from './configuration.interface';
 export * from './graph.interface';
 export * from './keypair.interface';
 export * from './metadata.interface';

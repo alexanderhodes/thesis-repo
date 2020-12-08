@@ -20,7 +20,6 @@ export class BigchainBaseService {
             this.#_connection = new this.driver.Connection(this.#_apiPath);
         }
 
-
         return this.#_connection;
     }
 

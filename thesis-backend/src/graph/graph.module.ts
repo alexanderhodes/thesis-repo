@@ -4,6 +4,7 @@ import {GraphService} from './services';
 import {GraphController} from './controllers';
 import {AuthorizationModule} from '../authorization';
 import {SharedModule} from '../shared';
+import {CoreModule} from '../core';
 
 const controllers = [
     GraphController
@@ -20,6 +21,7 @@ const services = [
     imports: [
         AppConfigModule,
         AuthorizationModule,
+        CoreModule,
         SharedModule
     ],
     exports: [
