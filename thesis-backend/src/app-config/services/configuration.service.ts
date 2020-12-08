@@ -59,7 +59,8 @@ export class ConfigurationService {
     createRemoteConfig(): IRemoteConfig {
         const protocol = this.get<string>('NODE_PROTOCOL');
         const nodeUrls = this.get<string>('NODE_URLS');
+        const timeout = this.get<number>('NODE_TIMEOUT');
         const nodes = createNodeConfigs(nodeUrls);
-        return { protocol, nodes: nodes };
+        return { protocol, nodes, timeout };
     }
 }

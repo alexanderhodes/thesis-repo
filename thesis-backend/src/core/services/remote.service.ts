@@ -9,7 +9,6 @@ type RequestType = 'get' | 'GET' | 'post' | 'POST';
 export class RemoteService {
 
     readonly #remoteConfig: IRemoteConfig;
-    readonly #timeout: number = 5000;
 
     constructor(private httpService: HttpService,
                 private configurationService: ConfigurationService) {
@@ -51,7 +50,7 @@ export class RemoteService {
             data: body,
             baseURL: `${this.#remoteConfig.protocol}://${remote.host}`,
             url: url,
-            timeout: this.#timeout
+            timeout: this.#remoteConfig.timeout
         };
     }
 
