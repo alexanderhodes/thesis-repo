@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Post} from '@nestjs/common';
 import {GraphService} from '../services';
 import {IGraphObject} from '../../shared';
 import {GraphQueryDto, GraphRelationDto} from '../dtos';
@@ -24,12 +24,14 @@ export class GraphController {
     }
 
     @Post('node/:type')
+    @HttpCode(HttpStatus.OK)
     async getGraphObjectsByTypeWithQuery(@Param("type") type: string, @Body() graphQuery: GraphQueryDto): Promise<IGraphObject[]> {
         const response = await this.neo4jService.findNodesByTypeAndQuery(graphQuery);
         return toGraphObjects(response);
     }
 
     @Post('node/:type/remote')
+    @HttpCode(HttpStatus.OK)
     async getGraphObjectByTypeWithQuery(@Param("type") type: string, @Body() graphQuery: GraphQueryDto): Promise<any> {
         const remoteQueries = await Promise.all(this.remoteService.queryRemote('POST', `api/graph/node/${type}`, graphQuery));
         const response = await this.neo4jService.findNodesByTypeAndQuery(graphQuery);
@@ -47,12 +49,14 @@ export class GraphController {
     }
 
     @Post("relation/create")
+    @HttpCode(HttpStatus.OK)
     async createRelation(@Body() relationDto: GraphRelationDto): Promise<IGraphObject[]> {
         const response = await this.neo4jService.createRelation(relationDto);
         return toGraphObjects(response);
     }
 
     @Post("relation/read")
+    @HttpCode(HttpStatus.OK)
     async readRelation(@Body() relationDto: GraphRelationDto): Promise<IGraphObject[]> {
         const response = await this.neo4jService.readRelation(relationDto);
         return toGraphObjects(response);
@@ -64,6 +68,7 @@ export class GraphController {
     }
 
     @Post("cypher")
+    @HttpCode(HttpStatus.OK)
     async getResultByCypherQuery(@Body() query: { cypher: string }): Promise<IGraphObject[]> {
         if (query.cypher.toUpperCase().indexOf('DELETE') === -1 && query.cypher.toUpperCase().indexOf('REMOVE') === -1) {
             const response = await this.neo4jService.executeCypherQuery(query.cypher);
