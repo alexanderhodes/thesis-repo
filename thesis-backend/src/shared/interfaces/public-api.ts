@@ -7,4 +7,5 @@ export * from './object.interface';
 export * from './object-structure.interface';
 export * from './relation.interface';
 export * from './relation-structure.interface';
+export * from './remote.interface';
 export * from './transaction.interface';

@@ -1,6 +1,6 @@
 import {Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Post} from '@nestjs/common';
 import {GraphService} from '../services';
-import {IGraphObject} from '../../shared';
+import {IGraphObject, IRemoteResponse} from '../../shared';
 import {GraphQueryDto, GraphRelationDto} from '../dtos';
 import {toGraphObjects} from '../mappers';
 import {RemoteService} from '../../core';
@@ -33,9 +33,8 @@ export class GraphController {
     @Post('node/:type/remote')
     @HttpCode(HttpStatus.OK)
     async getGraphObjectByTypeWithQuery(@Param("type") type: string, @Body() graphQuery: GraphQueryDto): Promise<any> {
-        const remoteQueries = await Promise.all(this.remoteService.queryRemote('POST', `api/graph/node/${type}`, graphQuery));
         const response = await this.neo4jService.findNodesByTypeAndQuery(graphQuery);
-        const graphQueries = [
+        const graphQueries: IRemoteResponse[] = [
             {
                 host: 'local',
                 name: 'local',
@@ -43,14 +42,9 @@ export class GraphController {
                 error: false
             }
         ];
-        remoteQueries.forEach(query => {
-            graphQueries.push({
-                host: query.config.baseURL,
-                name: this.remoteService.getNodeNameForBaseURL(query.config.baseURL),
-                data: toGraphObjects(query.data),
-                error: !!query.error
-            });
-        })
+        const remoteResponses: IRemoteResponse[] = await this.remoteService.queryRemote('POST', `api/graph/node/${type}`, graphQuery, toGraphObjects);
+        console.log('remoteResponses', remoteResponses);
+        graphQueries.push(...remoteResponses);
         return graphQueries;
     }
 

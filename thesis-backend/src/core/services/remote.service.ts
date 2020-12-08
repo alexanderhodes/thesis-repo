@@ -1,9 +1,9 @@
 import {HttpService, Injectable} from '@nestjs/common';
 import {AxiosRequestConfig} from 'axios';
 import {ConfigurationService} from '../../app-config';
-import {INodeConfig, IRemoteConfig} from '../../shared';
+import {INodeConfig, IRemoteConfig, IRemoteResponse} from '../../shared';
 
-type REQUEST_TYPES = 'get' | 'GET' | 'post' | 'POST';
+type RequestType = 'get' | 'GET' | 'post' | 'POST';
 
 @Injectable()
 export class RemoteService {
@@ -16,7 +16,23 @@ export class RemoteService {
         this.#remoteConfig = this.configurationService.createRemoteConfig();
     }
 
-    queryRemote(method: REQUEST_TYPES, url: string, body: any): Promise<any>[] {
+    async queryRemote(method: RequestType, url: string, body: any, parser: (any) => any): Promise<IRemoteResponse[]> {
+        const responses: IRemoteResponse[] = [];
+        const remoteQueries = await Promise.all(this._queryRemote(method, url, body));
+
+        remoteQueries.forEach(query => {
+            responses.push({
+                host: query.config.baseURL,
+                name: this._getNodeNameForBaseURL(query.config.baseURL),
+                data: parser(query.data),
+                error: !!query.error
+            } as IRemoteResponse);
+        })
+
+        return responses;
+    }
+
+    _queryRemote(method: RequestType, url: string, body: any): Promise<any>[] {
         const queries = [];
         console.log('remoteConfig', this.#remoteConfig);
 
@@ -29,7 +45,7 @@ export class RemoteService {
         return queries;
     }
 
-    _createRequest(method: REQUEST_TYPES, url: string, body: any, remote: INodeConfig): AxiosRequestConfig {
+    private _createRequest(method: RequestType, url: string, body: any, remote: INodeConfig): AxiosRequestConfig {
         return {
             method: method,
             data: body,
@@ -39,7 +55,7 @@ export class RemoteService {
         };
     }
 
-    _catchError(remote: INodeConfig): any {
+    private _catchError(remote: INodeConfig): any {
         return {
             config: {
                 baseURL: `${this.#remoteConfig.protocol}://${remote.host}`
@@ -49,7 +65,7 @@ export class RemoteService {
         };
     }
 
-    getNodeNameForBaseURL(baseURL: string): string {
+    private _getNodeNameForBaseURL(baseURL: string): string {
         const node = this.#remoteConfig.nodes.find(node => `${this.#remoteConfig.protocol}://${node.host}` === baseURL);
         return node ? node.name : '';
     }
