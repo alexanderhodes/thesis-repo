@@ -1,25 +1,25 @@
-<div *ngFor="let object of objects" class="pb-3">
+<div *ngFor="let resource of resources" class="pb-3">
   <div class="text-bold text-black text-3xl">
-    {{ object.custom ? object.type : ('common.'+object.type+'-multiple') | translate }}
+    {{ resource.custom ? resource.type : ('common.'+resource.type+'-multiple') | translate }}
   </div>
   <table class="table-auto w-full">
     <thead>
     <tr class="border-t-4 border-black">
       <th class="px-4 py-2 text-left h-auto">
-        <span class="text-lg">Name</span>
+        <span class="text-lg">{{ 'common.name' | translate }}</span>
       </th>
       <th class="px-4 py-2 text-left h-auto">
-        <span class="text-lg">Aktionen</span>
+        <span class="text-lg">{{ 'common.actions' | translate }}</span>
       </th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let asset of object.data; index as i; last as last" class="border-t-2 border-black"
+    <tr *ngFor="let asset of resource.data; index as i; last as last" class="border-t-2 border-black"
         [ngClass]="{'border-b-2': last}">
       <td class="px-4 py-2">{{ asset.data.name }}</td>
       <td class="px-4 py-2">
-        <button [routerLink]="[object.type, asset.data.uuid]" [queryParams]="{custom: object.custom}" ts-button-tertiary class="my-1">
-          zur Detailansicht
+        <button [routerLink]="[resource.type, asset.data.uuid]" [queryParams]="{custom: resource.custom}" ts-button-tertiary class="my-1">
+          {{ 'common.to-detail' | translate }}
         </button>
       </td>
     </tr>

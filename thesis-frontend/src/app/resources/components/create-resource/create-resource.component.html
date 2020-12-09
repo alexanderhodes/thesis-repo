@@ -20,12 +20,14 @@
 
     <ng-container *ngIf="createForm">
       <form [formGroup]="createForm" (ngSubmit)="createResource()">
-        <ng-container *ngIf="selectedResourceType === 'qualification' || selectedResourceType === 'occupation'; else custom">
+        <ng-container
+          *ngIf="selectedResourceType === 'qualification' || selectedResourceType === 'occupation'; else custom">
           <div class="grid grid-cols-12">
             <div class="col-span-6 px-2 pt-3">
               <label for="identifier" class="text-black">Identifier *</label>
               <input id="identifier" ts-input formControlName="identifier">
-              <ng-container *ngIf="(submitted || getFormControl('identifier').touched) && getFormControl('identifier').invalid">
+              <ng-container
+                *ngIf="(submitted || getFormControl('identifier').touched) && getFormControl('identifier').invalid">
                 <ts-error-message *ngIf="getFormControl('identifier').errors.required">
                   Bitte geben Sie einen Wert ein.
                 </ts-error-message>
@@ -43,7 +45,8 @@
             <div class="col-span-6 px-2 pt-3">
               <label for="description" class="text-black">Beschreibung *</label>
               <input id="description" ts-input formControlName="description">
-              <ng-container *ngIf="(submitted || getFormControl('description').touched) && getFormControl('description').invalid">
+              <ng-container
+                *ngIf="(submitted || getFormControl('description').touched) && getFormControl('description').invalid">
                 <ts-error-message *ngIf="getFormControl('description').errors.required">
                   Bitte geben Sie einen Wert ein.
                 </ts-error-message>
@@ -52,7 +55,8 @@
             <div class="col-span-6 px-2 pt-3">
               <label for="disambiguatingDescription" class="text-black">Weitere Beschreibung</label>
               <input id="disambiguatingDescription" ts-input formControlName="disambiguatingDescription">
-              <ng-container *ngIf="(submitted || getFormControl('disambiguatingDescription').touched) && getFormControl('disambiguatingDescription').invalid">
+              <ng-container
+                *ngIf="(submitted || getFormControl('disambiguatingDescription').touched) && getFormControl('disambiguatingDescription').invalid">
                 <ts-error-message *ngIf="getFormControl('disambiguatingDescription').errors.required">
                   Bitte geben Sie einen Wert ein.
                 </ts-error-message>
@@ -85,7 +89,8 @@
         <ng-container *ngFor="let objectStructure of objectStructures">
           <div class="grid grid-cols-12">
             <div class="col-span-6 px-2 pt-3">
-              <label [attr.for]="objectStructure.field">{{ objectStructure.field }} {{ !objectStructure.nullable ? '*' : '' }}</label>
+              <label
+                [attr.for]="objectStructure.field">{{ objectStructure.field }} {{ !objectStructure.nullable ? '*' : '' }}</label>
               <ng-container *ngIf="objectStructure.datatype === 'boolean'; else normalInput">
                 <div class="flex items-start">
                   <div class="flex-items-center h-5">
@@ -101,7 +106,8 @@
                 <input [id]="objectStructure.field" ts-input [formControlName]="objectStructure.field"
                        [attr.type]="objectStructure.datatype === 'number' ? 'number' : 'text'">
                 <ng-container *ngIf="!objectStructure.nullable">
-                  <ng-container *ngIf="(submitted || getFormControl(objectStructure.field).touched) && getFormControl(objectStructure.field).invalid">
+                  <ng-container
+                    *ngIf="(submitted || getFormControl(objectStructure.field).touched) && getFormControl(objectStructure.field).invalid">
                     <ts-error-message *ngIf="getFormControl(objectStructure.field).errors.required">
                       Bitte geben Sie einen Wert ein.
                     </ts-error-message>
@@ -111,6 +117,16 @@
             </div>
           </div>
         </ng-container>
+        <div class="grid grid-cols-12">
+          <div class="col-span-6 col-start-4 mt-3" *ngIf="message">
+            <ng-container *ngIf="message.type === 'error'; else successMessage">
+              <ts-error-message>{{ message.text }}</ts-error-message>
+            </ng-container>
+            <ng-template #successMessage>
+              <ts-success-message>{{ message.text }}</ts-success-message>
+            </ng-template>
+          </div>
+        </div>
         <div class="w-100 text-center pt-3">
           <button ts-button-tertiary type="submit">anlegen</button>
         </div>

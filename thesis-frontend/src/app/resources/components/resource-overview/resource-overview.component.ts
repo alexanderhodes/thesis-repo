@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@an
 import {take, takeUntil} from 'rxjs/operators';
 import {CleanUpHelper, StateService, STORAGE_USER, TransactionsApiService} from '../../../core';
 import {Asset, KeyPair, Occupation, Qualification, Relation, Resource, StorageUser, UuidService} from '../../../shared';
+import {ReplaySubject, Subject} from 'rxjs';
 
 @Component({
   selector: 'ts-resource-overview',
@@ -12,12 +13,14 @@ import {Asset, KeyPair, Occupation, Qualification, Relation, Resource, StorageUs
 })
 export class ResourceOverviewComponent extends CleanUpHelper implements OnInit {
 
+  resourceCreated$: Subject<Asset>;
   #publicKey: string;
 
   constructor(private transactionApiService: TransactionsApiService,
               private uuidService: UuidService,
               private stateService: StateService) {
     super();
+    this.resourceCreated$ = new ReplaySubject(1);
   }
 
   ngOnInit(): void {
@@ -29,7 +32,7 @@ export class ResourceOverviewComponent extends CleanUpHelper implements OnInit {
   }
 
   onResourceCreated(asset: Asset): void {
-    console.log('asset', asset);
+    this.resourceCreated$.next(asset);
   }
 
 }

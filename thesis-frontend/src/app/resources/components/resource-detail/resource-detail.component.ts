@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncap
 import {ActivatedRoute} from '@angular/router';
 import {take} from 'rxjs/operators';
 import {GraphApiService} from '../../../core';
-import {Asset, GraphObject, GraphQuery, GraphRelationQuery, Node} from '../../../shared';
+import {Asset, GraphObject, GraphQuery, GraphRelationQuery, Node, RemoteResponse} from '../../../shared';
 
 @Component({
   selector: 'ts-resource-detail',
@@ -65,6 +65,12 @@ export class ResourceDetailComponent implements OnInit {
       .pipe(take(1))
       .subscribe((graphObjects: GraphObject[]) => {
         console.log('graphObjects', graphObjects);
+      });
+
+    this.graphApiService.getRemoteNodesByQuery(nodeParam, query)
+      .pipe(take(1))
+      .subscribe((remoteResponse: RemoteResponse<GraphObject[]>) => {
+        console.log('remoteResponse', remoteResponse);
       });
   }
 

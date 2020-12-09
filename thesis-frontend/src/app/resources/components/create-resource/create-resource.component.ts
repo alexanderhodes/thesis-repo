@@ -16,14 +16,28 @@ import {
   STORAGE_USER,
   TransactionsApiService
 } from '../../../core';
-import {Asset, IObject, IObjectStructure, KeyPair, StorageUser, Transaction, UuidService} from '../../../shared';
+import {
+  Asset,
+  IMessage,
+  IObject,
+  IObjectStructure,
+  KeyPair,
+  StorageUser,
+  Transaction,
+  UuidService
+} from '../../../shared';
+import {AsyncPipe} from '@angular/common';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'ts-create-resource',
   templateUrl: 'create-resource.component.html',
   styleUrls: ['create-resource.component.scss'],
   encapsulation: ViewEncapsulation.Emulated,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    AsyncPipe
+  ]
 })
 export class CreateResourceComponent extends CleanUpHelper implements OnInit {
 
@@ -36,12 +50,15 @@ export class CreateResourceComponent extends CleanUpHelper implements OnInit {
   resourceTypes: { key: string, description: string }[] = [];
   #publicKey: string;
   submitted: boolean = false;
+  message: IMessage;
 
   constructor(private transactionsApiService: TransactionsApiService,
               private objectStructureApiService: ObjectStructureApiService,
               private stateService: StateService,
               private objectApiService: ObjectApiService,
               private uuidService: UuidService,
+              private asyncPipe: AsyncPipe,
+              private translateService: TranslateService,
               private changeDetectorRef: ChangeDetectorRef) {
     super();
     this.resourceCreated = new EventEmitter<Asset>();
@@ -84,6 +101,7 @@ export class CreateResourceComponent extends CleanUpHelper implements OnInit {
   createResource(): void {
     console.log('value', this.createForm.value);
     this.submitted = true;
+    this.message = null;
     if (this.createForm.valid) {
       const asset: Asset = {
         namespace: this.selectedResourceType,
@@ -101,10 +119,19 @@ export class CreateResourceComponent extends CleanUpHelper implements OnInit {
           console.log('createdTransaction', createdTransaction);
           this.resourceCreated.emit(createdTransaction.asset.data);
           this.submitted = false;
+          this.message = {
+            type: 'success',
+            text: this.asyncPipe.transform(this.translateService.get('resources.text.created'))
+          };
           this.createForm.reset({});
           this.changeDetectorRef.detectChanges();
         }, (error) => {
           console.log('err', error);
+          this.message = {
+            type: 'error',
+            text: this.asyncPipe.transform(this.translateService.get('resources.text.create-error'))
+          };
+          this.changeDetectorRef.detectChanges();
         });
     }
   }
@@ -146,33 +173,5 @@ export class CreateResourceComponent extends CleanUpHelper implements OnInit {
   getFormControl(name: string): AbstractControl {
     return this.createForm.get(name);
   }
-  //
-  // createOccupation(): void {
-  //   if (this.createOccupationForm.valid) {
-  //     const occupation: Occupation = {
-  //       namespace: 'occupation',
-  //       data: {
-  //         name: '',
-  //         url: null,
-  //         status: this.status,
-  //         skills: this.skills,
-  //         occupationalCategory: '',
-  //         narrowerOccupations: this.narrowerOccupations,
-  //         hierarchy: this.hierarchy,
-  //         disambiguatingDescription: '',
-  //         description: '',
-  //         identifier: ''
-  //       }
-  //     };
-  //     const keyPair: KeyPair = { publicKey: '', privateKey: '' };
-  //     this.transactionsApiService.createTransaction(occupation, keyPair)
-  //       .pipe(take(1))
-  //       .subscribe((transaction: Transaction) => {
-  //         console.log('response', transaction);
-  //       }, (error) => {
-  //         console.log('error', error);
-  //       });
-  //   }
-  // }
 
 }
