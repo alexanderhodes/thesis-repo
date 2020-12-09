@@ -3,10 +3,13 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  OnInit, Output,
+  OnInit,
+  Output,
   ViewEncapsulation
 } from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AsyncPipe} from '@angular/common';
+import {TranslateService} from '@ngx-translate/core';
 import {take, takeUntil} from 'rxjs/operators';
 import {
   CleanUpHelper,
@@ -26,8 +29,6 @@ import {
   Transaction,
   UuidService
 } from '../../../shared';
-import {AsyncPipe} from '@angular/common';
-import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'ts-create-resource',
@@ -48,7 +49,7 @@ export class CreateResourceComponent extends CleanUpHelper implements OnInit {
   selectedResourceType: string;
   objectStructures: IObjectStructure[] = [];
   resourceTypes: { key: string, description: string }[] = [];
-  #publicKey: string;
+  #keyPair: KeyPair;
   submitted: boolean = false;
   message: IMessage;
 
@@ -69,7 +70,10 @@ export class CreateResourceComponent extends CleanUpHelper implements OnInit {
     this.stateService.getItem$(STORAGE_USER)
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: StorageUser) => {
-        this.#publicKey = data && data.publicKey ? data.publicKey : null;
+        this.#keyPair = {
+          privateKey: data && data.privateKey ? data.privateKey : null,
+          publicKey: data && data.publicKey ? data.publicKey : null
+        };
       });
 
     this.resourceTypes = [{
@@ -108,12 +112,7 @@ export class CreateResourceComponent extends CleanUpHelper implements OnInit {
         data: this.createForm.value
       };
       asset.data.uuid = this.uuidService.generateV4Uuid();
-      const privateKey = '8CDnuWXXDPRB8Zn8bd22U52qhLAfaU3NZZeYDrHZA14m';
-      const keyPair: KeyPair = {
-        privateKey,
-        publicKey: this.#publicKey
-      };
-      this.transactionsApiService.createTransaction(asset, keyPair)
+      this.transactionsApiService.createTransaction(asset, this.#keyPair)
         .pipe(take(1))
         .subscribe((createdTransaction: Transaction) => {
           console.log('createdTransaction', createdTransaction);
