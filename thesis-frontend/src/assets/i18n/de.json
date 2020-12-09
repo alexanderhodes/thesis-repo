@@ -84,5 +84,6 @@
   "objects.text.nullable": "Das Attribut kann einen leeren Wert enthalten.",
   "objects.text.no-object-structures": "Es sind noch keine Objekt-Strukturen vorhanden.",
   "resources.text.created": "Die Ressource wurde erfolgreich angelegt.",
-  "resources.text.create-error": "Beim Anlegen der Ressource ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut."
+  "resources.text.create-error": "Beim Anlegen der Ressource ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
+  "resources.text.other-instances": "Bezeichnungen auf anderen Instanzen"
 }
