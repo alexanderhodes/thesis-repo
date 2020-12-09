@@ -4,8 +4,8 @@ import {Router} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
 import {take} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
-import {LoginApiService} from '../core';
-import {LoginCredentials} from '../shared';
+import {LoginApiService} from '../../../core';
+import {LoginCredentials} from '../../../shared';
 
 @Component({
   selector: 'ts-login',
@@ -45,7 +45,7 @@ export class LoginComponent {
       this.loginApiService.login(loginCredentials)
         .pipe(take(1))
         .subscribe(() => {
-          this.router.navigate(['/']).then();
+          this.router.navigateByUrl('/login/validate').then();
         }, (error) => {
           console.log('error', error);
           if (error.status && error.status === 401) {

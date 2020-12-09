@@ -1,0 +1,15 @@
+
+<div class="grid grid-cols-12">
+  <div class="col-span-6 col-start-4 mt-2">
+    <div>{{ 'login.text.validate-private-key' | translate }}</div>
+    <input ts-input [(ngModel)]="privateKey">
+  </div>
+  <div class="col-span-6 col-start-4 mt-2 text-center" *ngIf="message && message.type === 'error'">
+    <ts-error-message>{{ message.text }}</ts-error-message>
+  </div>
+  <div class="col-span-6 col-start-4 mt-2 text-center">
+    <button (click)="validate()" ts-button-tertiary>
+      {{ 'common.send' | translate }}
+    </button>
+  </div>
+</div>

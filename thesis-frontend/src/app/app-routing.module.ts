@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {PermissionsEnum} from './core/enums';
-import {PermissionRouteGuard} from './core/guards';
+import {PermissionRouteGuard, PermissionsEnum, PrivateKeyGuard} from './core';
 
 const routes: Routes = [
   {
@@ -15,7 +14,7 @@ const routes: Routes = [
   {
     path: 'users',
     loadChildren: () => import('./users').then(m => m.UsersModule),
-    canActivate: [PermissionRouteGuard],
+    canActivate: [PermissionRouteGuard, PrivateKeyGuard],
     data: {
       roles: [],
       permissions: [PermissionsEnum.USER_READ]
@@ -24,7 +23,7 @@ const routes: Routes = [
   {
     path: 'resources',
     loadChildren: () => import('./resources').then(m => m.ResourcesModule),
-    canActivate: [PermissionRouteGuard],
+    canActivate: [PermissionRouteGuard, PrivateKeyGuard],
     data: {
       roles: [],
       permissions: [PermissionsEnum.ASSETS_READ]
@@ -33,7 +32,7 @@ const routes: Routes = [
   {
     path: 'configuration',
     loadChildren: () => import('./configuration').then(m => m.ConfigurationModule),
-    canActivate: [PermissionRouteGuard],
+    canActivate: [PermissionRouteGuard, PrivateKeyGuard],
     data: {
       roles: ['ADMINISTRATOR', 'GREMIUM'],
       permissions: [PermissionsEnum.CONFIGURATION_CREATE, PermissionsEnum.CONFIGURATION_READ]

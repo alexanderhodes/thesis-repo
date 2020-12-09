@@ -40,6 +40,7 @@ export interface StorageUser {
   accessToken: string;
   permissions: Permission[];
   publicKey: string;
+  privateKey: string;
   username: string;
   roles: Role[];
 }

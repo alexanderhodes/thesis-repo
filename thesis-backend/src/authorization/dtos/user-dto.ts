@@ -30,3 +30,7 @@ export class UpdateWithPasswordDto {
     })
     readonly password: string;
 }
+
+export class PrivateKeyValidationDto {
+    readonly privateKey: string;
+}

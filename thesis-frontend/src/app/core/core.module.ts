@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {SharedModule} from '../shared';
-import {PermissionRouteGuard, RoleRouteGuard} from './guards';
+import {PermissionRouteGuard, PrivateKeyGuard, RoleRouteGuard} from './guards';
 import {HeaderComponent, HeaderItemComponent} from './header';
 import {ApiPrefixInterceptor, HttpErrorInterceptor, HttpTokenInterceptor} from './interceptor';
 import {HasPermissionDirective, HasRoleDirective} from './directives';
@@ -33,6 +33,7 @@ const directives = [
 
 const guards = [
   PermissionRouteGuard,
+  PrivateKeyGuard,
   RoleRouteGuard
 ];
 

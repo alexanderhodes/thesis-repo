@@ -1,11 +1,15 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from './login.component';
+import {LoginComponent, ValidatePrivateKeyComponent} from './components/public-api';
 
 const routes: Routes = [
   {
     path: '',
     component: LoginComponent
+  },
+  {
+    path: 'validate',
+    component: ValidatePrivateKeyComponent
   }
 ];
 

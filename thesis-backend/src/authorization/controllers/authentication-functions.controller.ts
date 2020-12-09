@@ -1,12 +1,12 @@
-import {Body, Controller, HttpCode, HttpException, HttpStatus, Param, Post, UseGuards} from '@nestjs/common';
+import {Body, Controller, HttpCode, HttpException, HttpStatus, Param, Post, Request, UseGuards} from '@nestjs/common';
 import {ApiBearerAuth, ApiOkResponse, ApiTags} from '@nestjs/swagger';
 import {JwtAuthGuard, PermissionsGuard} from '../guards';
 import {HasPermissions} from '../decorators';
 import {PermissionsEnum} from '../constants';
-import {UpdateWithPasswordDto} from '../dtos';
+import {PrivateKeyValidationDto, UpdateWithPasswordDto} from '../dtos';
 import {UserEntity, UsersService} from '../../database';
 import {AuthenticationService} from '../services';
-import {KeypairService} from '../../shared';
+import {HashingService, KeypairService} from '../../shared';
 import {UserWithKeyPair, UserWithPermissions} from '../interfaces';
 
 @ApiTags('authentication-functions')
@@ -15,6 +15,7 @@ export class AuthenticationFunctionsController {
 
     constructor(private authenticationService: AuthenticationService,
                 private keyPairService: KeypairService,
+                private hashingService: HashingService,
                 private usersService: UsersService) {
     }
 
@@ -55,6 +56,20 @@ export class AuthenticationFunctionsController {
             throw new HttpException(`Benutzer mit ID ${userId} nicht gefunden`, HttpStatus.NOT_FOUND);
         }
         throw new HttpException(`Es wurde kein Benutzer angegeben`, HttpStatus.BAD_REQUEST);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @HttpCode(200)
+    @Post('validate-private-key')
+    async validatePrivateKey(@Body() privateKeyDto: PrivateKeyValidationDto, @Request() req) {
+        if (privateKeyDto && privateKeyDto.privateKey && req.user) {
+            const equals = await this.hashingService.compare(privateKeyDto.privateKey, req.user.privateKey);
+            if (equals) {
+                return {};
+            }
+            throw new HttpException('Der private Schlüssel ist nicht korrekt', HttpStatus.BAD_REQUEST);
+        }
+        throw new HttpException('Bitte geben Sie senden Sie ihren private Schlüssel.', HttpStatus.BAD_REQUEST);
     }
 
 }

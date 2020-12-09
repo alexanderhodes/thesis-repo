@@ -5,21 +5,23 @@
         <span [routerLink]="['/']" class="text-white cursor-pointer font-bold text-3xl">LOGO</span>
       </div>
       <div class="col-span-7 text-left">
-        <ng-container *ngIf="(username$ | async) === null">
+        <ng-container *ngIf="(username$ | async) === null && (privateKey$ | async) === null">
           <div [routerLink]="['/login']" [routerLinkActive]="['font-bold']" [routerLinkActiveOptions]="{exact: false}"
                class="text-white cursor-pointer hover:underline inline-block mr-3">
             {{ 'header.menu.login' | translate }}
           </div>
         </ng-container>
-        <ts-header-item [routerLink]="'/users'" [permission]="'USER_READ'">
-          {{ 'header.menu.users' | translate }}
-        </ts-header-item>
-        <ts-header-item [routerLink]="'/resources'" [permission]="'ASSETS_READ'">
-          Ressourcen
-        </ts-header-item>
-        <ts-header-item [routerLink]="'/configuration'" [permission]="'CONFIGURATION_READ'">
-          {{ 'header.menu.configuration' | translate }}
-        </ts-header-item>
+        <ng-container *ngIf="(privateKey$ | async) !== null">
+          <ts-header-item [routerLink]="'/users'" [permission]="'USER_READ'">
+            {{ 'header.menu.users' | translate }}
+          </ts-header-item>
+          <ts-header-item [routerLink]="'/resources'" [permission]="'ASSETS_READ'">
+            {{ 'common.resources' | translate }}
+          </ts-header-item>
+          <ts-header-item [routerLink]="'/configuration'" [permission]="'CONFIGURATION_READ'">
+            {{ 'header.menu.configuration' | translate }}
+          </ts-header-item>
+        </ng-container>
       </div>
       <div class="col-span-3 text-right">
         <ng-container *ngIf="(username$ | async) !== null">

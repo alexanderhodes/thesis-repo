@@ -9,6 +9,7 @@ export interface Payload {
 export interface LoginResponse {
     accessToken: string;
     permissions: PermissionEntity[];
+    privateKey: string;
     publicKey: string;
     roles: RoleEntity[];
     username: string;

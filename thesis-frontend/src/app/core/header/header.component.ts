@@ -16,6 +16,7 @@ import {StorageUser} from '../../shared';
 export class HeaderComponent extends CleanUpHelper implements OnInit {
 
   username$: Observable<string>;
+  privateKey$: Observable<string>;
 
   constructor(private stateService: StateService,
               private router: Router,
@@ -27,6 +28,10 @@ export class HeaderComponent extends CleanUpHelper implements OnInit {
     this.username$ = this.stateService.getItem$(STORAGE_USER).pipe(
       takeUntil(this.onDestroy$),
       map((value: StorageUser) => value && value.username ? value.username : null)
+    );
+    this.privateKey$ = this.stateService.getItem$(STORAGE_USER).pipe(
+      takeUntil(this.onDestroy$),
+      map((value: StorageUser) => value && value.privateKey ? value.privateKey : null)
     );
     this.stateService.getItem$(STORAGE_USER).pipe(
       takeUntil(this.onDestroy$)
