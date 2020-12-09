@@ -1,7 +1,7 @@
 import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, UseGuards} from '@nestjs/common';
 import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
 import {UsersService} from '../../database';
-import {KeypairService, PasswordService} from '../../shared';
+import {KeypairService, HashingService} from '../../shared';
 import {CreatedUserDto, CreateUserDto, UserResponseDto} from '../dtos';
 import {toUserEntity} from '../mappers';
 import {HasPermissions, JwtAuthGuard, PermissionsEnum, PermissionsGuard} from '../../authorization';
@@ -11,7 +11,7 @@ import {HasPermissions, JwtAuthGuard, PermissionsEnum, PermissionsGuard} from '.
 export class UsersController {
 
     constructor(private usersService: UsersService,
-                private passwordService: PasswordService,
+                private hashingService: HashingService,
                 private keypairService: KeypairService) {}
 
     @UseGuards(JwtAuthGuard, PermissionsGuard)
@@ -20,11 +20,13 @@ export class UsersController {
     @ApiBearerAuth()
     async createUser(@Body() createUser: CreateUserDto): Promise<CreatedUserDto> {
         // has password
-        const hashedPassword = await this.passwordService.createHash(createUser.password);
+        const hashedPassword = await this.hashingService.createHash(createUser.password);
         // create key pair
         const keypair = this.keypairService.createKeyPair();
+        // hash private key
+        const hashedPrivateKey = await this.hashingService.createHash(keypair.privateKey);
         // hash password
-        const user = toUserEntity(createUser.username, hashedPassword, createUser.roles, keypair.publicKey);
+        const user = toUserEntity(createUser.username, hashedPassword, createUser.roles, keypair.publicKey, hashedPrivateKey);
         // save user to database
         const insertedUser = await this.usersService.insert(user);
         // check result from insert

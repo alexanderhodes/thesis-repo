@@ -18,6 +18,10 @@ export class UserEntity {
         unique: true
     })
     publicKey: string;
+    @Column({
+        unique: true
+    })
+    privateKey: string;
     @ManyToMany(() => RoleEntity, role => role.name, {
         cascade: ["insert", "update"]
     })

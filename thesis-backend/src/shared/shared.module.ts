@@ -1,10 +1,10 @@
 import {Module} from '@nestjs/common';
-import {KeypairService, PasswordService} from './services';
+import {KeypairService, HashingService} from './services';
 
 const controllers = [];
 const services = [
     KeypairService,
-    PasswordService
+    HashingService
 ];
 
 @Module({

@@ -49,7 +49,6 @@ insert into public.role_permissions_permission ("roleName", "permissionName") va
 insert into public.role_permissions_permission ("roleName", "permissionName") values ('ADMINISTRATOR','CONFIGURATION_DELETE') ;
 
 -- insert default user
-insert into public.user ("username", "password", "publicKey") values ('alex','$2b$10$RsMvon91WvCUcOH40q2l4.DAJHzChShQWRnSk2/nQ3.7tGBenph6W','GmqY981bJL6JFN82UrD421bcRxkwV3p2s97ZLf6smzkb');
+INSERT INTO public."user" (id, username, password, "publicKey", "privateKey") VALUES ('8a5ecfc8-7d3a-40cb-95e4-5cfb59e3f889', 'alex', '$2b$10$RsMvon91WvCUcOH40q2l4.DAJHzChShQWRnSk2/nQ3.7tGBenph6W', '5bL8RdeB5idG4yD79jxBSVZ62HtjiTxrnAmhDviYCHh3', '$2b$10$p.otiozW89lWhQWw6jM1AeXdGVyCObqzjBu4TOjBwNotwMyJoCL7i');
 insert into public.user_roles_role ("userId", "roleName") values ((select "id" from public.user where "username" = 'alex'),'BOARD');
 insert into public.user_roles_role ("userId", "roleName") values ((select "id" from public.user where "username" = 'alex'),'ADMINISTRATOR');
-
