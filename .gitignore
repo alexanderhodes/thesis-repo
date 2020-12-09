@@ -37,7 +37,6 @@ testem.log
 /typings
 
 # Tests
-/coverage
 /.nyc_output
 
 # IDEs and editors
@@ -60,6 +59,7 @@ testem.log
 # Docker
 mongo-volume
 postgres-data
+neo4j
 
 # local files
 /backup

@@ -25,6 +25,11 @@ services:
     container_name: thesis_neo4j
     environment:
       NEO4J_AUTH: 'neo4j/j4oen'
+    volumes:
+      - ./neo4j/data:/data
+      - ./neo4j/logs:/logs
+      - ./neo4j/import:/var/lib/neo4j/import
+      - ./neo4j/plugins:/plugins
     ports:
       - 7474:7474
       - 7687:7687
