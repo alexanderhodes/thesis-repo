@@ -50,6 +50,7 @@
   "common.disambiguatingDescription": "weitere Beschreibung",
   "common.identifier": "ID",
   "common.url": "URL",
+  "common.no-resources": "Derzeit sind noch keine Ressourcen angelegt worden.",
   "login.action.login": "anmelden",
   "login.title": "Anmelden",
   "user.action.generate-key-pair": "Schlüsselpaar generieren",

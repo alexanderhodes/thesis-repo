@@ -23,6 +23,11 @@
         </button>
       </td>
     </tr>
+    <tr *ngIf="resource.data.length === 0" class="border-t-2 border-b-2 border-black">
+      <td colspan="2" class="px-4 py-2">
+        {{ 'common.no-resources' | translate }}
+      </td>
+    </tr>
     </tbody>
   </table>
 </div>
