@@ -9,7 +9,7 @@ import {
     createRelation,
     DROP_NODES_AND_RELATIONS,
     getNodesByType,
-    readRelation
+    readRelation, updateNodeQueryForAsset, updateRelation
 } from '../queries';
 import {GraphQuery, Relation} from '../interfaces';
 
@@ -33,6 +33,11 @@ export class GraphService {
         return this._executeQuery(query);
     }
 
+    async updateNode(asset: IAsset): Promise<QueryResult> {
+        const query = updateNodeQueryForAsset(asset);
+        return this._executeQuery(query);
+    }
+
     async findNodesByType(type: string): Promise<QueryResult> {
         const queryByTypes = getNodesByType(type);
         return this._executeQuery(queryByTypes);
@@ -46,6 +51,11 @@ export class GraphService {
     // relations
     async createRelation(relation: Relation): Promise<QueryResult> {
         const relationQuery = createRelation(relation);
+        return this._executeQuery(relationQuery);
+    }
+
+    async updateRelation(relation: Relation): Promise<QueryResult> {
+        const relationQuery = updateRelation(relation);
         return this._executeQuery(relationQuery);
     }
 

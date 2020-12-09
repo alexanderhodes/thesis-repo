@@ -5,6 +5,7 @@ import {GraphQuery} from '../interfaces';
 const CREATE_NODE = "CREATE ({{id}}:{{type}} {{{attributes}}})";
 const READ_NODES = "MATCH (n:{{type}}) RETURN n";
 const READ_NODES_BY_QUERY = "MATCH (n:{{type}}) [WHERE] RETURN {{attributes}} [ORDERBY] [LIMIT]";
+const UPDATE_NODE = "MATCH (n:{{type}} {{{query}}}) SET {{attributes}} RETURN n";
 
 export function createNodeQuery(assetId: string, asset: { [key: string]: any }, type: string): string {
     const attributes = joinKeyValuePair(asset, ':');
@@ -16,8 +17,20 @@ export function createNodeQuery(assetId: string, asset: { [key: string]: any }, 
         .replace('{{attributes}}', attributes);
 }
 
+export function updateNodeQuery(assetId: string, asset: { [key: string]: any }, type: string): string {
+    const attributes = joinKeyValuePair(asset, '=');
+    return UPDATE_NODE
+        .replace('{{type}}', type)
+        .replace('{{query}}', `uuid: '${assetId}'`)
+        .replace('{{attributes}}', attributes);
+}
+
 export function createNodeQueryForAsset(asset: IAsset): string {
     return createNodeQuery(asset.data.uuid, asset.data, asset.namespace);
+}
+
+export function updateNodeQueryForAsset(asset: IAsset): string {
+    return updateNodeQuery(asset.data.uuid, asset.data, asset.namespace);
 }
 
 export function createNodeQueryWithQuery(graphQuery: GraphQuery): string {

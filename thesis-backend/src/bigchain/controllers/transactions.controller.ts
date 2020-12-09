@@ -34,12 +34,14 @@ export class TransactionsController {
         if (asset.namespace === 'relation') {
             // relation has to be created
             const relation = transaction.asset.data as RelationDto;
-            const result = await this.neo4jService.createRelation(relation.data);
+            const result = await (transaction.metadata.transactionType === 'create' ?
+                this.neo4jService.createRelation(relation.data) : this.neo4jService.updateRelation(relation.data));
             const success = result.summary.counters.updates();
             console.log('success', success['relationshipsCreated:'] === 1);
         } else {
-            // node hast to be created
-            const result = await this.neo4jService.createNode(asset);
+            // node has to be created or updated
+            const result = await (transaction.metadata.transactionType === 'create' ?
+                this.neo4jService.createNode(asset) : this.neo4jService.updateNode(asset));
             const success = result.summary.counters.updates();
             console.log('success', success['nodesCreated'] === 1);
         }

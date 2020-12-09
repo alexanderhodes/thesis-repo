@@ -6,6 +6,8 @@ const CREATE_RELATION
 const READ_RELATION
     = `MATCH (a:{{typeA}} {{conditionA}} ) {{direction1}} [r{{typeRelation}} {{conditionR}} ] {{direction2}} (b{{typeB}} {{conditionB}} ) RETURN {{return}}`
 const DEFAULT_RETURN = 'a,b,r';
+const UPDATE_RELATION
+    = `MATCH (a:{{typeA}} {{conditionA}} ) {{direction1}} [r{{typeRelation}} {{conditionR}} ] {{direction2}} (b{{typeB}} {{conditionB}} ) SET {{relationAttributes}} RETURN {{return}}`
 
 export function createRelation(relation: Relation): string {
     const conditionA = joinKeyValuePair(relation.left.condition, '=', 'a');
@@ -41,5 +43,26 @@ export function readRelation(relation: Relation): string {
         .replace('{{direction2}}', '-')
         .replace('{{typeRelation}}', relation.name ? ':' + relation.name : '')
         .replace('{{conditionR}}', conditionR.length ? `{${conditionR}}` : '')
+        .replace('{{return}}', returns.length ? returns : DEFAULT_RETURN);
+}
+
+export function updateRelation(relation: Relation): string {
+    const conditionA = joinKeyValuePair(relation.left.condition, ':');
+    const conditionB = relation.right ? joinKeyValuePair(relation.right.condition, ':') : '';
+    const conditionR = joinKeyValuePair(relation.attributes, ':');
+    const returns = createReturn(relation.return);
+    const relationAttributes = joinKeyValuePair(relation.attributes, ':');
+
+    return UPDATE_RELATION
+        .replace('{{typeA}}', relation.left.namespace)
+        .replace('{{typeB}}', relation.right.namespace)
+        .replace('{{typeRelation}}', relation.name ? ':' + relation.name : '')
+        .replace('{{conditionA}}', conditionA)
+        .replace('{{conditionB}}', conditionB)
+        .replace('{{conditionR}}', conditionR.length ? `{${conditionR}}` : '')
+        .replace('{{direction1}}', relation.direction === 'out' ? '->' : relation.direction === 'in' ? '<-' : '-')
+        .replace('{{direction2}}', '-')
+        .replace('{{relation}}', relation.name)
+        .replace('{{relationAttributes}}', relationAttributes)
         .replace('{{return}}', returns.length ? returns : DEFAULT_RETURN);
 }
