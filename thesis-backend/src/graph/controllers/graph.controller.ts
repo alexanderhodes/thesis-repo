@@ -34,7 +34,7 @@ export class GraphController {
     @HttpCode(HttpStatus.OK)
     async getGraphObjectByTypeWithQuery(@Param("type") type: string, @Body() graphQuery: GraphQueryDto): Promise<any> {
         const response = await this.neo4jService.findNodesByTypeAndQuery(graphQuery);
-        const graphQueries: IRemoteResponse<IGraphObject>[] = [
+        const graphQueries: IRemoteResponse<IGraphObject[]>[] = [
             {
                 host: 'local',
                 name: 'local',
@@ -42,7 +42,7 @@ export class GraphController {
                 error: false
             }
         ];
-        const remoteResponses: IRemoteResponse<IGraphObject>[] = await this.remoteService.queryRemote('POST', `api/graph/node/${type}`, graphQuery, toGraphObjects);
+        const remoteResponses: IRemoteResponse<IGraphObject[]>[] = await this.remoteService.queryRemote('POST', `api/graph/node/${type}`, graphQuery, toGraphObjects);
         console.log('remoteResponses', remoteResponses);
         graphQueries.push(...remoteResponses);
         return graphQueries;

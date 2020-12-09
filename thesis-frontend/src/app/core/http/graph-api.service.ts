@@ -16,8 +16,8 @@ export class GraphApiService {
     return this.httpClient.post<GraphObject[]>(`graph/node/${type}`, query);
   }
 
-  getRemoteNodesByQuery(type: string, query: GraphQuery): Observable<RemoteResponse<GraphObject[]>> {
-    return this.httpClient.post<RemoteResponse<GraphObject[]>>(`graph/node/${type}/remote`, query);
+  getRemoteNodesByQuery(type: string, query: GraphQuery): Observable<RemoteResponse<GraphObject[]>[]> {
+    return this.httpClient.post<RemoteResponse<GraphObject[]>[]>(`graph/node/${type}/remote`, query);
   }
 
   getRelationsByQuery(query: GraphRelationQuery): Observable<GraphObject[]> {

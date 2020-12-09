@@ -15,10 +15,12 @@ export class ResourceDetailComponent implements OnInit {
 
   asset: Asset;
   custom: boolean = false;
+  remoteResponses: Array<RemoteResponse<GraphObject[]>>;
 
   constructor(private graphApiService: GraphApiService,
               private activatedRoute: ActivatedRoute,
               private changeDetectorRef: ChangeDetectorRef) {
+    this.remoteResponses = [];
   }
 
   ngOnInit(): void {
@@ -69,8 +71,10 @@ export class ResourceDetailComponent implements OnInit {
 
     this.graphApiService.getRemoteNodesByQuery(nodeParam, query)
       .pipe(take(1))
-      .subscribe((remoteResponse: RemoteResponse<GraphObject[]>) => {
-        console.log('remoteResponse', remoteResponse);
+      .subscribe((remoteResponses: Array<RemoteResponse<GraphObject[]>>) => {
+        console.log('remoteResponse', remoteResponses);
+        this.remoteResponses = remoteResponses;
+        this.changeDetectorRef.detectChanges();
       });
   }
 
