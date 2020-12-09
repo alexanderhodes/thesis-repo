@@ -6,11 +6,18 @@
     </div>
     <div *ngFor="let item of asset.data | keyvalue" class="col-span-6 col-start-4">
       <ng-container *ngIf="item.key !== 'uuid'">
-        <div class="font-bold">{{ item.key }}</div>
-        <div>{{ item.value && item.value.length ? item.value : '&nbsp;' }}</div>
+        <div class="font-bold">
+          <ng-container *ngIf="(('common.'+item.key) | translate).indexOf('common') === -1; else translationNotFound">
+            {{ ('common.' + item.key) | translate }}
+          </ng-container>
+          <ng-template #translationNotFound>
+            {{ item.key }}
+          </ng-template>
+        </div>
+        <div>{{ item.value && item.value.length && item.value !== 'null' ? item.value : '&nbsp;' }}</div>
       </ng-container>
     </div>
-    <div class="col-span-6 col-start-4" *ngIf="remoteResponses && remoteResponses.length">
+    <div class="col-span-6 col-start-4 mt-5" *ngIf="remoteResponses && remoteResponses.length">
       <div class="text-xl">Bezeichnungen auf anderen Instanzen</div>
       <table class="table-auto w-full">
         <thead>

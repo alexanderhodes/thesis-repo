@@ -24,50 +24,50 @@
           *ngIf="selectedResourceType === 'qualification' || selectedResourceType === 'occupation'; else custom">
           <div class="grid grid-cols-12">
             <div class="col-span-6 px-2 pt-3">
-              <label for="identifier" class="text-black">Identifier *</label>
+              <label for="identifier" class="text-black">{{ 'common.identifier' | translate }} *</label>
               <input id="identifier" ts-input formControlName="identifier">
               <ng-container
                 *ngIf="(submitted || getFormControl('identifier').touched) && getFormControl('identifier').invalid">
                 <ts-error-message *ngIf="getFormControl('identifier').errors.required">
-                  Bitte geben Sie einen Wert ein.
+                  {{ 'common.error.no-value' | translate }}
                 </ts-error-message>
               </ng-container>
             </div>
             <div class="col-span-6 px-2 pt-3">
-              <label for="name" class="text-black">Name *</label>
+              <label for="name" class="text-black">{{ 'common.name' | translate }} *</label>
               <input id="name" ts-input formControlName="name">
               <ng-container *ngIf="(submitted || getFormControl('name').touched) && getFormControl('name').invalid">
                 <ts-error-message *ngIf="getFormControl('name').errors.required">
-                  Bitte geben Sie einen Wert ein.
+                  {{ 'common.error.no-value' | translate }}
                 </ts-error-message>
               </ng-container>
             </div>
-            <div class="col-span-6 px-2 pt-3">
-              <label for="description" class="text-black">Beschreibung *</label>
-              <input id="description" ts-input formControlName="description">
+            <div class="col-span-12 px-2 pt-3">
+              <label for="description" class="text-black">{{ 'common.description' | translate }} *</label>
+              <textarea id="description" ts-input formControlName="description" style="resize: none;"></textarea>
               <ng-container
                 *ngIf="(submitted || getFormControl('description').touched) && getFormControl('description').invalid">
                 <ts-error-message *ngIf="getFormControl('description').errors.required">
-                  Bitte geben Sie einen Wert ein.
+                  {{ 'common.error.no-value' | translate }}
                 </ts-error-message>
               </ng-container>
             </div>
-            <div class="col-span-6 px-2 pt-3">
-              <label for="disambiguatingDescription" class="text-black">Weitere Beschreibung</label>
-              <input id="disambiguatingDescription" ts-input formControlName="disambiguatingDescription">
+            <div class="col-span-12 px-2 pt-3">
+              <label for="disambiguatingDescription" class="text-black">{{ 'common.disambiguatingDescription' | translate }}</label>
+              <textarea id="disambiguatingDescription" ts-input formControlName="disambiguatingDescription" style="resize: none;"></textarea>
               <ng-container
                 *ngIf="(submitted || getFormControl('disambiguatingDescription').touched) && getFormControl('disambiguatingDescription').invalid">
                 <ts-error-message *ngIf="getFormControl('disambiguatingDescription').errors.required">
-                  Bitte geben Sie einen Wert ein.
+                  {{ 'common.error.no-value' | translate }}
                 </ts-error-message>
               </ng-container>
             </div>
             <div class="col-span-6 px-2 pt-3">
-              <label for="url" class="text-black">URL *</label>
+              <label for="url" class="text-black">{{ 'common.url' | translate }} *</label>
               <input id="url" ts-input formControlName="url">
               <ng-container *ngIf="(submitted || getFormControl('name').touched) && getFormControl('name').invalid">
                 <ts-error-message *ngIf="getFormControl('name').errors.required">
-                  Bitte geben Sie einen Wert ein.
+                  {{ 'common.error.no-value' | translate }}
                 </ts-error-message>
               </ng-container>
             </div>
@@ -76,11 +76,11 @@
         <ng-template #custom>
           <div class="grid grid-cols-12">
             <div class="col-span-6 px-2 pt-3">
-              <label for="name" class="text-black">Name *</label>
+              <label for="name" class="text-black">{{ 'common.name' | translate }} *</label>
               <input id="name" ts-input formControlName="name">
               <ng-container *ngIf="(submitted || getFormControl('name').touched) && getFormControl('name').invalid">
                 <ts-error-message *ngIf="getFormControl('name').errors.required">
-                  Bitte geben Sie einen Wert ein.
+                  {{ 'common.error.no-value' | translate }}
                 </ts-error-message>
               </ng-container>
             </div>
@@ -109,7 +109,7 @@
                   <ng-container
                     *ngIf="(submitted || getFormControl(objectStructure.field).touched) && getFormControl(objectStructure.field).invalid">
                     <ts-error-message *ngIf="getFormControl(objectStructure.field).errors.required">
-                      Bitte geben Sie einen Wert ein.
+                      {{ 'common.error.no-value' | translate }}
                     </ts-error-message>
                   </ng-container>
                 </ng-container>
@@ -128,7 +128,9 @@
           </div>
         </div>
         <div class="w-100 text-center pt-3">
-          <button ts-button-tertiary type="submit">anlegen</button>
+          <button ts-button-tertiary type="submit">
+            {{ 'common.create' | translate }}
+          </button>
         </div>
       </form>
     </ng-container>
