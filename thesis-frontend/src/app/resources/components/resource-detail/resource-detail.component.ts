@@ -7,7 +7,9 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {AsyncPipe} from '@angular/common';
 import {take} from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
 import {BreadcrumbService, GraphApiService} from '../../../core';
 import {Asset, GraphObject, GraphQuery, GraphRelationQuery, Node, RemoteResponse} from '../../../shared';
 
@@ -16,7 +18,10 @@ import {Asset, GraphObject, GraphQuery, GraphRelationQuery, Node, RemoteResponse
   templateUrl: 'resource-detail.component.html',
   styleUrls: ['resource-detail.component.scss'],
   encapsulation: ViewEncapsulation.Emulated,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    AsyncPipe
+  ]
 })
 export class ResourceDetailComponent implements OnInit, OnDestroy {
 
@@ -28,6 +33,8 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private breadcrumbService: BreadcrumbService,
+              private asyncPipe: AsyncPipe,
+              private translateService: TranslateService,
               private changeDetectorRef: ChangeDetectorRef) {
     this.remoteResponses = [];
   }
@@ -88,7 +95,7 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
       });
 
     this.breadcrumbService.newBreadcrumb({
-      text: 'Detail',
+      text: this.asyncPipe.transform(this.translateService.get(`common.${nodeParam}-single`)),
       url: this.router.url
     });
   }
