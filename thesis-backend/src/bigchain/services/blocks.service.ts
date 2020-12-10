@@ -3,18 +3,18 @@ import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {BigchainBaseService} from './bigchain-base.service';
 import {ConfigurationService} from '../../app-config';
-import {Blocks} from '../models';
+import {BlockModel} from '../models';
 
 @Injectable()
 export class BlocksService extends BigchainBaseService {
 
     constructor(configurationService: ConfigurationService,
                 httpService: HttpService,
-                @InjectModel(Blocks.name) private blocksModel: Model<Blocks>) {
+                @InjectModel(BlockModel.name) private blocksModel: Model<BlockModel>) {
         super(configurationService, httpService);
     }
 
-    async find(): Promise<Blocks[]> {
+    async find(): Promise<BlockModel[]> {
         return this.blocksModel.find();
     }
 

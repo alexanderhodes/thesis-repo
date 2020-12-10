@@ -1,9 +1,10 @@
 import {TransactionType} from '../types';
+import {IAsset} from './asset.interface';
 
 export interface IMetadata {
     transactionType: TransactionType;
-    asset: string;
-    timestamp: string;
+    asset: IAsset;
+    timestamp: number;
     data?: any;
-    [key: string]: any;
+    user: string;
 }

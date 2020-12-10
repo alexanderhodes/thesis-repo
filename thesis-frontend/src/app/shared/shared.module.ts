@@ -9,7 +9,6 @@ import {
   TrashComponent
 } from './components';
 import {ButtonDirective, InputDirective} from './directives';
-import {BigchainService} from './services';
 
 const components = [
   ChevronDownComponent,
@@ -24,9 +23,7 @@ const directives = [
   InputDirective,
 ];
 
-const services = [
-  BigchainService
-];
+const services = [];
 
 
 @NgModule({

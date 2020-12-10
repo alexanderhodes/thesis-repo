@@ -64,7 +64,8 @@ export class ResourceListComponent extends CleanUpHelper implements OnInit {
             const node = (graphObject.data as Node);
             const data = {
               name: node.name,
-              uuid: node.properties.uuid
+              uuid: node.properties.uuid,
+              status: node.properties.status
             };
             Object.keys(node.properties).forEach(key => {
               data[key] = node.properties[key];

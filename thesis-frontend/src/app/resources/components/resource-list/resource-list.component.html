@@ -9,6 +9,9 @@
         <span class="text-lg">{{ 'common.name' | translate }}</span>
       </th>
       <th class="px-4 py-2 text-left h-auto">
+        <span class="text-lg">{{ 'common.status' | translate }}</span>
+      </th>
+      <th class="px-4 py-2 text-left h-auto">
         <span class="text-lg">{{ 'common.actions' | translate }}</span>
       </th>
     </tr>
@@ -17,6 +20,7 @@
     <tr *ngFor="let asset of resource.data; index as i; last as last" class="border-t-2 border-black"
         [ngClass]="{'border-b-2': last}">
       <td class="px-4 py-2">{{ asset.data.name }}</td>
+      <td class="px-4 py-2">{{ ('common.'+asset.data.status) | translate }}</td>
       <td class="px-4 py-2">
         <button [routerLink]="[resource.type, asset.data.uuid]" [queryParams]="{custom: resource.custom}" ts-button-tertiary class="my-1">
           {{ 'common.to-detail' | translate }}
@@ -24,7 +28,7 @@
       </td>
     </tr>
     <tr *ngIf="resource.data.length === 0" class="border-t-2 border-b-2 border-black">
-      <td colspan="2" class="px-4 py-2">
+      <td colspan="3" class="px-4 py-2">
         {{ 'common.no-resources' | translate }}
       </td>
     </tr>

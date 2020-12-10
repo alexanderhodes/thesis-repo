@@ -14,7 +14,14 @@
             {{ item.key }}
           </ng-template>
         </div>
-        <div>{{ item.value && item.value.length && item.value !== 'null' ? item.value : '&nbsp;' }}</div>
+        <div>
+          <ng-container *ngIf="item.key === 'status'; else normalAttribute">
+            {{ ('common.' + item.value) | translate }}
+          </ng-container>
+          <ng-template #normalAttribute>
+            {{ item.value && item.value.length && item.value !== 'null' ? item.value : '&nbsp;' }}
+          </ng-template>
+        </div>
       </ng-container>
     </div>
     <div class="col-span-6 col-start-4 mt-5" *ngIf="remoteResponses && remoteResponses.length">

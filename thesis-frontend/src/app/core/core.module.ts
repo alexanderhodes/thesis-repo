@@ -7,7 +7,7 @@ import {PermissionRouteGuard, PrivateKeyGuard, RoleRouteGuard} from './guards';
 import {HeaderComponent, HeaderItemComponent} from './header';
 import {ApiPrefixInterceptor, HttpErrorInterceptor, HttpTokenInterceptor} from './interceptor';
 import {HasPermissionDirective, HasRoleDirective} from './directives';
-import {ConfigService, RoleService} from './services';
+import {BigchainService, ConfigService, RoleService} from './services';
 import {
   DbRelationApiService,
   DbRelationStructureApiService,
@@ -39,6 +39,7 @@ const guards = [
 
 const services = [
 //  PermissionService,
+  BigchainService,
   ConfigService,
   RoleService,
   GraphApiService,

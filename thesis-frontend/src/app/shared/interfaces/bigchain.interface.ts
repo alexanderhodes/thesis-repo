@@ -29,7 +29,7 @@ export interface Transaction {
 }
 
 export type Namespace = 'occupation' | 'qualification' | 'relation' | string;
-export type Status = string;
+export type Status = 'draft' | 'in validation' | 'released';
 
 export type RelationDirection = 'in' | 'out' | 'both';
 export type RelationReturn = 'left' | 'right' | 'relation';
@@ -37,8 +37,10 @@ export type TransactionType = 'create' | 'update' | 'delete';
 
 export interface MetaData {
   transactionType: TransactionType;
-  initialTransaction: string;
-  [key: string]: any;
+  asset: Asset;
+  timestamp: number;
+  data?: any;
+  user: string;
 }
 
 export interface Asset {
@@ -46,6 +48,7 @@ export interface Asset {
   data: {
     uuid: string;
     name: string;
+    status: Status;
     [key: string]: any;
   };
 }
@@ -99,6 +102,7 @@ export interface Relation extends Asset {
     left: RelationNode;
     right: RelationNode;
     return?: RelationReturn[];
+    status: Status;
   };
 }
 

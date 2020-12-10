@@ -3,7 +3,7 @@ import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {BigchainBaseService} from './bigchain-base.service';
 import {ConfigurationService} from '../../app-config';
-import {Transactions} from '../models';
+import {TransactionModel} from '../models';
 import {UserEntity} from '../../database';
 import {IMetadata, ITransaction} from '../../shared';
 import {AssetsService} from './assets.service';
@@ -14,11 +14,11 @@ export class TransactionsService extends BigchainBaseService {
     constructor(configurationService: ConfigurationService,
                 httpService: HttpService,
                 private assetsService: AssetsService,
-                @InjectModel(Transactions.name) private transactionsModel: Model<Transactions>) {
+                @InjectModel(TransactionModel.name) private transactionsModel: Model<TransactionModel>) {
         super(configurationService, httpService);
     }
 
-    async find(): Promise<Transactions[]> {
+    async find(): Promise<TransactionModel[]> {
         return this.transactionsModel.find();
     }
 

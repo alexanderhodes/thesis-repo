@@ -1,9 +1,12 @@
+import {Status} from '../types';
+
 export type IGraphObjectType = 'node' | 'relation' | 'path';
 
 export interface INode {
     name: string;
     properties: {
         uuid?: string;
+        status?: Status;
         [key: string]: any ;
     };
 }

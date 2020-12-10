@@ -112,6 +112,7 @@ export class CreateResourceComponent extends CleanUpHelper implements OnInit {
         data: this.createForm.value
       };
       asset.data.uuid = this.uuidService.generateV4Uuid();
+      asset.data.status = 'draft';
       this.transactionsApiService.createTransaction(asset, this.#keyPair)
         .pipe(take(1))
         .subscribe((createdTransaction: Transaction) => {

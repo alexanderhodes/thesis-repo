@@ -2,7 +2,7 @@ import {Document} from 'mongoose';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 
 @Schema()
-export class Transactions extends Document {
+export class TransactionModel extends Document {
 
     @Prop()
     _id: string;
@@ -19,4 +19,4 @@ export class Transactions extends Document {
 
 }
 
-export const TransactionsSchema = SchemaFactory.createForClass(Transactions);
+export const TransactionsSchema = SchemaFactory.createForClass(TransactionModel);

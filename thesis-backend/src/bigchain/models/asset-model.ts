@@ -3,7 +3,7 @@ import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IAsset} from '../../shared';
 
 @Schema()
-export class Assets extends Document {
+export class AssetModel extends Document {
 
     @Prop()
     _id: string;
@@ -14,4 +14,4 @@ export class Assets extends Document {
 
 }
 
-export const AssetSchema = SchemaFactory.createForClass(Assets);
+export const AssetSchema = SchemaFactory.createForClass(AssetModel);

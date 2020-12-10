@@ -5,7 +5,7 @@ import {IMetadata} from '../../shared';
 @Schema({
     collection: 'metadata'
 })
-export class Metadata extends Document {
+export class MetadataModel extends Document {
 
     @Prop()
     _id: string;
@@ -15,4 +15,4 @@ export class Metadata extends Document {
     metadata: IMetadata;
 }
 
-export const MetadataSchema = SchemaFactory.createForClass(Metadata);
+export const MetadataSchema = SchemaFactory.createForClass(MetadataModel);
