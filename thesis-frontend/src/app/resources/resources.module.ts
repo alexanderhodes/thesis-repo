@@ -5,17 +5,19 @@ import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
 import {
   CreateResourceComponent,
-  ResourceOverviewComponent,
   ResourceDetailComponent,
-  ResourceListComponent
+  ResourceDetailTransactionsComponent,
+  ResourceListComponent,
+  ResourceOverviewComponent
 } from './components/public-api';
 import {ResourcesRoutingModule} from './resources-routing.module';
 import {CoreModule} from '../core';
 
 const components = [
   CreateResourceComponent,
-  ResourceOverviewComponent,
   ResourceDetailComponent,
+  ResourceDetailTransactionsComponent,
+  ResourceOverviewComponent,
   ResourceListComponent
 ];
 
