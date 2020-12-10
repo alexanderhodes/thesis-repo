@@ -63,7 +63,7 @@ export class AuthenticationService {
         return {
             accessToken: this.jwtService.sign(payload),
             permissions: permissions,
-            privateKey: '',
+            privateKey: 'extern',
             publicKey: null,
             username: null,
             roles: []
