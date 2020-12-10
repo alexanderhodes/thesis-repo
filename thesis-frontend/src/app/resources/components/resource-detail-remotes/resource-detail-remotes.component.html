@@ -1,0 +1,33 @@
+<div class="text-xl">{{ 'resources.text.other-instances' | translate }}</div>
+<table class="table-auto w-full">
+  <thead>
+  <tr class="border-t-4 border-black">
+    <th class="px-4 py-2 text-left h-auto">
+      <span class="text-lg">{{ 'common.instance' | translate }}</span>
+    </th>
+    <th class="px-4 py-2 text-left h-auto">
+      <span class="text-lg">{{ 'common.name' | translate }}</span>
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let remoteResponse of remoteResponses; index as i; last as last" class="border-t-2 border-black"
+      [ngClass]="{'border-b-2': last}">
+    <td class="px-4 py-2">{{ remoteResponse.name }}</td>
+    <td class="px-4 py-2">
+      <ng-container *ngIf="remoteResponse.error">
+        {{ 'common.request-error' | translate }}
+      </ng-container>
+      <ng-container *ngIf="!remoteResponse.error">
+        <ng-container *ngIf="remoteResponse.data && remoteResponse.data.length; else noData">
+          {{ remoteResponse.data[0].data.properties.name }}
+        </ng-container>
+        <ng-template #noData>
+          {{ 'common.no-data' | translate }}
+        </ng-template>
+      </ng-container>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
