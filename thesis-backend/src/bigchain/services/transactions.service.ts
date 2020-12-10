@@ -5,8 +5,9 @@ import {BigchainBaseService} from './bigchain-base.service';
 import {ConfigurationService} from '../../app-config';
 import {TransactionModel} from '../models';
 import {UserEntity} from '../../database';
-import {IMetadata, ITransaction} from '../../shared';
+import {AssetTransaction, IMetadata, ITransaction} from '../../shared';
 import {AssetsService} from './assets.service';
+import {MetadataService} from './metadata.service';
 
 @Injectable()
 export class TransactionsService extends BigchainBaseService {
@@ -14,6 +15,7 @@ export class TransactionsService extends BigchainBaseService {
     constructor(configurationService: ConfigurationService,
                 httpService: HttpService,
                 private assetsService: AssetsService,
+                private metadataService: MetadataService,
                 @InjectModel(TransactionModel.name) private transactionsModel: Model<TransactionModel>) {
         super(configurationService, httpService);
     }
@@ -24,6 +26,25 @@ export class TransactionsService extends BigchainBaseService {
 
     getTransaction(transactionId: string): Promise<ITransaction> {
         return this.getConnection().getTransaction(transactionId);
+    }
+
+    async getTransactionsForAsset(assetUuid: string, namespace: string): Promise<AssetTransaction[]> {
+        const assets = await this.assetsService.findAllByUuidAndNamespace(assetUuid, namespace);
+        const transactions: AssetTransaction[] = [];
+
+        for (const asset of assets) {
+            const transaction = await this.getTransaction(asset.id);
+            const metadata = await this.metadataService.findById(transaction.id);
+            if (transaction && metadata && metadata.metadata.asset) {
+                transactions.push({
+                    asset: metadata.metadata.asset,
+                    metadata: metadata.metadata,
+                    transaction: transaction
+                });
+            }
+        }
+
+        return transactions;
     }
 
     async listTransactions(assetUuid: string): Promise<ITransaction[]> {

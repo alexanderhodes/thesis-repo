@@ -24,11 +24,19 @@ export class AssetsService extends BigchainBaseService {
     }
 
     async findByUuid(uuid: string): Promise<AssetModel> {
-        return this.assetModel.findOne({ "data.data.uuid": uuid});
+        return this.assetModel.findOne({"data.data.uuid": uuid});
+    }
+
+    async findByUuidAndNamespace(uuid: string, namespace: string): Promise<AssetModel> {
+        return this.assetModel.findOne({ $and: [{"data.data.uuid": uuid}, {"data.namespace": namespace}] });
     }
 
     async findAllByUuid(uuid: string): Promise<AssetModel[]> {
         return this.assetModel.find({ "data.data.uuid": uuid});
+    }
+
+    async findAllByUuidAndNamespace(uuid: string, namespace: string): Promise<AssetModel[]> {
+        return this.assetModel.find({ $and: [{"data.data.uuid": uuid}, {"data.namespace": namespace}] });
     }
 
 }

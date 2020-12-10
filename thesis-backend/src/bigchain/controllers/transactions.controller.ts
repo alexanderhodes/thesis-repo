@@ -4,7 +4,7 @@ import {JwtAuthGuard} from '../../authorization';
 import {RelationDto, TransactionDto} from '../dtos';
 import {GraphService} from '../../graph';
 import {TransactionsService} from '../services';
-import {ITransaction} from '../../shared';
+import {AssetTransaction, ITransaction} from '../../shared';
 
 @ApiTags("transactions")
 @Controller("transactions")
@@ -19,9 +19,9 @@ export class TransactionsController {
         return this.transactionsService.find();
     }
 
-    @Get("asset/:asset")
-    getTransactionsForAsset(@Param("asset") asset): Promise<any> {
-        return this.transactionsService.listTransactions(asset);
+    @Get(":namespace/:assetUuid")
+    getTransactionsForAsset(@Param("assetUuid") asset: string, @Param("namespace") namespace: string): Promise<AssetTransaction[]> {
+        return this.transactionsService.getTransactionsForAsset(asset, namespace);
     }
 
     @UseGuards(JwtAuthGuard)

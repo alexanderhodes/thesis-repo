@@ -18,5 +18,13 @@ export class MetadataService extends BigchainBaseService {
         return this.metadataModel.find();
     }
 
+    async findById(id: string): Promise<MetadataModel> {
+        return this.metadataModel.findOne({"id": id});
+    }
+
+    async findByAsset(uuid: string): Promise<MetadataModel[]> {
+        return this.metadataModel.find({ "metadata.asset.data.uuid": uuid });
+    }
+
 }
 

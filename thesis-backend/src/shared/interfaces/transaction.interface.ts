@@ -29,3 +29,9 @@ export interface ITransaction {
     version: string,
     id: string
 }
+
+export interface AssetTransaction {
+    metadata: IMetadata;
+    asset: IAsset;
+    transaction: any;
+}

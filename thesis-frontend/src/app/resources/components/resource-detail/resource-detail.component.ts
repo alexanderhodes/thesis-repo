@@ -10,8 +10,16 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
 import {take} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
-import {BreadcrumbService, GraphApiService} from '../../../core';
-import {Asset, GraphObject, GraphQuery, GraphRelationQuery, Node, RemoteResponse} from '../../../shared';
+import {BreadcrumbService, GraphApiService, TransactionsApiService} from '../../../core';
+import {
+  Asset,
+  AssetTransaction,
+  GraphObject,
+  GraphQuery,
+  GraphRelationQuery,
+  Node,
+  RemoteResponse
+} from '../../../shared';
 
 @Component({
   selector: 'ts-resource-detail',
@@ -28,8 +36,10 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
   asset: Asset;
   custom: boolean = false;
   remoteResponses: Array<RemoteResponse<GraphObject[]>>;
+  transactions: AssetTransaction[];
 
   constructor(private graphApiService: GraphApiService,
+              private transactionsApiService: TransactionsApiService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private breadcrumbService: BreadcrumbService,
@@ -86,6 +96,17 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
         console.log('graphObjects', graphObjects);
       });
 
+    this._getRemoteNodes(nodeParam, query);
+
+    this._getTransactions(nodeParam, uuidParam);
+
+    this.breadcrumbService.newBreadcrumb({
+      text: this.asyncPipe.transform(this.translateService.get(`common.${nodeParam}-single`)),
+      url: this.router.url
+    });
+  }
+
+  private _getRemoteNodes(nodeParam: string, query: GraphQuery): void {
     this.graphApiService.getRemoteNodesByQuery(nodeParam, query)
       .pipe(take(1))
       .subscribe((remoteResponses: Array<RemoteResponse<GraphObject[]>>) => {
@@ -93,11 +114,17 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
         this.remoteResponses = remoteResponses;
         this.changeDetectorRef.detectChanges();
       });
+  }
 
-    this.breadcrumbService.newBreadcrumb({
-      text: this.asyncPipe.transform(this.translateService.get(`common.${nodeParam}-single`)),
-      url: this.router.url
-    });
+  private _getTransactions(nodeParam: string, uuidParam: string): void {
+    console.log('getTransactions');
+    this.transactionsApiService.getTransactionsForAsset(nodeParam, uuidParam)
+      .pipe(take(1))
+      .subscribe((transactions: AssetTransaction[]) => {
+        console.log('transactions', transactions);
+        this.transactions = transactions;
+        this.changeDetectorRef.detectChanges();
+      });
   }
 
   ngOnDestroy(): void {

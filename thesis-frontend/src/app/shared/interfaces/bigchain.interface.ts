@@ -28,6 +28,12 @@ export interface Transaction {
   id: string;
 }
 
+export interface AssetTransaction {
+  metadata: MetaData;
+  asset: Asset;
+  transaction: any;
+}
+
 export type Namespace = 'occupation' | 'qualification' | 'relation' | string;
 export type Status = 'draft' | 'in validation' | 'released';
 

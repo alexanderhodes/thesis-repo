@@ -58,5 +58,36 @@
         </tbody>
       </table>
     </div>
+    <div class="col-span-6 col-start-4 mt-5" *ngIf="transactions && transactions.length">
+      <div class="text-xl">{{ 'common.transactions' | translate }}</div>
+      <table class="table-auto w-full">
+        <thead>
+        <tr class="border-t-4 border-black">
+          <th class="px-4 py-2 text-left h-auto">
+            <span class="text-lg">{{ 'common.timestamp' | translate }}</span>
+          </th>
+          <th class="px-4 py-2 text-left h-auto">
+            <span class="text-lg">{{ 'common.status' | translate }}</span>
+          </th>
+          <th class="px-4 py-2 text-left h-auto">
+            <span class="text-lg">{{ 'common.transaction-type' | translate }}</span>
+          </th>
+          <th class="px-4 py-2 text-left h-auto">
+            <span class="text-lg">{{ 'common.user' | translate }}</span>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let transaction of transactions; index as i; last as last" class="border-t-2 border-black"
+            [ngClass]="{'border-b-2': last}">
+          <td class="px-4 py-2">{{ transaction.metadata.timestamp | date:'dd.MM.yyyy HH:mm' }}</td>
+          <td class="px-4 py-2">{{ ('common.'+transaction.metadata.asset.data.status) | translate }}</td>
+          <td class="px-4 py-2">{{ ('common.'+transaction.metadata.transactionType) | translate }}</td>
+          <td class="px-4 py-2">{{ transaction.metadata.user }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 </ng-container>
