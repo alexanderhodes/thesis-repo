@@ -1,7 +1,9 @@
 import {Document} from 'mongoose';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 
-@Schema()
+@Schema({
+    collection: 'transactions'
+})
 export class TransactionModel extends Document {
 
     @Prop()

@@ -49,21 +49,4 @@ export class TransactionsController {
         return transactionResult;
     }
 
-//    @UseGuards(JwtAuthGuard)
-//    @Patch(":privateKey")
-//    transferTransaction(@Request() req,
-//                        @Body() transaction: any,
-//                        @Param("privateKey") privateKey) {
-//        const user = req.user;
-//        if (user) {
-//            const metaData: IMetadata = {
-//                'time': Date.now(),
-//                'pk': privateKey,
-//                'user': user
-//            };
-//            return this.transactionsService.updateTransaction(transaction, user, privateKey, metaData);
-//        }
-//        return HttpStatus.BAD_REQUEST;
-//    }
-
 }

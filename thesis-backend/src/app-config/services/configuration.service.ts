@@ -12,6 +12,7 @@ import {
 } from '../../database';
 import {IRemoteConfig} from '../../shared';
 import {createNodeConfigs} from '../utils';
+import {MongooseModuleOptions} from '@nestjs/mongoose/dist/interfaces/mongoose-options.interface';
 
 @Injectable()
 export class ConfigurationService {
@@ -50,7 +51,7 @@ export class ConfigurationService {
         }
     }
 
-    createMongoDbConfigFactory(): { uri: string } {
+    createMongoDbConfigFactory(): MongooseModuleOptions {
         return {
             uri: this.get<string>("MONGODB_PATH")
         };
