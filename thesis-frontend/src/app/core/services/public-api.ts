@@ -1,4 +1,5 @@
 export * from './bigchain.service';
+export * from './breadcrumb.service';
 export * from './config.service';
 export * from './permission.service';
 export * from './role.service';

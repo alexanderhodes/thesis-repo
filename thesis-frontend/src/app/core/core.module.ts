@@ -20,8 +20,10 @@ import {
   TransactionsApiService,
   UsersApiService
 } from './http';
+import {BreadcrumbComponent} from './components/public-api';
 
 const components = [
+  BreadcrumbComponent,
   HeaderComponent,
   HeaderItemComponent
 ];

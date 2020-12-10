@@ -1,7 +1,14 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewEncapsulation
+} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {take} from 'rxjs/operators';
-import {GraphApiService} from '../../../core';
+import {BreadcrumbService, GraphApiService} from '../../../core';
 import {Asset, GraphObject, GraphQuery, GraphRelationQuery, Node, RemoteResponse} from '../../../shared';
 
 @Component({
@@ -11,7 +18,7 @@ import {Asset, GraphObject, GraphQuery, GraphRelationQuery, Node, RemoteResponse
   encapsulation: ViewEncapsulation.Emulated,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ResourceDetailComponent implements OnInit {
+export class ResourceDetailComponent implements OnInit, OnDestroy {
 
   asset: Asset;
   custom: boolean = false;
@@ -19,6 +26,8 @@ export class ResourceDetailComponent implements OnInit {
 
   constructor(private graphApiService: GraphApiService,
               private activatedRoute: ActivatedRoute,
+              private router: Router,
+              private breadcrumbService: BreadcrumbService,
               private changeDetectorRef: ChangeDetectorRef) {
     this.remoteResponses = [];
   }
@@ -77,6 +86,15 @@ export class ResourceDetailComponent implements OnInit {
         this.remoteResponses = remoteResponses;
         this.changeDetectorRef.detectChanges();
       });
+
+    this.breadcrumbService.newBreadcrumb({
+      text: 'Detail',
+      url: this.router.url
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.breadcrumbService.removeLastBreadcrumb();
   }
 
 }

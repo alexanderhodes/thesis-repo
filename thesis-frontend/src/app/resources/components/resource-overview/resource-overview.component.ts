@@ -1,8 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {take, takeUntil} from 'rxjs/operators';
-import {CleanUpHelper, StateService, STORAGE_USER, TransactionsApiService} from '../../../core';
-import {Asset, KeyPair, Occupation, Qualification, Relation, Resource, StorageUser, UuidService} from '../../../shared';
+import {Router} from '@angular/router';
 import {ReplaySubject, Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {BreadcrumbService, CleanUpHelper, StateService, STORAGE_USER, TransactionsApiService} from '../../../core';
+import {Asset, StorageUser, UuidService} from '../../../shared';
 
 @Component({
   selector: 'ts-resource-overview',
@@ -18,6 +19,8 @@ export class ResourceOverviewComponent extends CleanUpHelper implements OnInit {
 
   constructor(private transactionApiService: TransactionsApiService,
               private uuidService: UuidService,
+              private breadcrumbService: BreadcrumbService,
+              private router: Router,
               private stateService: StateService) {
     super();
     this.resourceCreated$ = new ReplaySubject(1);
@@ -29,6 +32,11 @@ export class ResourceOverviewComponent extends CleanUpHelper implements OnInit {
       .subscribe((data: StorageUser) => {
         this.#publicKey = data && data.publicKey ? data.publicKey : null;
       });
+    this.breadcrumbService.startBreadcrumb({
+      text: 'Ressourcen',
+      url: this.router.url
+    });
+    this.breadcrumbService.showBreadcrumb(true);
   }
 
   onResourceCreated(asset: Asset): void {

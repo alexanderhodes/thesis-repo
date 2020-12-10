@@ -1,10 +1,10 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
 import {take} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
-import {LoginApiService} from '../../../core';
+import {BreadcrumbService, LoginApiService} from '../../../core';
 import {LoginCredentials} from '../../../shared';
 
 @Component({
@@ -17,7 +17,7 @@ import {LoginCredentials} from '../../../shared';
     AsyncPipe
   ]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   loginForm: FormGroup = new FormGroup({
     username: new FormControl('', [Validators.required]),
@@ -30,7 +30,12 @@ export class LoginComponent {
               private router: Router,
               private asyncPipe: AsyncPipe,
               private translateService: TranslateService,
+              private breadcrumbService: BreadcrumbService,
               private changeDetectorRef: ChangeDetectorRef) {
+  }
+
+  ngOnInit(): void {
+    this.breadcrumbService.showBreadcrumb(false);
   }
 
   login(): void {

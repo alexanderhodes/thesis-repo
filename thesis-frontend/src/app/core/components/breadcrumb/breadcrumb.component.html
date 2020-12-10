@@ -1,0 +1,10 @@
+<ng-container *ngIf="show">
+  <div class="grid grid-cols-12">
+    <div class="col-span-6 col-start-4 mt-2">
+      <ng-container *ngFor="let breadcrumb of breadcrumbs; last as last">
+        <span class="cursor-pointer" [routerLink]="breadcrumb.url">{{ breadcrumb.text }}</span>
+        <span *ngIf="!last"> / </span>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>
