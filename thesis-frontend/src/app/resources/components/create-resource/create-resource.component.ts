@@ -113,7 +113,7 @@ export class CreateResourceComponent extends CleanUpHelper implements OnInit {
       };
       asset.data.uuid = this.uuidService.generateV4Uuid();
       asset.data.status = 'draft';
-      this.transactionsApiService.createTransaction(asset, this.#keyPair)
+      this.transactionsApiService.createTransaction(asset, this.#keyPair, 'create')
         .pipe(take(1))
         .subscribe((createdTransaction: Transaction) => {
           console.log('createdTransaction', createdTransaction);

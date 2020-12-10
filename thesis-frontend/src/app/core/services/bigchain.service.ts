@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as driver from 'bigchaindb-driver';
 import {takeUntil} from 'rxjs/operators';
-import {Asset, KeyPair, MetaData, StorageUser, Transaction} from '../../shared';
+import {Asset, KeyPair, MetaData, StorageUser, Transaction, TransactionType} from '../../shared';
 import {CleanUpHelper} from '../utils';
 import {StateService, STORAGE_USER} from './state.service';
 
@@ -21,12 +21,12 @@ export class BigchainService extends CleanUpHelper {
       });
   }
 
-  createTransaction(asset: Asset, keyPair: KeyPair): Transaction {
+  createTransaction(asset: Asset, keyPair: KeyPair, transactionType: TransactionType): Transaction {
     const metadata: MetaData = {
       timestamp: Date.now(),
       asset,
       data: '',
-      transactionType: 'create',
+      transactionType,
       user: this.#username
     };
     // Construct a transaction payload

@@ -18,7 +18,7 @@ export function createNodeQuery(assetId: string, asset: { [key: string]: any }, 
 }
 
 export function updateNodeQuery(assetId: string, asset: { [key: string]: any }, type: string): string {
-    const attributes = joinKeyValuePair(asset, '=');
+    const attributes = joinKeyValuePair(asset, '=', 'n');
     return UPDATE_NODE
         .replace('{{type}}', type)
         .replace('{{query}}', `uuid: '${assetId}'`)

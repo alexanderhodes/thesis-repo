@@ -1,9 +1,22 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
 import {take, takeUntil} from 'rxjs/operators';
-import {CleanUpHelper, GraphApiService, ObjectApiService} from '../../../core';
-import {Asset, GraphObject, IObject, Node} from '../../../shared';
 import {Observable} from 'rxjs';
+import {
+  CleanUpHelper,
+  GraphApiService,
+  ObjectApiService,
+  StateService,
+  STORAGE_USER,
+  TransactionsApiService
+} from '../../../core';
+import {Asset, GraphObject, IObject, KeyPair, Node, Status, StorageUser} from '../../../shared';
+
+export interface ILocalResource {
+  type: string;
+  data: Asset[];
+  custom: boolean;
+}
 
 @Component({
   selector: 'ts-resource-list',
@@ -16,16 +29,28 @@ export class ResourceListComponent extends CleanUpHelper implements OnInit {
 
   @Input()
   resourceCreated$: Observable<Asset>;
-  resources: { type: string, data: Asset[], custom: boolean }[];
+  resources: ILocalResource[];
+  #keyPair: KeyPair;
 
   constructor(private objectApiService: ObjectApiService,
               private graphApiService: GraphApiService,
               private router: Router,
+              private transactionApiService: TransactionsApiService,
+              private stateService: StateService,
               private changeDetectorRef: ChangeDetectorRef) {
     super();
   }
 
   ngOnInit(): void {
+    this.stateService.getItem$(STORAGE_USER)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((data: StorageUser) => {
+        this.#keyPair = {
+          privateKey: data && data.privateKey ? data.privateKey : null,
+          publicKey: data && data.publicKey ? data.publicKey : null
+        };
+      });
+
     this.resources = [{type: 'occupation', data: [], custom: false}, {type: 'qualification', data: [], custom: false}];
 
     this.objectApiService.getAllObjects()
@@ -82,6 +107,24 @@ export class ResourceListComponent extends CleanUpHelper implements OnInit {
           this.changeDetectorRef.detectChanges();
         });
     });
+  }
+
+  changeStatus(localResource: ILocalResource, updatedAsset: Asset, newStatus: Status): void {
+    updatedAsset.data.status = newStatus;
+    this.transactionApiService.createTransaction(updatedAsset, this.#keyPair, 'update').pipe(take(1))
+      .subscribe((updatedTransaction) => {
+        console.log('updatedTransaction', updatedTransaction);
+        const resource = this.resources.find(res => res.type === localResource.type);
+        if (resource) {
+          const index = resource.data.findIndex(asset => asset.data.uuid === updatedAsset.data.uuid);
+          if (index > -1) {
+            resource.data[index].data.status = newStatus;
+            this.changeDetectorRef.detectChanges();
+          }
+        }
+      }, (error) => {
+        console.log('error', error);
+      });
   }
 
 }

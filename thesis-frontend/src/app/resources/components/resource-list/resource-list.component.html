@@ -22,8 +22,15 @@
       <td class="px-4 py-2">{{ asset.data.name }}</td>
       <td class="px-4 py-2">{{ ('common.'+asset.data.status) | translate }}</td>
       <td class="px-4 py-2">
-        <button [routerLink]="[resource.type, asset.data.uuid]" [queryParams]="{custom: resource.custom}" ts-button-tertiary class="my-1">
+        <button [routerLink]="[resource.type, asset.data.uuid]" [queryParams]="{custom: resource.custom}" ts-button-tertiary class="my-1"
+                [ngClass]="{'mr-3': asset.data.status !== 'released'}">
           {{ 'common.to-detail' | translate }}
+        </button>
+        <button *ngIf="asset.data.status === 'draft'" ts-button-tertiary (click)="changeStatus(resource, asset, 'in validation')" class="my-1">
+          {{ 'common.validate' | translate }}
+        </button>
+        <button *ngIf="asset.data.status === 'in validation'" ts-button-tertiary (click)="changeStatus(resource, asset, 'released')" class="my-1">
+          {{ 'common.release' | translate }}
         </button>
       </td>
     </tr>
