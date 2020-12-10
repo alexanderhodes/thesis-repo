@@ -1,11 +1,11 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AsyncPipe} from '@angular/common';
 import {TranslateService} from '@ngx-translate/core';
 import {take} from 'rxjs/operators';
 import {CreatedUser, CreateUser, FileService, GenerateKeyPairResponse, KeyPair, Role, User} from '../../../shared';
-import {RolesApiService, UsersApiService} from '../../../core';
+import {BreadcrumbService, RolesApiService, UsersApiService} from '../../../core';
 
 @Component({
   selector: 'ts-user-detail',
@@ -46,6 +46,8 @@ export class UserDetailComponent implements OnInit {
               private usersApiService: UsersApiService,
               private activatedRoute: ActivatedRoute,
               private fileService: FileService,
+              private router: Router,
+              private breadcrumbService: BreadcrumbService,
               private asyncPipe: AsyncPipe,
               private translateService: TranslateService,
               private changeDetectorRef: ChangeDetectorRef) {}
@@ -60,6 +62,11 @@ export class UserDetailComponent implements OnInit {
         this.updateUserForm.setValue({
           username: user.username,
           roles: user.roles[0]
+        });
+
+        this.breadcrumbService.newBreadcrumb({
+          text: user.username,
+          url: this.router.url
         });
       });
     });
@@ -109,7 +116,7 @@ export class UserDetailComponent implements OnInit {
         user: this.#user.id,
         password: this.getFormControlForUpdatePassword('password').value
       }).pipe()
-        .subscribe((response) => {
+        .subscribe(() => {
           this.updatePasswordForm.reset({
             password: '',
             passwordRepeat: ''
@@ -117,7 +124,7 @@ export class UserDetailComponent implements OnInit {
           this.submittedPasswordChange = false;
           this.passwordChangeSuccessful = true;
           this.changeDetectorRef.detectChanges();
-        }, (error) => {
+        }, () => {
           this.submittedPasswordChange = true;
           this.passwordChangeSuccessful = false;
           this.changeDetectorRef.detectChanges();
@@ -153,14 +160,6 @@ export class UserDetailComponent implements OnInit {
         };
         this.changeDetectorRef.detectChanges();
       });
-  }
-
-  downloadKeyFile(): void {
-    const keyPair = {
-      privateKey: this.updatedUser.privateKey,
-      publicKey: this.updatedUser.publicKey
-    };
-    this._downloadKeyFile(keyPair);
   }
 
   _downloadKeyFile(keyPair: KeyPair): void {

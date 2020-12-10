@@ -1,14 +1,20 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
+import {AsyncPipe} from '@angular/common';
+import {TranslateService} from '@ngx-translate/core';
 import {take} from 'rxjs/operators';
 import {User} from '../../../shared';
-import {UsersApiService} from '../../../core';
+import {BreadcrumbService, UsersApiService} from '../../../core';
 
 @Component({
   selector: 'ts-user-list',
   templateUrl: 'user-list.component.html',
   styleUrls: ['user-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.Emulated
+  encapsulation: ViewEncapsulation.Emulated,
+  providers: [
+    AsyncPipe
+  ]
 })
 export class UserListComponent implements OnInit {
 
@@ -16,6 +22,10 @@ export class UserListComponent implements OnInit {
   show: boolean = false;
 
   constructor(private usersApiService: UsersApiService,
+              private breadcrumbService: BreadcrumbService,
+              private router: Router,
+              private asyncPipe: AsyncPipe,
+              private translateService: TranslateService,
               private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
@@ -25,6 +35,12 @@ export class UserListComponent implements OnInit {
       this.users = users;
       this.changeDetectorRef.detectChanges();
     });
+
+    this.breadcrumbService.startBreadcrumb({
+      text: this.asyncPipe.transform(this.translateService.get('user.title.user-list')),
+      url: this.router.url
+    });
+    this.breadcrumbService.showBreadcrumb(true);
   }
 
   deleteUser(id: string): void {

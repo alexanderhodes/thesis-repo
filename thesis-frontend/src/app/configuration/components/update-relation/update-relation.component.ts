@@ -5,7 +5,7 @@ import {AsyncPipe} from '@angular/common';
 import {take} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {DbRelation, DbRelationStructure, IMessage, IObject, UpdateRelationStructure} from '../../../shared';
-import {DbRelationApiService, DbRelationStructureApiService} from '../../../core';
+import {BreadcrumbService, DbRelationApiService, DbRelationStructureApiService} from '../../../core';
 
 @Component({
   selector: 'ts-update-relation',
@@ -34,6 +34,7 @@ export class UpdateRelationComponent implements OnInit {
               private asyncPipe: AsyncPipe,
               private dbRelationApiService: DbRelationApiService,
               private dbRelationStructureApiService: DbRelationStructureApiService,
+              private breadcrumbService: BreadcrumbService,
               private changeDetectorRef: ChangeDetectorRef) {
     this.deletedRelationStructures = [];
   }
@@ -49,6 +50,10 @@ export class UpdateRelationComponent implements OnInit {
           name: this.relation.name
         });
         this.changeDetectorRef.detectChanges();
+        this.breadcrumbService.newBreadcrumb({
+          text: this.asyncPipe.transform(this.translateService.get('common.relation')) + ': ' + name,
+          url: this.router.url
+        });
       });
       this.dbRelationStructureApiService.findAllForRelation(name).pipe(
         take(1)

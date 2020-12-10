@@ -4,7 +4,7 @@ import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/form
 import {ActivatedRoute, Router} from '@angular/router';
 import {take} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
-import {ObjectApiService, ObjectStructureApiService} from '../../../core';
+import {BreadcrumbService, ObjectApiService, ObjectStructureApiService} from '../../../core';
 import {IMessage, IObject, IObjectStructure, IUpdateObjectStructure} from '../../../shared';
 
 @Component({
@@ -36,6 +36,7 @@ export class UpdateObjectComponent implements OnInit {
               private asyncPipe: AsyncPipe,
               private objectApiService: ObjectApiService,
               private objectStructureApiService: ObjectStructureApiService,
+              private breadcrumbService: BreadcrumbService,
               private changeDetectorRef: ChangeDetectorRef) {
     this.deletedObjectStructures = [];
   }
@@ -52,6 +53,10 @@ export class UpdateObjectComponent implements OnInit {
           deletable: this.object.deletable
         });
         this.changeDetectorRef.detectChanges();
+        this.breadcrumbService.newBreadcrumb({
+          text: this.asyncPipe.transform(this.translateService.get('common.object')) + ': ' + name,
+          url: this.router.url
+        });
       });
       this.objectStructureApiService.getObjectStructuresByObject(name).pipe(
         take(1)
