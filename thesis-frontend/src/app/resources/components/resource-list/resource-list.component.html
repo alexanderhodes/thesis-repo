@@ -26,12 +26,14 @@
                 [ngClass]="{'mr-3': asset.data.status !== 'released'}">
           {{ 'common.to-detail' | translate }}
         </button>
-        <button *ngIf="asset.data.status === 'draft'" ts-button-tertiary (click)="changeStatus(resource, asset, 'in validation')" class="my-1">
-          {{ 'common.validate' | translate }}
-        </button>
-        <button *ngIf="asset.data.status === 'in validation'" ts-button-tertiary (click)="changeStatus(resource, asset, 'released')" class="my-1">
-          {{ 'common.release' | translate }}
-        </button>
+        <ng-container *tsHasRole="'BOARD'">
+          <button *ngIf="asset.data.status === 'draft'" ts-button-tertiary (click)="changeStatus(resource, asset, 'in validation')" class="my-1">
+            {{ 'common.validate' | translate }}
+          </button>
+          <button *ngIf="asset.data.status === 'in validation'" ts-button-tertiary (click)="changeStatus(resource, asset, 'released')" class="my-1">
+            {{ 'common.release' | translate }}
+          </button>
+        </ng-container>
       </td>
     </tr>
     <tr *ngIf="resource.data.length === 0" class="border-t-2 border-b-2 border-black">

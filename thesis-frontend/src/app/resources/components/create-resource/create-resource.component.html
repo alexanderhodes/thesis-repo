@@ -23,7 +23,7 @@
         <ng-container
           *ngIf="selectedResourceType === 'qualification' || selectedResourceType === 'occupation'; else custom">
           <div class="grid grid-cols-12">
-            <div class="col-span-6 px-2 pt-3">
+            <div class="col-span-12 px-2 pt-3">
               <label for="identifier" class="text-black">{{ 'common.identifier' | translate }} *</label>
               <input id="identifier" ts-input formControlName="identifier">
               <ng-container
@@ -33,7 +33,7 @@
                 </ts-error-message>
               </ng-container>
             </div>
-            <div class="col-span-6 px-2 pt-3">
+            <div class="col-span-12 px-2 pt-3">
               <label for="name" class="text-black">{{ 'common.name' | translate }} *</label>
               <input id="name" ts-input formControlName="name">
               <ng-container *ngIf="(submitted || getFormControl('name').touched) && getFormControl('name').invalid">
@@ -62,7 +62,7 @@
                 </ts-error-message>
               </ng-container>
             </div>
-            <div class="col-span-6 px-2 pt-3">
+            <div class="col-span-12 px-2 pt-3">
               <label for="url" class="text-black">{{ 'common.url' | translate }} *</label>
               <input id="url" ts-input formControlName="url">
               <ng-container *ngIf="(submitted || getFormControl('name').touched) && getFormControl('name').invalid">
@@ -75,7 +75,7 @@
         </ng-container>
         <ng-template #custom>
           <div class="grid grid-cols-12">
-            <div class="col-span-6 px-2 pt-3">
+            <div class="col-span-12 px-2 pt-3">
               <label for="name" class="text-black">{{ 'common.name' | translate }} *</label>
               <input id="name" ts-input formControlName="name">
               <ng-container *ngIf="(submitted || getFormControl('name').touched) && getFormControl('name').invalid">
@@ -88,7 +88,7 @@
         </ng-template>
         <ng-container *ngFor="let objectStructure of objectStructures">
           <div class="grid grid-cols-12">
-            <div class="col-span-6 px-2 pt-3">
+            <div class="col-span-12 px-2 pt-3">
               <label
                 [attr.for]="objectStructure.field">{{ objectStructure.field }} {{ !objectStructure.nullable ? '*' : '' }}</label>
               <ng-container *ngIf="objectStructure.datatype === 'boolean'; else normalInput">
