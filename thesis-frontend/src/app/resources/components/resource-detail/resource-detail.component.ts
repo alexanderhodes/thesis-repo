@@ -37,7 +37,7 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
   custom: boolean = false;
   remoteResponses: Array<RemoteResponse<GraphObject[]>>;
   transactions: AssetTransaction[];
-  relations: GraphObject[];
+  relations: GraphRelationsResponse[];
   #node: string;
   #uuid: string;
   #graphQuery: GraphQuery;
@@ -149,7 +149,8 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
     this.graphApiService.getRelationsByQuery(relationsQuery)
       .pipe(take(1))
       .subscribe((relations: GraphRelationsResponse[]) => {
-        console.log('relations', relations);
+        this.relations = relations;
+        this.changeDetectorRef.detectChanges();
       });
   }
 

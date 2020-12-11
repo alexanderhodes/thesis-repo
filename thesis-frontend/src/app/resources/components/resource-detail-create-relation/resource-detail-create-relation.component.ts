@@ -1,4 +1,12 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component, EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation
+} from '@angular/core';
 import {AsyncPipe} from '@angular/common';
 import {TranslateService} from '@ngx-translate/core';
 import {take, takeUntil} from 'rxjs/operators';
@@ -37,6 +45,8 @@ export class ResourceDetailCreateRelationComponent extends CleanUpHelper impleme
 
   @Input()
   asset!: Asset;
+  @Output()
+  relationCreated: EventEmitter<void>;
 
   relations: DbRelation[];
   selectedRelation: DbRelation;
@@ -58,6 +68,7 @@ export class ResourceDetailCreateRelationComponent extends CleanUpHelper impleme
               private asyncPipe: AsyncPipe,
               private changeDetectorRef: ChangeDetectorRef) {
     super();
+    this.relationCreated = new EventEmitter<void>();
   }
 
   ngOnInit(): void {
@@ -153,6 +164,7 @@ export class ResourceDetailCreateRelationComponent extends CleanUpHelper impleme
             type: 'success',
             text: this.asyncPipe.transform(this.translateService.get('common.success.relation-created'))
           };
+          this.relationCreated.emit();
           this.changeDetectorRef.detectChanges();
         }, (error) => {
           const translation = error && error.status ? 'common.error.no-internet-connection' : 'common.error.saving-error';

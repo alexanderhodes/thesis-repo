@@ -31,7 +31,10 @@
       <ts-resource-detail-transactions [transactions]="transactions" (reloadTransactions)="onReloadTransactions()"></ts-resource-detail-transactions>
     </div>
     <div class="col-span-6 col-start-4 mt-5">
-      <ts-resource-detail-create-relation [asset]="asset"></ts-resource-detail-create-relation>
+      <ts-resource-detail-create-relation [asset]="asset" (relationCreated)="onReloadRelations()"></ts-resource-detail-create-relation>
+    </div>
+    <div class="col-span-6 col-start-4 mt-5">
+      <ts-resource-detail-relations [relations]="relations" (reloadRelations)="onReloadRelations()"></ts-resource-detail-relations>
     </div>
   </div>
 </ng-container>

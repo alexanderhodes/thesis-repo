@@ -1,0 +1,27 @@
+<div class="flex">
+  <span class="text-xl mr-auto">{{ 'common.relations' | translate }}</span>
+  <span class="text-s pt-1 cursor-pointer" (click)="reload()">{{ 'common.refresh' | translate }}</span>
+</div>
+<table class="table-auto w-full">
+  <thead>
+  <tr class="border-t-4 border-black">
+    <th class="px-4 py-2 text-left h-auto">
+      <span class="text-lg">{{ 'common.relation' | translate }}</span>
+    </th>
+    <th class="px-4 py-2 text-left h-auto">
+      <span class="text-lg">{{ 'common.object' | translate }}</span>
+    </th>
+    <th class="px-4 py-2 text-left h-auto">
+      <span class="text-lg">{{ 'common.actions' | translate }}</span>
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let relation of relations; index as i; last as last" class="border-t-2 border-black"
+      [ngClass]="{'border-b-2': last}">
+    <td class="px-4 py-2">{{ getNameForRelation(relation.relation[2].data.name) }}</td>
+    <td class="px-4 py-2">{{ relation.relation[1].data.properties.name }}</td>
+    <td class="px-4 py-2">&nbsp;</td>
+  </tr>
+  </tbody>
+</table>

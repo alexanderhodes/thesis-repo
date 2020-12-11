@@ -75,6 +75,7 @@
   "common.transactions": "Transaktionen",
   "common.refresh": "aktualisieren",
   "common.create-resource": "Ressource anlegen",
+  "common.relations": "Beziehungen",
   "login.action.login": "anmelden",
   "login.title": "Anmelden",
   "login.text.validate-private-key": "Bitte geben Sie Ihren privaten Schlüssel ein.",
