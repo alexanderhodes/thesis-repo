@@ -23,7 +23,7 @@ import {
   Asset,
   IMessage,
   IObject,
-  IObjectStructure,
+  IObjectStructure, IResourceType,
   KeyPair,
   StorageUser,
   Transaction,
@@ -48,7 +48,7 @@ export class CreateResourceComponent extends CleanUpHelper implements OnInit {
   createForm: FormGroup;
   selectedResourceType: string;
   objectStructures: IObjectStructure[] = [];
-  resourceTypes: { key: string, description: string }[] = [];
+  resourceTypes: IResourceType[] = [];
   #keyPair: KeyPair;
   submitted: boolean = false;
   message: IMessage;
@@ -66,7 +66,6 @@ export class CreateResourceComponent extends CleanUpHelper implements OnInit {
   }
 
   ngOnInit(): void {
-    // implement this
     this.stateService.getItem$(STORAGE_USER)
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: StorageUser) => {

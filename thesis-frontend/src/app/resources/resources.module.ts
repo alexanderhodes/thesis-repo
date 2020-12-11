@@ -6,6 +6,7 @@ import {SharedModule} from '../shared';
 import {
   CreateResourceComponent,
   ResourceDetailComponent,
+  ResourceDetailCreateRelationComponent,
   ResourceDetailRemotesComponent,
   ResourceDetailTransactionsComponent,
   ResourceListComponent,
@@ -17,6 +18,7 @@ import {CoreModule} from '../core';
 const components = [
   CreateResourceComponent,
   ResourceDetailComponent,
+  ResourceDetailCreateRelationComponent,
   ResourceDetailRemotesComponent,
   ResourceDetailTransactionsComponent,
   ResourceOverviewComponent,

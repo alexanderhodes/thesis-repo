@@ -16,7 +16,7 @@ import {
   AssetTransaction,
   GraphObject,
   GraphQuery,
-  GraphRelationQuery,
+  GraphRelationQuery, GraphRelationsResponse,
   Node,
   RemoteResponse
 } from '../../../shared';
@@ -37,6 +37,7 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
   custom: boolean = false;
   remoteResponses: Array<RemoteResponse<GraphObject[]>>;
   transactions: AssetTransaction[];
+  relations: GraphObject[];
   #node: string;
   #uuid: string;
   #graphQuery: GraphQuery;
@@ -60,6 +61,38 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
 
     this.#graphQuery = {node: this.#node, condition: {uuid: this.#uuid}};
 
+    // get node data
+    this._getNode();
+    // get names on different nodes
+    this._getRemoteNodes();
+    // get blockchain transactions
+    this._getTransactions();
+    // get relations
+    this._getRelations();
+
+    this.breadcrumbService.newBreadcrumb({
+      text: this.asyncPipe.transform(this.translateService.get(`common.${this.#node}-single`)),
+      url: this.router.url
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.breadcrumbService.removeLastBreadcrumb();
+  }
+
+  onReloadRemoteResponses(): void {
+    this._getRemoteNodes();
+  }
+
+  onReloadTransactions(): void {
+    this._getTransactions();
+  }
+
+  onReloadRelations(): void {
+    this._getRelations();
+  }
+
+  private _getNode(): void {
     this.graphApiService.getNodesByQuery(this.#node, this.#graphQuery)
       .pipe(take(1))
       .subscribe((graphObjects: GraphObject[]) => {
@@ -83,42 +116,6 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
       }, (error) => {
         console.log('error', error);
       });
-
-    const relationsQuery: GraphRelationQuery = {
-      left: {
-        namespace: this.#node,
-        condition: {
-          uuid: this.#uuid
-        }
-      },
-      direction: 'both'
-    };
-    this.graphApiService.getRelationsByQuery(relationsQuery)
-      .pipe(take(1))
-      .subscribe((graphObjects: GraphObject[]) => {
-        console.log('graphObjects', graphObjects);
-      });
-
-    this._getRemoteNodes();
-
-    this._getTransactions();
-
-    this.breadcrumbService.newBreadcrumb({
-      text: this.asyncPipe.transform(this.translateService.get(`common.${this.#node}-single`)),
-      url: this.router.url
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.breadcrumbService.removeLastBreadcrumb();
-  }
-
-  onReloadRemoteResponses(): void {
-    this._getRemoteNodes();
-  }
-
-  onReloadTransactions(): void {
-    this._getTransactions();
   }
 
   private _getRemoteNodes(): void {
@@ -136,6 +133,23 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
       .subscribe((transactions: AssetTransaction[]) => {
         this.transactions = transactions;
         this.changeDetectorRef.detectChanges();
+      });
+  }
+
+  private _getRelations(): void {
+    const relationsQuery: GraphRelationQuery = {
+      left: {
+        namespace: this.#node,
+        condition: {
+          uuid: this.#uuid
+        }
+      },
+      direction: 'both'
+    };
+    this.graphApiService.getRelationsByQuery(relationsQuery)
+      .pipe(take(1))
+      .subscribe((relations: GraphRelationsResponse[]) => {
+        console.log('relations', relations);
       });
   }
 

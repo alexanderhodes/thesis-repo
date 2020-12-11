@@ -30,5 +30,8 @@
     <div class="col-span-6 col-start-4 mt-5" *ngIf="transactions && transactions.length">
       <ts-resource-detail-transactions [transactions]="transactions" (reloadTransactions)="onReloadTransactions()"></ts-resource-detail-transactions>
     </div>
+    <div class="col-span-6 col-start-4 mt-5">
+      <ts-resource-detail-create-relation [asset]="asset"></ts-resource-detail-create-relation>
+    </div>
   </div>
 </ng-container>

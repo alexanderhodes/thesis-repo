@@ -1,3 +1,5 @@
+import {GraphObject} from './graph.interface';
+
 export interface Transaction {
   inputs: [
     {
@@ -120,4 +122,8 @@ export interface RelationNode {
 export interface Hierarchy {
   name: string;
   url: string;
+}
+
+export interface GraphRelationsResponse {
+  relation: GraphObject[];
 }

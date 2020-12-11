@@ -1,5 +1,5 @@
 import {QueryResult} from 'neo4j-driver';
-import {IGraphObject, INode, IGraphRelation, ISegment} from '../../shared';
+import {IGraphObject, INode, IGraphRelation, ISegment, IGraphRelationsResponse} from '../../shared';
 
 export function toGraphObjects(response: QueryResult): IGraphObject[] {
     const graphObjects: IGraphObject[] = [];
@@ -57,4 +57,17 @@ export function toRelation(object: any): IGraphRelation {
         name: object.type,
         properties: object.properties
     };
+}
+
+export function toRelations(graphObjects: IGraphObject[]): IGraphRelationsResponse[] {
+    if (!graphObjects || graphObjects.length === 0) {
+        return [];
+    }
+    const relations: IGraphRelationsResponse[] = [];
+    let index = 0;
+    while ((index + 3) <= graphObjects.length) {
+        relations.push({ relation: graphObjects.slice(index, index+3) });
+        index += 3;
+    }
+    return relations;
 }

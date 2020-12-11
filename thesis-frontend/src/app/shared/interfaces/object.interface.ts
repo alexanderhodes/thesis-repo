@@ -5,3 +5,8 @@ export interface IObject {
   deletable: boolean;
   objectStructure?: IObjectStructure[];
 }
+
+export interface IResourceType {
+  key: string;
+  description: string;
+}

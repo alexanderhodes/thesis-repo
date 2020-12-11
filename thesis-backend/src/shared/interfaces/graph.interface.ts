@@ -30,3 +30,7 @@ export interface IGraphObject {
     type: IGraphObjectType;
     data: IPath | INode | IGraphRelation;
 }
+
+export interface IGraphRelationsResponse {
+    relation: IGraphObject[];
+}

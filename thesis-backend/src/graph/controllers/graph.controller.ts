@@ -1,9 +1,9 @@
 import {Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Post} from '@nestjs/common';
 import {ApiTags} from '@nestjs/swagger';
 import {GraphService} from '../services';
-import {IGraphObject, IRemoteResponse} from '../../shared';
+import {IGraphObject, IGraphRelationsResponse, IRemoteResponse} from '../../shared';
 import {GraphQueryDto, GraphRelationDto} from '../dtos';
-import {toGraphObjects} from '../mappers';
+import {toGraphObjects, toRelations} from '../mappers';
 import {RemoteService} from '../../core';
 
 @ApiTags("graph")
@@ -59,9 +59,10 @@ export class GraphController {
 
     @Post("relation/read")
     @HttpCode(HttpStatus.OK)
-    async readRelation(@Body() relationDto: GraphRelationDto): Promise<IGraphObject[]> {
+    async readRelation(@Body() relationDto: GraphRelationDto): Promise<IGraphRelationsResponse[]> {
         const response = await this.neo4jService.readRelation(relationDto);
-        return toGraphObjects(response);
+        const graphObjects: IGraphObject[] = toGraphObjects(response);
+        return toRelations(graphObjects);
     }
 
     @Delete()
