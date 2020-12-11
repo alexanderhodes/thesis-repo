@@ -110,18 +110,15 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
     this.graphApiService.getRemoteNodesByQuery(nodeParam, query)
       .pipe(take(1))
       .subscribe((remoteResponses: Array<RemoteResponse<GraphObject[]>>) => {
-        console.log('remoteResponse', remoteResponses);
         this.remoteResponses = remoteResponses;
         this.changeDetectorRef.detectChanges();
       });
   }
 
   private _getTransactions(nodeParam: string, uuidParam: string): void {
-    console.log('getTransactions');
     this.transactionsApiService.getTransactionsForAsset(nodeParam, uuidParam)
       .pipe(take(1))
       .subscribe((transactions: AssetTransaction[]) => {
-        console.log('transactions', transactions);
         this.transactions = transactions;
         this.changeDetectorRef.detectChanges();
       });

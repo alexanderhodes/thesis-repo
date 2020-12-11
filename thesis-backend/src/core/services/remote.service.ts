@@ -33,7 +33,6 @@ export class RemoteService {
 
     _queryRemote(method: RequestType, url: string, body: any): Promise<any>[] {
         const queries = [];
-        console.log('remoteConfig', this.#remoteConfig);
 
         this.#remoteConfig.nodes.forEach((remote: INodeConfig) => {
             queries.push(this.httpService.request(this._createRequest(method, url, body, remote))

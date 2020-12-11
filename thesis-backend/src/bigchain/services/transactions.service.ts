@@ -24,8 +24,12 @@ export class TransactionsService extends BigchainBaseService {
         return this.transactionsModel.find();
     }
 
-    getTransaction(transactionId: string): Promise<ITransaction> {
-        return this.getConnection().getTransaction(transactionId);
+//     getTransactionByApi(transactionId: string): Promise<ITransaction> {
+//         return this.getConnection().getTransaction(transactionId);
+//     }
+
+    async getTransactionByMongoDb(transactionId: string): Promise<TransactionModel> {
+        return this.transactionsModel.findOne({"id": transactionId});
     }
 
     async getTransactionsForAsset(assetUuid: string, namespace: string): Promise<AssetTransaction[]> {
@@ -33,7 +37,7 @@ export class TransactionsService extends BigchainBaseService {
         const transactions: AssetTransaction[] = [];
 
         for (const asset of assets) {
-            const transaction = await this.getTransaction(asset.id);
+            const transaction = await this.getTransactionByMongoDb(asset.id);
             const metadata = await this.metadataService.findById(transaction.id);
             if (transaction && metadata && metadata.metadata.asset) {
                 transactions.push({
@@ -52,7 +56,7 @@ export class TransactionsService extends BigchainBaseService {
         const transactions = [];
 
         for (const asset of assets) {
-            const transaction = await this.getTransaction(asset.id);
+            const transaction = await this.getTransactionByMongoDb(asset.id);
             transactions.push(transaction);
         }
 
@@ -66,27 +70,6 @@ export class TransactionsService extends BigchainBaseService {
         return connection.postTransactionCommit(transaction)
             .then((retrievedTx: ITransaction, err) => {
                 console.log('err', err);
-                return connection.getTransaction(retrievedTx.id);
-            });
-    }
-
-    updateTransaction(createdTransaction: any, user: UserEntity, privateKey: string, metadata: IMetadata = null): Promise<ITransaction> {
-        const tx = this.driver.Transaction.makeTransferTransaction(
-            [{ tx: createdTransaction, output_index: 0 }],
-            [
-                this.driver.Transaction.makeOutput(this.driver.Transaction.makeEd25519Condition(user.publicKey))
-            ],
-            metadata
-        );
-
-        // Sign the transaction with private keys
-        const txSigned = this.driver.Transaction.signTransaction(tx, privateKey);
-        // get connection to bigchaindb
-        const connection = this.getConnection();
-        // Send the transaction off to BigchainDB
-        return connection.postTransactionCommit(txSigned)
-            .then((retrievedTx: ITransaction) => {
-                console.log('Transaction', retrievedTx.id, 'successfully transfered.')
                 return connection.getTransaction(retrievedTx.id);
             });
     }
