@@ -1,4 +1,7 @@
-<div class="text-xl">{{ 'resources.text.other-instances' | translate }}</div>
+<div class="flex">
+  <span class="text-xl mr-auto">{{ 'resources.text.other-instances' | translate }}</span>
+  <span class="text-s pt-1 cursor-pointer" (click)="reload()">{{ 'common.refresh' | translate }}</span>
+</div>
 <table class="table-auto w-full">
   <thead>
   <tr class="border-t-4 border-black">

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
 import {AssetTransaction} from '../../../shared';
 
 @Component({
@@ -12,5 +12,15 @@ export class ResourceDetailTransactionsComponent {
 
   @Input()
   transactions: AssetTransaction[];
+  @Output()
+  reloadTransactions: EventEmitter<void>;
+
+  constructor() {
+    this.reloadTransactions = new EventEmitter<void>();
+  }
+
+  reload(): void {
+    this.reloadTransactions.emit();
+  }
 
 }

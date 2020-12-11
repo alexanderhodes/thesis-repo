@@ -25,10 +25,10 @@
       </ng-container>
     </div>
     <div class="col-span-6 col-start-4 mt-5" *ngIf="remoteResponses && remoteResponses.length">
-      <ts-resource-detail-remotes [remoteResponses]="remoteResponses"></ts-resource-detail-remotes>
+      <ts-resource-detail-remotes [remoteResponses]="remoteResponses" (reloadRemoteResponses)="onReloadRemoteResponses()"></ts-resource-detail-remotes>
     </div>
     <div class="col-span-6 col-start-4 mt-5" *ngIf="transactions && transactions.length">
-      <ts-resource-detail-transactions [transactions]="transactions"></ts-resource-detail-transactions>
+      <ts-resource-detail-transactions [transactions]="transactions" (reloadTransactions)="onReloadTransactions()"></ts-resource-detail-transactions>
     </div>
   </div>
 </ng-container>

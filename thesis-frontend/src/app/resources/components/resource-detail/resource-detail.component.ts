@@ -37,6 +37,9 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
   custom: boolean = false;
   remoteResponses: Array<RemoteResponse<GraphObject[]>>;
   transactions: AssetTransaction[];
+  #node: string;
+  #uuid: string;
+  #graphQuery: GraphQuery;
 
   constructor(private graphApiService: GraphApiService,
               private transactionsApiService: TransactionsApiService,
@@ -50,14 +53,14 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const nodeParam = this.activatedRoute.snapshot.params.node;
-    const uuidParam = this.activatedRoute.snapshot.params.uuid;
+    this.#node = this.activatedRoute.snapshot.params.node;
+    this.#uuid = this.activatedRoute.snapshot.params.uuid;
     this.custom = this.activatedRoute.snapshot.queryParamMap.has('custom') ?
       !this.activatedRoute.snapshot.queryParamMap.get('custom') : true;
 
-    const query: GraphQuery = {node: nodeParam, condition: {uuid: uuidParam}};
+    this.#graphQuery = {node: this.#node, condition: {uuid: this.#uuid}};
 
-    this.graphApiService.getNodesByQuery(nodeParam, query)
+    this.graphApiService.getNodesByQuery(this.#node, this.#graphQuery)
       .pipe(take(1))
       .subscribe((graphObjects: GraphObject[]) => {
         if (graphObjects && graphObjects.length > 0) {
@@ -83,9 +86,9 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
 
     const relationsQuery: GraphRelationQuery = {
       left: {
-        namespace: nodeParam,
+        namespace: this.#node,
         condition: {
-          name: uuidParam
+          uuid: this.#uuid
         }
       },
       direction: 'both'
@@ -96,18 +99,30 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
         console.log('graphObjects', graphObjects);
       });
 
-    this._getRemoteNodes(nodeParam, query);
+    this._getRemoteNodes();
 
-    this._getTransactions(nodeParam, uuidParam);
+    this._getTransactions();
 
     this.breadcrumbService.newBreadcrumb({
-      text: this.asyncPipe.transform(this.translateService.get(`common.${nodeParam}-single`)),
+      text: this.asyncPipe.transform(this.translateService.get(`common.${this.#node}-single`)),
       url: this.router.url
     });
   }
 
-  private _getRemoteNodes(nodeParam: string, query: GraphQuery): void {
-    this.graphApiService.getRemoteNodesByQuery(nodeParam, query)
+  ngOnDestroy(): void {
+    this.breadcrumbService.removeLastBreadcrumb();
+  }
+
+  onReloadRemoteResponses(): void {
+    this._getRemoteNodes();
+  }
+
+  onReloadTransactions(): void {
+    this._getTransactions();
+  }
+
+  private _getRemoteNodes(): void {
+    this.graphApiService.getRemoteNodesByQuery(this.#node, this.#graphQuery)
       .pipe(take(1))
       .subscribe((remoteResponses: Array<RemoteResponse<GraphObject[]>>) => {
         this.remoteResponses = remoteResponses;
@@ -115,17 +130,13 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
       });
   }
 
-  private _getTransactions(nodeParam: string, uuidParam: string): void {
-    this.transactionsApiService.getTransactionsForAsset(nodeParam, uuidParam)
+  private _getTransactions(): void {
+    this.transactionsApiService.getTransactionsForAsset(this.#node, this.#uuid)
       .pipe(take(1))
       .subscribe((transactions: AssetTransaction[]) => {
         this.transactions = transactions;
         this.changeDetectorRef.detectChanges();
       });
-  }
-
-  ngOnDestroy(): void {
-    this.breadcrumbService.removeLastBreadcrumb();
   }
 
 }

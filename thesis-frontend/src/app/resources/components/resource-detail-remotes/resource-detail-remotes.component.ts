@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
 import {GraphObject, RemoteResponse} from '../../../shared';
 
 @Component({
@@ -12,5 +12,15 @@ export class ResourceDetailRemotesComponent {
 
   @Input()
   remoteResponses: Array<RemoteResponse<GraphObject[]>>;
+  @Output()
+  reloadRemoteResponses: EventEmitter<void>;
+
+  constructor() {
+    this.reloadRemoteResponses = new EventEmitter<void>();
+  }
+
+  reload(): void {
+    this.reloadRemoteResponses.emit();
+  }
 
 }
