@@ -1,10 +1,12 @@
 import {Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Post} from '@nestjs/common';
+import {ApiTags} from '@nestjs/swagger';
 import {GraphService} from '../services';
 import {IGraphObject, IRemoteResponse} from '../../shared';
 import {GraphQueryDto, GraphRelationDto} from '../dtos';
 import {toGraphObjects} from '../mappers';
 import {RemoteService} from '../../core';
 
+@ApiTags("graph")
 @Controller("graph")
 export class GraphController {
 

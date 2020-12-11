@@ -1,12 +1,12 @@
 import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, UseGuards} from '@nestjs/common';
-import {ApiBearerAuth} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
 import {RelationService} from '../../database';
 import {HasPermissions, JwtAuthGuard, PermissionsEnum, PermissionsGuard} from '../../authorization';
 import {DbRelationDto} from '../dtos';
 import {IDbRelation} from '../../shared';
 import {toRelationEntity} from '../mappers';
 
-@Controller('relations')
+@ApiTags('relations')
 @Controller('relations')
 export class RelationController {
 
