@@ -2,7 +2,8 @@
   <div class="grid grid-cols-12">
     <div class="col-span-3 col-start-4 mt-2 px-2">
       <label for="object-name" class="text-black">{{ 'common.object' | translate }}</label>
-      <input id="object-name" ts-input formControlName="name">
+      <input id="object-name" ts-input formControlName="name"
+             [attr.disabled]="object && (object.name === 'occupation' || object.name === 'qualification')">
       <ng-container
         *ngIf="(submitted || getFormControlFromObjectForm('name').touched) && getFormControlFromObjectForm('name').invalid">
         <ts-error-message *ngIf="getFormControlFromObjectForm('name').errors.required">
@@ -10,7 +11,8 @@
         </ts-error-message>
       </ng-container>
     </div>
-    <div class="col-span-3 col-start-7 mt-2 px-2">
+    <div class="col-span-3 col-start-7 mt-2 px-2"
+         *ngIf="object && !(object.name === 'occupation' || object.name === 'qualification')">
       <label for="deletable" class="text-black">{{ 'common.deletable' | translate }}</label>
       <div class="flex items-start">
         <div class="flex-items-center h-5">
@@ -25,7 +27,8 @@
       <ts-add-object-structure (addedObjectStructure)="onObjectStructureAdded($event)"
                                [objectStructures]="objectStructures">
         <div class="col-span-6 mt-2 px-2">
-          <ts-object-structure-list [objectStructures]="objectStructures" (deletedObjectStructure)="onObjectStructureDelete($event)"></ts-object-structure-list>
+          <ts-object-structure-list [objectStructures]="objectStructures"
+                                    (deletedObjectStructure)="onObjectStructureDelete($event)"></ts-object-structure-list>
         </div>
       </ts-add-object-structure>
     </div>
