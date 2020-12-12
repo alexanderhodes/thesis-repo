@@ -1,8 +1,8 @@
 import {Controller, Get, NotFoundException, Param, UseGuards} from '@nestjs/common';
-import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiOkResponse, ApiTags} from '@nestjs/swagger';
 import {RolesService} from '../../database';
 import {RoleDto} from '../dtos';
-import {HasPermissions, JwtAuthGuard, PermissionsEnum, PermissionsGuard} from '../../authorization';
+import {HasPermissions, JwtAuthGuard, PermissionsEnum, PermissionsGuard, Role} from '../../authorization';
 
 @ApiTags('roles')
 @Controller("roles")
@@ -13,6 +13,9 @@ export class RolesController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @HasPermissions(PermissionsEnum.USER_READ)
     @Get()
+    @ApiOkResponse({
+        type: [RoleDto]
+    })
     @ApiBearerAuth()
     findAll(): Promise<RoleDto[]> {
         return this.rolesService.findAll();
@@ -21,6 +24,9 @@ export class RolesController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @HasPermissions(PermissionsEnum.USER_READ)
     @Get(":name")
+    @ApiOkResponse({
+        type: RoleDto
+    })
     @ApiBearerAuth()
     async findOneByName(@Param("name") name: string): Promise<RoleDto> {
         const role = await this.rolesService.findOneByName(name);

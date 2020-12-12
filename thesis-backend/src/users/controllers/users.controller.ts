@@ -1,5 +1,5 @@
 import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, UseGuards} from '@nestjs/common';
-import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiOkResponse, ApiTags} from '@nestjs/swagger';
 import {UsersService} from '../../database';
 import {KeypairService, HashingService} from '../../shared';
 import {CreatedUserDto, CreateUserDto, UserResponseDto} from '../dtos';
@@ -17,6 +17,9 @@ export class UsersController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @HasPermissions(PermissionsEnum.USER_CREATE)
     @Post()
+    @ApiOkResponse({
+        type: CreatedUserDto
+    })
     @ApiBearerAuth()
     async createUser(@Body() createUser: CreateUserDto): Promise<CreatedUserDto> {
         // has password
@@ -48,6 +51,9 @@ export class UsersController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @HasPermissions(PermissionsEnum.USER_READ)
     @Get()
+    @ApiOkResponse({
+        type: UserResponseDto
+    })
     @ApiBearerAuth()
     async getAllUsers(): Promise<UserResponseDto[]> {
         const users = await this.usersService.findAll();
@@ -62,6 +68,9 @@ export class UsersController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @HasPermissions(PermissionsEnum.USER_READ)
     @Get(":id")
+    @ApiOkResponse({
+        type: UserResponseDto
+    })
     @ApiBearerAuth()
     async getUserById(@Param("id") id: string): Promise<UserResponseDto> {
         const user = await this.usersService.findOneById(id);

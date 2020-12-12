@@ -1,9 +1,9 @@
 import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, UseGuards} from '@nestjs/common';
-import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiOkResponse, ApiTags} from '@nestjs/swagger';
 import {RelationEntity, RelationService, RelationStructureService} from '../../database';
 import {HasPermissions, JwtAuthGuard, PermissionsEnum, PermissionsGuard} from '../../authorization';
 import {IDbRelationStructure, IUpdateRelationStructureResponse} from '../../shared';
-import {DbRelationStructureDto, UpdateRelationStructuresDto} from '../dtos';
+import {DbRelationDto, DbRelationStructureDto, UpdateRelationStructuresDto} from '../dtos';
 import {toRelationEntity, toRelationStructureEntity} from '../mappers';
 
 @ApiTags('relation-structure')
@@ -16,16 +16,22 @@ export class RelationStructureController {
 
     @UseGuards(JwtAuthGuard)
     @Get()
+    @ApiOkResponse({
+        type: [DbRelationStructureDto]
+    })
     @ApiBearerAuth()
-    async getAllRelationStructures(): Promise<IDbRelationStructure[]> {
+    async getAllRelationStructures(): Promise<DbRelationStructureDto[]> {
         const relationStructures = await this.relationStructureService.findAll();
         return relationStructures as IDbRelationStructure[];
     }
 
     @UseGuards(JwtAuthGuard)
     @Get("relation/:relationName")
+    @ApiOkResponse({
+        type: [DbRelationStructureDto]
+    })
     @ApiBearerAuth()
-    async getRelationStructureForRelation(@Param("relationName") relationName: string): Promise<IDbRelationStructure[]> {
+    async getRelationStructureForRelation(@Param("relationName") relationName: string): Promise<DbRelationStructureDto[]> {
         const relation = await this.relationService.findOne(relationName);
         if (relation) {
             return this.relationStructureService.findAllByRelation(relationName);
@@ -35,8 +41,11 @@ export class RelationStructureController {
 
     @UseGuards(JwtAuthGuard)
     @Get(":id")
+    @ApiOkResponse({
+        type: DbRelationStructureDto
+    })
     @ApiBearerAuth()
-    async getRelationStructure(@Param("id") id: string): Promise<IDbRelationStructure> {
+    async getRelationStructure(@Param("id") id: string): Promise<DbRelationStructureDto> {
         const relationStructure = await this.relationStructureService.findOne(id);
         if (relationStructure) {
             return relationStructure;
@@ -47,8 +56,11 @@ export class RelationStructureController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Post()
     @HasPermissions(PermissionsEnum.CONFIGURATION_CREATE)
+    @ApiOkResponse({
+        type: [DbRelationStructureDto]
+    })
     @ApiBearerAuth()
-    async createRelationStructures(@Body() relationStructureDtos: DbRelationStructureDto[]): Promise<IDbRelationStructure[]> {
+    async createRelationStructures(@Body() relationStructureDtos: DbRelationStructureDto[]): Promise<DbRelationStructureDto[]> {
         const createdRelationStructures: IDbRelationStructure[] = [];
         for (const createRelationStructure of relationStructureDtos) {
             const relation = toRelationEntity(createRelationStructure.relation.name);
@@ -62,8 +74,11 @@ export class RelationStructureController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Put(":id")
     @HasPermissions(PermissionsEnum.CONFIGURATION_UPDATE)
+    @ApiOkResponse({
+        type: DbRelationStructureDto
+    })
     @ApiBearerAuth()
-    async updateRelationStructure(@Param("id") id: string, @Body() relationStructureDto: DbRelationStructureDto): Promise<IDbRelationStructure> {
+    async updateRelationStructure(@Param("id") id: string, @Body() relationStructureDto: DbRelationStructureDto): Promise<DbRelationStructureDto> {
         const foundRelationStructure = await this.relationStructureService.findOne(id);
         if (foundRelationStructure) {
             const relation = toRelationEntity(relationStructureDto.relation.name);

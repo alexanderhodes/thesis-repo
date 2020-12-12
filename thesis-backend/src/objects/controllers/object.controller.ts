@@ -1,5 +1,5 @@
 import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, UseGuards} from '@nestjs/common';
-import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiOkResponse, ApiTags} from '@nestjs/swagger';
 import {ObjectService} from '../../database';
 import {ObjectDto} from '../dtos';
 import {toObjectEntity} from '../mappers';
@@ -15,8 +15,11 @@ export class ObjectController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Post()
     @HasPermissions(PermissionsEnum.CONFIGURATION_CREATE)
+    @ApiOkResponse({
+        type: ObjectDto
+    })
     @ApiBearerAuth()
-    async createObject(@Body() createObject: ObjectDto): Promise<IObject> {
+    async createObject(@Body() createObject: ObjectDto): Promise<ObjectDto> {
         const foundObject = await this.objectService.findOne(createObject.name);
         if (!foundObject) {
             const objectEntity = toObjectEntity(createObject.name, createObject.deletable);
@@ -35,15 +38,21 @@ export class ObjectController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Get()
     @HasPermissions(PermissionsEnum.ASSETS_READ)
+    @ApiOkResponse({
+        type: [ObjectDto]
+    })
     @ApiBearerAuth()
-    getAllObjects(): Promise<IObject[]> {
+    getAllObjects(): Promise<ObjectDto[]> {
         return this.objectService.findAll();
     }
 
     @UseGuards(JwtAuthGuard)
     @Get(":name")
+    @ApiOkResponse({
+        type: ObjectDto
+    })
     @ApiBearerAuth()
-    async getObjectByName(@Param("name") name: string): Promise<IObject> {
+    async getObjectByName(@Param("name") name: string): Promise<ObjectDto> {
         const object = await this.objectService.findOne(name);
         if (object) {
             return object;
@@ -54,8 +63,11 @@ export class ObjectController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Put(":name")
     @HasPermissions(PermissionsEnum.CONFIGURATION_UPDATE)
+    @ApiOkResponse({
+        type: ObjectDto
+    })
     @ApiBearerAuth()
-    async updateObject(@Param("name") name: string, @Body() updateObjectDto: ObjectDto): Promise<IObject> {
+    async updateObject(@Param("name") name: string, @Body() updateObjectDto: ObjectDto): Promise<ObjectDto> {
         const foundObject = await this.objectService.findOne(name);
         if (foundObject) {
             const object = toObjectEntity(updateObjectDto.name, updateObjectDto.deletable);

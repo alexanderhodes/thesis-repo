@@ -7,7 +7,7 @@ export class RoleDto {
     })
     readonly name: string;
     @ApiProperty({
-        type: PermissionDto
+        type: [PermissionDto]
     })
     readonly permissions: PermissionDto[];
 }

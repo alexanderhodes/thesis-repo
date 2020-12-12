@@ -1,5 +1,5 @@
 import {Body, Controller, Get, Param, Post, UseGuards} from '@nestjs/common';
-import {ApiTags} from '@nestjs/swagger';
+import {ApiOkResponse, ApiTags} from '@nestjs/swagger';
 import {JwtAuthGuard} from '../../authorization';
 import {RelationDto, TransactionDto} from '../dtos';
 import {GraphService} from '../../graph';

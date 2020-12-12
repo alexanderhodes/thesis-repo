@@ -16,17 +16,44 @@ export class CreateUserDto {
     readonly roles: RoleDto[];
 }
 
-export interface CreatedUserDto {
+export class CreatedUserDto {
+    @ApiProperty({
+        type: String
+    })
     id: string;
+    @ApiProperty({
+        type: String
+    })
     username: string;
+    @ApiProperty({
+        type: String
+    })
     privateKey: string;
+    @ApiProperty({
+        type: String
+    })
     publicKey: string;
+    @ApiProperty({
+        type: [RoleDto]
+    })
     roles: RoleDto[];
 }
 
-export interface UserResponseDto {
+export class UserResponseDto {
+    @ApiProperty({
+        type: String
+    })
     id: string;
+    @ApiProperty({
+        type: String
+    })
     username: string;
+    @ApiProperty({
+        type: String
+    })
     publicKey: string;
+    @ApiProperty({
+        type: [RoleDto]
+    })
     roles: RoleDto[];
 }

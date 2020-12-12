@@ -1,9 +1,8 @@
 import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, UseGuards} from '@nestjs/common';
-import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiOkResponse, ApiTags} from '@nestjs/swagger';
 import {RelationService} from '../../database';
 import {HasPermissions, JwtAuthGuard, PermissionsEnum, PermissionsGuard} from '../../authorization';
 import {DbRelationDto} from '../dtos';
-import {IDbRelation} from '../../shared';
 import {toRelationEntity} from '../mappers';
 
 @ApiTags('relations')
@@ -15,8 +14,11 @@ export class RelationController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Post()
     @HasPermissions(PermissionsEnum.CONFIGURATION_CREATE)
+    @ApiOkResponse({
+        type: DbRelationDto
+    })
     @ApiBearerAuth()
-    async createRelation(@Body() createRelation: DbRelationDto): Promise<IDbRelation> {
+    async createRelation(@Body() createRelation: DbRelationDto): Promise<DbRelationDto> {
         const foundRelation = await this.relationService.findOne(createRelation.name);
         if (!foundRelation) {
             const relationEntity = toRelationEntity(createRelation.name);
@@ -33,15 +35,21 @@ export class RelationController {
 
     @UseGuards(JwtAuthGuard)
     @Get()
+    @ApiOkResponse({
+        type: [DbRelationDto]
+    })
     @ApiBearerAuth()
-    getAllRelations(): Promise<IDbRelation[]> {
+    getAllRelations(): Promise<DbRelationDto[]> {
         return this.relationService.findAll();
     }
 
     @UseGuards(JwtAuthGuard)
     @Get(":name")
+    @ApiOkResponse({
+        type: DbRelationDto
+    })
     @ApiBearerAuth()
-    async getRelationByName(@Param("name") name: string): Promise<IDbRelation> {
+    async getRelationByName(@Param("name") name: string): Promise<DbRelationDto> {
         const relation = await this.relationService.findOne(name);
         if (relation) {
             return relation;
@@ -52,8 +60,11 @@ export class RelationController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Put(":name")
     @HasPermissions(PermissionsEnum.CONFIGURATION_UPDATE)
+    @ApiOkResponse({
+        type: DbRelationDto
+    })
     @ApiBearerAuth()
-    async updateRelation(@Param("name") name: string, @Body() updateRelationDto: DbRelationDto): Promise<IDbRelation> {
+    async updateRelation(@Param("name") name: string, @Body() updateRelationDto: DbRelationDto): Promise<DbRelationDto> {
         const foundRelation = await this.relationService.findOne(name);
         if (foundRelation) {
             const relation = toRelationEntity(updateRelationDto.name);
