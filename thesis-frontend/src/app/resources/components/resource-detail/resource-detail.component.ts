@@ -8,17 +8,24 @@ import {
 } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
-import {take} from 'rxjs/operators';
+import {take, takeUntil} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
-import {BreadcrumbService, GraphApiService, TransactionsApiService} from '../../../core';
+import {
+  BreadcrumbService,
+  CleanUpHelper,
+  GraphApiService,
+  StateService,
+  STORAGE_USER,
+  TransactionsApiService
+} from '../../../core';
 import {
   Asset,
   AssetTransaction,
   GraphObject,
-  GraphQuery,
-  GraphRelationQuery, GraphRelationsResponse,
-  Node,
-  RemoteResponse
+  GraphQuery, GraphRelation,
+  GraphRelationQuery, GraphRelationsResponse, KeyPair,
+  Node, Relation,
+  RemoteResponse, StorageUser, Transaction
 } from '../../../shared';
 
 @Component({
@@ -31,7 +38,7 @@ import {
     AsyncPipe
   ]
 })
-export class ResourceDetailComponent implements OnInit, OnDestroy {
+export class ResourceDetailComponent extends CleanUpHelper implements OnInit, OnDestroy {
 
   asset: Asset;
   custom: boolean = false;
@@ -41,6 +48,7 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
   #node: string;
   #uuid: string;
   #graphQuery: GraphQuery;
+  #keyPair: KeyPair;
 
   constructor(private graphApiService: GraphApiService,
               private transactionsApiService: TransactionsApiService,
@@ -49,11 +57,22 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
               private breadcrumbService: BreadcrumbService,
               private asyncPipe: AsyncPipe,
               private translateService: TranslateService,
+              private stateService: StateService,
               private changeDetectorRef: ChangeDetectorRef) {
+    super();
     this.remoteResponses = [];
   }
 
   ngOnInit(): void {
+    this.stateService.getItem$(STORAGE_USER)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((data: StorageUser) => {
+        this.#keyPair = {
+          privateKey: data && data.privateKey ? data.privateKey : null,
+          publicKey: data && data.publicKey ? data.publicKey : null
+        };
+      });
+
     this.#node = this.activatedRoute.snapshot.params.node;
     this.#uuid = this.activatedRoute.snapshot.params.uuid;
     this.custom = this.activatedRoute.snapshot.queryParamMap.has('custom') ?
@@ -90,6 +109,38 @@ export class ResourceDetailComponent implements OnInit, OnDestroy {
 
   onReloadRelations(): void {
     this._getRelations();
+  }
+
+  onRelationDelete(graphRelation: GraphRelationsResponse): void {
+    if (graphRelation) {
+      const relationToDelete = graphRelation.relation[2].data as GraphRelation;
+      console.log('relationToDelete', relationToDelete);
+      const relation: Relation = {
+        namespace: 'relation',
+        data: {
+          uuid: relationToDelete.properties.uuid,
+          status: 'draft',
+          left: {
+            namespace: (graphRelation.relation[0].data as Node).name,
+            condition: {}
+          },
+          right: {
+            namespace: (graphRelation.relation[1].data as Node).name,
+            condition: {}
+          },
+          name: relationToDelete.name,
+          direction: relationToDelete.properties.direction,
+          attributes: {
+            uuid: relationToDelete.properties.uuid
+          }
+        }
+      };
+      this.transactionsApiService.createTransaction(relation, this.#keyPair, 'delete')
+        .pipe(take(1)).subscribe((deletedRelation: Transaction) => {
+          console.log('deletedRelation', deletedRelation);
+          this._getRelations();
+      });
+    }
   }
 
   private _getNode(): void {

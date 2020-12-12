@@ -11,7 +11,7 @@
     <th class="px-4 py-2 text-left h-auto">
       <span class="text-lg">{{ 'common.object' | translate }}</span>
     </th>
-    <th class="px-4 py-2 text-left h-auto">
+    <th class="px-4 py-2 text-left h-auto" *tsHasPermission="'ASSETS_DELETE'">
       <span class="text-lg">{{ 'common.actions' | translate }}</span>
     </th>
   </tr>
@@ -21,7 +21,13 @@
       [ngClass]="{'border-b-2': last}">
     <td class="px-4 py-2">{{ getNameForRelation(relation.relation[2].data.name) }}</td>
     <td class="px-4 py-2">{{ relation.relation[1].data.properties.name }}</td>
-    <td class="px-4 py-2">&nbsp;</td>
+    <td class="px-4 py-2" *tsHasPermission="'ASSETS_DELETE'">
+      <button ts-button-tertiary (click)="deleteRelation(relation)">{{ 'common.delete' | translate }}</button>
+    </td>
+  </tr>
+  <tr *ngIf="!relations || relations.length === 0">
+    <td colspan="2">{{ 'common.no-relations' | translate }}</td>
+    <td *tsHasPermission="'ASSETS_DELETE'">&nbsp;</td>
   </tr>
   </tbody>
 </table>

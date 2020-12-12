@@ -35,7 +35,8 @@ export class TransactionsController {
             // relation has to be created
             const relation = transaction.asset.data as RelationDto;
             const result = await (transaction.metadata.transactionType === 'create' ?
-                this.neo4jService.createRelation(relation.data) : this.neo4jService.updateRelation(relation.data));
+                this.neo4jService.createRelation(relation.data) : ( transaction.metadata.transactionType === 'update' ?
+                    this.neo4jService.updateRelation(relation.data) : this.neo4jService.deleteRelation(relation.data)));
             const success = result.summary.counters.updates();
             console.log('success', success['relationshipsCreated:'] === 1);
         } else {

@@ -25,12 +25,15 @@ export class ResourceDetailRelationsComponent implements OnInit {
   relations: GraphRelationsResponse[];
   @Output()
   reloadRelations: EventEmitter<void>;
+  @Output()
+  deletedRelation: EventEmitter<GraphRelationsResponse>;
 
   #relations: DbRelation[];
 
   constructor(private relationApiService: DbRelationApiService,
               private changeDetectorRef: ChangeDetectorRef) {
     this.reloadRelations = new EventEmitter<void>();
+    this.deletedRelation = new EventEmitter<GraphRelationsResponse>();
   }
 
   ngOnInit(): void {
@@ -51,6 +54,10 @@ export class ResourceDetailRelationsComponent implements OnInit {
       return foundRelation ? foundRelation.name : relationName;
     }
     return relationName;
+  }
+
+  deleteRelation(relation: GraphRelationsResponse): void {
+    this.deletedRelation.emit(relation);
   }
 
   private getStoredRelationName(relationName: string): string {

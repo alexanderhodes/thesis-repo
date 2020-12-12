@@ -6,7 +6,7 @@ import {IAsset} from '../../shared';
 import {
     createNodeQueryForAsset,
     createNodeQueryWithQuery,
-    createRelation,
+    createRelation, deleteRelation,
     DROP_NODES_AND_RELATIONS,
     getNodesByType,
     readRelation, updateNodeQueryForAsset, updateRelation
@@ -56,6 +56,11 @@ export class GraphService {
 
     async updateRelation(relation: Relation): Promise<QueryResult> {
         const relationQuery = updateRelation(relation);
+        return this._executeQuery(relationQuery);
+    }
+
+    async deleteRelation(relation: Relation): Promise<QueryResult> {
+        const relationQuery = deleteRelation(relation);
         return this._executeQuery(relationQuery);
     }
 

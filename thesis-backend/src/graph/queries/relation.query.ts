@@ -4,10 +4,12 @@ import {createReturn, joinKeyValuePair} from './helper.query';
 const CREATE_RELATION
     = `MATCH (a:{{typeA}}), (b:{{typeB}}) WHERE {{conditionA}} AND {{conditionB}} CREATE (a) {{direction1}} [r:{{relation}} {{{relationAttributes}}}] {{direction2}} (b) RETURN {{return}}`;
 const READ_RELATION
-    = `MATCH (a:{{typeA}} {{conditionA}} ) {{direction1}} [r{{typeRelation}} {{conditionR}} ] {{direction2}} (b{{typeB}} {{conditionB}} ) RETURN {{return}}`
+    = `MATCH (a:{{typeA}} {{conditionA}} ) {{direction1}} [r{{typeRelation}} {{conditionR}} ] {{direction2}} (b{{typeB}} {{conditionB}} ) RETURN {{return}}`;
 const DEFAULT_RETURN = 'a,b,r';
 const UPDATE_RELATION
-    = `MATCH (a:{{typeA}} {{conditionA}} ) {{direction1}} [r{{typeRelation}} {{conditionR}} ] {{direction2}} (b{{typeB}} {{conditionB}} ) SET {{relationAttributes}} RETURN {{return}}`
+    = `MATCH (a:{{typeA}} {{conditionA}} ) {{direction1}} [r{{typeRelation}} {{conditionR}} ] {{direction2}} (b{{typeB}} {{conditionB}} ) SET {{relationAttributes}} RETURN {{return}}`;
+const DELETE_RELATION
+    = `MATCH (:{{typeA}})-[r:{{typeRelation}} {{conditionR}}]-(:{{typeB}}) DELETE r`;
 
 export function createRelation(relation: Relation): string {
     const conditionA = joinKeyValuePair(relation.left.condition, '=', 'a');
@@ -68,6 +70,19 @@ export function updateRelation(relation: Relation): string {
         .replace('{{relation}}', relationName)
         .replace('{{relationAttributes}}', relationAttributes)
         .replace('{{return}}', returns.length ? returns : DEFAULT_RETURN);
+}
+
+export function deleteRelation(relation: Relation): string {
+//     MATCH (:{{typeA}})-[r:{{typeRelation}} {{conditionR}}]-(:{{typeB}}) DELETE r
+    console.log('relation', relation.attributes);
+    const conditionR = joinKeyValuePair(relation.attributes, ':');
+    const relationName = createRelationName(relation.name);
+
+    return DELETE_RELATION
+        .replace('{{typeA}}', relation.left.namespace)
+        .replace('{{typeB}}', relation.right.namespace)
+        .replace('{{typeRelation}}', relationName)
+        .replace('{{conditionR}}', `{${conditionR}}`);
 }
 
 export function createRelationName(relationName: string): string {

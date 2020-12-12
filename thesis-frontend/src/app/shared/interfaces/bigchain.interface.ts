@@ -105,7 +105,10 @@ export interface Relation extends Asset {
   data: {
     uuid: string;
     name: string;
-    attributes: { [key: string]: any };
+    attributes: {
+      uuid: string;
+      [key: string]: any
+    };
     direction: RelationDirection;
     left: RelationNode;
     right: RelationNode;

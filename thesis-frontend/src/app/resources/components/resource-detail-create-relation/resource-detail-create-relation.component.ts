@@ -134,11 +134,14 @@ export class ResourceDetailCreateRelationComponent extends CleanUpHelper impleme
   createRelation(): void {
     if (this.selectedRelation && this.selectedResourceType && this.selectedGraphObject) {
       const node: Node = this.selectedGraphObject.data as Node;
+      const uuid = this.uuidService.generateV4Uuid();
       const relation: Relation = {
         namespace: 'relation',
         data: {
           uuid: this.uuidService.generateV4Uuid(),
-          attributes: {},
+          attributes: {
+            uuid
+          },
           direction: 'out',
           name: this.selectedRelation.name,
           left: {
