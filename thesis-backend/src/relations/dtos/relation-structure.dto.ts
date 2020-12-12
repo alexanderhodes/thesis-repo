@@ -4,8 +4,18 @@ import {DbRelationDto} from './relation.dto';
 export type UpdateRelationStructureType = 'CREATE' | 'UPDATE' | 'DELETE';
 
 export class DbRelationStructureDto {
+    @ApiProperty({
+        type: String,
+        nullable: true
+    })
     readonly id?: string;
+    @ApiProperty( {
+        type: String
+    })
     readonly field: string;
+    @ApiProperty({
+        type: DbRelationDto
+    })
     readonly relation: DbRelationDto;
 }
 
