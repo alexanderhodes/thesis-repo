@@ -11,7 +11,7 @@ import {
     Query,
     UseGuards
 } from '@nestjs/common';
-import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiOkResponse, ApiTags} from '@nestjs/swagger';
 import {ObjectEntity, ObjectService, ObjectStructureService} from '../../database';
 import {IObjectStructure, IUpdateObjectStructureResponse} from '../../shared';
 import {ObjectStructureDto, UpdateObjectStructuresDto} from '../dtos';
@@ -27,16 +27,22 @@ export class ObjectStructureController {
 
     @UseGuards(JwtAuthGuard)
     @Get()
+    @ApiOkResponse({
+        type: [ObjectStructureDto]
+    })
     @ApiBearerAuth()
-    async getAllObjectStructures(): Promise<IObjectStructure[]> {
+    async getAllObjectStructures(): Promise<ObjectStructureDto[]> {
         const objectStructures = await this.objectStructureService.findAll();
         return objectStructures as IObjectStructure[];
     }
 
     @UseGuards(JwtAuthGuard)
     @Get("object/:objectName")
+    @ApiOkResponse({
+        type: [ObjectStructureDto]
+    })
     @ApiBearerAuth()
-    async getObjectStructureForObject(@Param("objectName") objectName: string): Promise<IObjectStructure[]> {
+    async getObjectStructureForObject(@Param("objectName") objectName: string): Promise<ObjectStructureDto[]> {
         const object = await this.objectService.findOne(objectName);
         if (object) {
             return this.objectStructureService.findAllByObject(objectName);
@@ -46,8 +52,11 @@ export class ObjectStructureController {
 
     @UseGuards(JwtAuthGuard)
     @Get(":id")
+    @ApiOkResponse({
+        type: ObjectStructureDto
+    })
     @ApiBearerAuth()
-    async getObjectStructureById(@Param("id") id: string): Promise<IObjectStructure> {
+    async getObjectStructureById(@Param("id") id: string): Promise<ObjectStructureDto> {
         const objectStructure = await this.objectStructureService.findOne(id);
         if (objectStructure) {
             return objectStructure;
@@ -58,8 +67,11 @@ export class ObjectStructureController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Post()
     @HasPermissions(PermissionsEnum.CONFIGURATION_CREATE)
+    @ApiOkResponse({
+        type: [ObjectStructureDto]
+    })
     @ApiBearerAuth()
-    async createObjectStructures(@Body() objectStructureDtos: ObjectStructureDto[]): Promise<IObjectStructure[]> {
+    async createObjectStructures(@Body() objectStructureDtos: ObjectStructureDto[]): Promise<ObjectStructureDto[]> {
         const createdObjectStructures: IObjectStructure[] = [];
         for (const createObjectStructure of objectStructureDtos) {
             const object = toObjectEntity(createObjectStructure.object.name, createObjectStructure.object.deletable);
@@ -77,6 +89,9 @@ export class ObjectStructureController {
     @UseGuards(JwtAuthGuard, PermissionsGuard)
     @Put(":id")
     @HasPermissions(PermissionsEnum.CONFIGURATION_UPDATE)
+    @ApiOkResponse({
+        type: ObjectStructureDto
+    })
     @ApiBearerAuth()
     async updateObjectStructure(@Param("id") id: string, @Body() objectStructureDto: ObjectStructureDto): Promise<IObjectStructure> {
         const foundObjectStructure = await this.objectStructureService.findOne(id);
