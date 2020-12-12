@@ -1,12 +1,15 @@
 # stop docker containers
+echo "stopping containers bigchaindb and neo4j"
 sudo docker container stop bigchaindb
 sudo docker container stop neo4j
 
 # remove docker containers
+echo "removing containers bigchaindb and neo4j"
 sudo docker container rm bigchaindb
 sudo docker container rm neo4j
 
 # start bigchain db with docker
+echo "starting containers bigchaindb and neo4j"
 sudo docker run \
   --detach \
   --name bigchaindb \
@@ -22,3 +25,6 @@ sudo docker run \
   --net=host \
   --env NEO4J_AUTH=neo4j/j4oen \
   neo4j:latest
+
+# list running container
+sudo docker container list
