@@ -17,7 +17,8 @@
     "install:backend": "cd thesis-backend && npm install",
     "deploy:frontend": "sudo rm -rf /var/www/html/* && sudo cp -r ./thesis-frontend/dist/thesis-frontend/* /var/www/html",
     "initialize-db": "psql -U admin -d authentication -f ./thesis-backend/sql/init-db.sql",
-    "start-docker": "scripts/clean-start-container.sh"
+    "start-docker": "scripts/start-container.sh",
+    "clean-start-docker": "scripts/clean-start-container.sh"
   },
   "author": "Alexander Hodes",
   "license": "ISC"
