@@ -15,7 +15,7 @@ export class RemoteService {
         this.#remoteConfig = this.configurationService.createRemoteConfig();
     }
 
-    async queryRemote<T>(method: RequestType, url: string, body: any, parser: (any) => T[]): Promise<IRemoteResponse<T[]>[]> {
+    async queryRemote<T>(method: RequestType, url: string, body: any, parser?: (any) => T[]): Promise<IRemoteResponse<T[]>[]> {
         const responses: IRemoteResponse<T[]>[] = [];
         const remoteQueries = await Promise.all(this._queryRemote(method, url, body));
 
@@ -23,7 +23,7 @@ export class RemoteService {
             responses.push({
                 host: query.config.baseURL,
                 name: this._getNodeNameForBaseURL(query.config.baseURL),
-                data: parser(query.data),
+                data: query.data,
                 error: !!query.error
             } as IRemoteResponse<T[]>);
         })

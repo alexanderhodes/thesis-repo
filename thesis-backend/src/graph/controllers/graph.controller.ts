@@ -44,7 +44,7 @@ export class GraphController {
                 error: false
             }
         ];
-        const remoteResponses: IRemoteResponse<IGraphObject[]>[] = await this.remoteService.queryRemote('POST', `api/graph/node/${type}`, graphQuery, toGraphObjects);
+        const remoteResponses: IRemoteResponse<IGraphObject[]>[] = await this.remoteService.queryRemote('POST', `api/graph/node/${type}`, graphQuery);
         console.log('remoteResponses', remoteResponses);
         graphQueries.push(...remoteResponses);
         return graphQueries;

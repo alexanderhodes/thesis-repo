@@ -9,6 +9,9 @@
       <span class="text-lg">{{ 'common.instance' | translate }}</span>
     </th>
     <th class="px-4 py-2 text-left h-auto">
+      <span class="text-lg">{{ 'common.host' | translate }}</span>
+    </th>
+    <th class="px-4 py-2 text-left h-auto">
       <span class="text-lg">{{ 'common.name' | translate }}</span>
     </th>
   </tr>
@@ -17,6 +20,7 @@
   <tr *ngFor="let remoteResponse of remoteResponses; index as i; last as last" class="border-t-2 border-black"
       [ngClass]="{'border-b-2': last}">
     <td class="px-4 py-2">{{ remoteResponse.name }}</td>
+    <td class="px-4 py-2">{{ remoteResponse.host }}</td>
     <td class="px-4 py-2">
       <ng-container *ngIf="remoteResponse.error">
         {{ 'common.request-error' | translate }}
