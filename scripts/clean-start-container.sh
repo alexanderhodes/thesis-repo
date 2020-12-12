@@ -1,3 +1,7 @@
+# stop docker containers
+sudo docker container stop bigchaindb
+sudo docker container stop neo4j
+
 # remove docker containers
 sudo docker container rm bigchaindb
 sudo docker container rm neo4j
