@@ -48,6 +48,7 @@ export class ResourceDetailComponent extends CleanUpHelper implements OnInit, On
   #node: string;
   #uuid: string;
   #graphQuery: GraphQuery;
+  #remoteGraphQuery: GraphQuery;
   #keyPair: KeyPair;
 
   constructor(private graphApiService: GraphApiService,
@@ -82,8 +83,6 @@ export class ResourceDetailComponent extends CleanUpHelper implements OnInit, On
 
     // get node data
     this._getNode();
-    // get names on different nodes
-    this._getRemoteNodes();
     // get blockchain transactions
     this._getTransactions();
     // get relations
@@ -119,6 +118,7 @@ export class ResourceDetailComponent extends CleanUpHelper implements OnInit, On
         namespace: 'relation',
         data: {
           uuid: relationToDelete.properties.uuid,
+          identifier: '',
           status: 'draft',
           left: {
             namespace: (graphRelation.relation[0].data as Node).name,
@@ -151,6 +151,7 @@ export class ResourceDetailComponent extends CleanUpHelper implements OnInit, On
           const node = (graphObjects[0].data as Node);
           const data = {
             name: node.properties.name,
+            identifier: node.properties.identifier,
             uuid: node.properties.uuid,
             status: node.properties.status
           };
@@ -162,6 +163,9 @@ export class ResourceDetailComponent extends CleanUpHelper implements OnInit, On
             data
           };
           console.log('asset', this.asset);
+          this.#remoteGraphQuery = {node: this.#node, condition: {identifier: this.asset.data.identifier}};
+          // get names on different nodes
+          this._getRemoteNodes();
           this.changeDetectorRef.detectChanges();
         }
       }, (error) => {
@@ -170,7 +174,7 @@ export class ResourceDetailComponent extends CleanUpHelper implements OnInit, On
   }
 
   private _getRemoteNodes(): void {
-    this.graphApiService.getRemoteNodesByQuery(this.#node, this.#graphQuery)
+    this.graphApiService.getRemoteNodesByQuery(this.#node, this.#remoteGraphQuery)
       .pipe(take(1))
       .subscribe((remoteResponses: Array<RemoteResponse<GraphObject[]>>) => {
         this.remoteResponses = remoteResponses;

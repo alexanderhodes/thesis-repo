@@ -55,6 +55,7 @@ export interface Asset {
   namespace: Namespace;
   data: {
     uuid: string;
+    identifier: string;
     name: string;
     status: Status;
     [key: string]: any;
@@ -73,37 +74,38 @@ export interface Resource extends Asset {
   };
 }
 
-export interface Occupation extends Resource {
-  data: {
-    uuid: string;
-    identifier: string;
-    name: string;
-    description: string;
-    disambiguatingDescription: string;
-    occupationalCategory: string;
-    hierarchy: Hierarchy[];
-    narrowerOccupations: Occupation[];
-    status: Status;
-    url: string;
-    skills: Qualification[];
-  };
-}
-
-export interface Qualification extends Resource {
-  data: {
-    uuid: string;
-    identifier: string;
-    name: string;
-    description: string;
-    disambiguatingDescription: string;
-    status: Status;
-    url: string;
-  };
-}
+// export interface Occupation extends Resource {
+//   data: {
+//     uuid: string;
+//     identifier: string;
+//     name: string;
+//     description: string;
+//     disambiguatingDescription: string;
+//     occupationalCategory: string;
+//     hierarchy: Hierarchy[];
+//     narrowerOccupations: Occupation[];
+//     status: Status;
+//     url: string;
+//     skills: Qualification[];
+//   };
+// }
+//
+// export interface Qualification extends Resource {
+//   data: {
+//     uuid: string;
+//     identifier: string;
+//     name: string;
+//     description: string;
+//     disambiguatingDescription: string;
+//     status: Status;
+//     url: string;
+//   };
+// }
 
 export interface Relation extends Asset {
   data: {
     uuid: string;
+    identifier: string;
     name: string;
     attributes: {
       uuid: string;

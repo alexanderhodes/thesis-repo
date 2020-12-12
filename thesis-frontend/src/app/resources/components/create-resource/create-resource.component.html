@@ -76,6 +76,16 @@
         <ng-template #custom>
           <div class="grid grid-cols-12">
             <div class="col-span-12 px-2 pt-3">
+              <label for="identifier" class="text-black">{{ 'common.identifier' | translate }} *</label>
+              <input id="identifier" ts-input formControlName="identifier">
+              <ng-container
+                *ngIf="(submitted || getFormControl('identifier').touched) && getFormControl('identifier').invalid">
+                <ts-error-message *ngIf="getFormControl('identifier').errors.required">
+                  {{ 'common.error.no-value' | translate }}
+                </ts-error-message>
+              </ng-container>
+            </div>
+            <div class="col-span-12 px-2 pt-3">
               <label for="name" class="text-black">{{ 'common.name' | translate }} *</label>
               <input id="name" ts-input formControlName="name">
               <ng-container *ngIf="(submitted || getFormControl('name').touched) && getFormControl('name').invalid">

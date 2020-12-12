@@ -6,6 +6,7 @@ export interface Node {
   name: string;
   properties: {
     uuid: string;
+    identifier: string;
     status: Status;
     [key: string]: any ;
   };

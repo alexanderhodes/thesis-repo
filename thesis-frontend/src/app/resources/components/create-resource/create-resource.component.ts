@@ -150,6 +150,7 @@ export class CreateResourceComponent extends CleanUpHelper implements OnInit {
         this.createForm.addControl('disambiguatingDescription', new FormControl('', []));
         this.createForm.addControl('url', new FormControl('', [Validators.required]));
       } else {
+        this.createForm.addControl('identifier', new FormControl('', [Validators.required]));
         this.createForm.addControl('name', new FormControl('', [Validators.required]));
       }
       this.objectStructureApiService.getObjectStructuresByObject(this.selectedResourceType)

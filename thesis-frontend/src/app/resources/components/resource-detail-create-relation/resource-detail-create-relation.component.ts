@@ -139,6 +139,7 @@ export class ResourceDetailCreateRelationComponent extends CleanUpHelper impleme
         namespace: 'relation',
         data: {
           uuid: this.uuidService.generateV4Uuid(),
+          identifier: '',
           attributes: {
             uuid
           },

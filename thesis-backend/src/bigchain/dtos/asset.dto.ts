@@ -5,6 +5,7 @@ export class AssetDto {
     readonly namespace: Namespace;
     readonly data: {
         readonly uuid: string;
+        readonly identifier: string;
         readonly name: string;
         readonly [key: string]: any;
     };
@@ -53,6 +54,7 @@ export class QualificationDto extends ResourceDto {
 export class RelationDto extends AssetDto {
     readonly data: {
         readonly uuid: string;
+        readonly identifier: string;
         readonly name: string;
         readonly attributes: { [key: string]: any };
         readonly direction: RelationDirection;

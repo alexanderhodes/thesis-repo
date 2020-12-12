@@ -5,6 +5,7 @@ export interface IAsset {
     namespace: Namespace;
     data: {
         uuid: string;
+        identifier: string;
         name: string;
         [key: string]: any;
     };
