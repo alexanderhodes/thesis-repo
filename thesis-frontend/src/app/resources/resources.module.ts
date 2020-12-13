@@ -5,7 +5,9 @@ import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
 import {
   CreateResourceComponent,
-  RelationListComponent, RemoteListComponent,
+  RelationListComponent,
+  RemoteListComponent,
+  ResourceDataComponent,
   ResourceDetailComponent,
   ResourceDetailCreateRelationComponent,
   ResourceListComponent,
@@ -18,6 +20,7 @@ import {CoreModule} from '../core';
 
 const components = [
   CreateResourceComponent,
+  ResourceDataComponent,
   ResourceDetailComponent,
   ResourceDetailCreateRelationComponent,
   RelationListComponent,

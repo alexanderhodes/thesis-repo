@@ -1,0 +1,21 @@
+<div *ngFor="let item of data | keyvalue">
+  <ng-container *ngIf="item.key !== 'uuid'">
+    <div class="font-bold">
+      <ng-container *ngIf="(('common.'+item.key) | translate).indexOf('common') === -1; else translationNotFound">
+        {{ ('common.' + item.key) | translate }}
+      </ng-container>
+      <ng-template #translationNotFound>
+        {{ item.key }}
+      </ng-template>
+    </div>
+    <div>
+      <ng-container *ngIf="item.key === 'status'; else normalAttribute">
+        {{ ('common.' + item.value) | translate }}
+      </ng-container>
+      <ng-template #normalAttribute>
+        {{ item.value && item.value.length && item.value !== 'null' ? item.value : '&nbsp;' }}
+      </ng-template>
+    </div>
+  </ng-container>
+</div>
+
