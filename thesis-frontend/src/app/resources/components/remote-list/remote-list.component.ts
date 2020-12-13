@@ -2,13 +2,13 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEnc
 import {GraphObject, RemoteResponse} from '../../../shared';
 
 @Component({
-  selector: 'ts-resource-detail-remotes',
-  templateUrl: 'resource-detail-remotes.component.html',
-  styleUrls: ['resource-detail-remotes.component.scss'],
+  selector: 'ts-remote-list',
+  templateUrl: 'remote-list.component.html',
+  styleUrls: ['remote-list.component.scss'],
   encapsulation: ViewEncapsulation.Emulated,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ResourceDetailRemotesComponent {
+export class RemoteListComponent {
 
   @Input()
   remoteResponses: Array<RemoteResponse<GraphObject[]>>;

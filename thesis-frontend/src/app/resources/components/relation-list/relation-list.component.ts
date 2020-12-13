@@ -13,13 +13,13 @@ import {DbRelation, GraphRelationsResponse} from '../../../shared';
 import {DbRelationApiService} from '../../../core';
 
 @Component({
-  selector: 'ts-resource-detail-relations',
-  templateUrl: 'resource-detail-relations.component.html',
-  styleUrls: ['resource-detail-relations.component.scss'],
+  selector: 'ts-relation-list',
+  templateUrl: 'relation-list.component.html',
+  styleUrls: ['relation-list.component.scss'],
   encapsulation: ViewEncapsulation.Emulated,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ResourceDetailRelationsComponent implements OnInit {
+export class RelationListComponent implements OnInit {
 
   @Input()
   relations: GraphRelationsResponse[];

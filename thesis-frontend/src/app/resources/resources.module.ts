@@ -5,10 +5,9 @@ import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
 import {
   CreateResourceComponent,
+  RelationListComponent, RemoteListComponent,
   ResourceDetailComponent,
   ResourceDetailCreateRelationComponent,
-  ResourceDetailRelationsComponent,
-  ResourceDetailRemotesComponent,
   ResourceListComponent,
   ResourceOverviewComponent,
   TransactionDetailComponent,
@@ -21,8 +20,8 @@ const components = [
   CreateResourceComponent,
   ResourceDetailComponent,
   ResourceDetailCreateRelationComponent,
-  ResourceDetailRelationsComponent,
-  ResourceDetailRemotesComponent,
+  RelationListComponent,
+  RemoteListComponent,
   ResourceOverviewComponent,
   ResourceListComponent,
   TransactionDetailComponent,

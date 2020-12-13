@@ -14,7 +14,7 @@ import {BreadcrumbService, StateService, STORAGE_TEMP} from '../../../core';
 import {AssetTransaction} from '../../../shared';
 
 @Component({
-  selector: 'ts-resource-detail-transaction-detail',
+  selector: 'ts-transaction-detail',
   templateUrl: 'transaction-detail.component.html',
   styleUrls: ['transaction-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

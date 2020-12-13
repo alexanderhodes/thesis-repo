@@ -4,7 +4,7 @@ import {AssetTransaction} from '../../../shared';
 import {StateService, STORAGE_TEMP} from '../../../core';
 
 @Component({
-  selector: 'ts-resource-detail-transactions',
+  selector: 'ts-transactions',
   templateUrl: 'transactions.component.html',
   styleUrls: ['transactions.component.scss'],
   encapsulation: ViewEncapsulation.Emulated,

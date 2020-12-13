@@ -28,16 +28,16 @@
       <a (click)="downloadJsonLD()" class="cursor-pointer hover:underline hover:text-blue">{{ 'common.jsonld-download' | translate }}</a>
     </div>
     <div class="col-span-6 col-start-4 mt-5" *ngIf="remoteResponses && remoteResponses.length">
-      <ts-resource-detail-remotes [remoteResponses]="remoteResponses" (reloadRemoteResponses)="onReloadRemoteResponses()"></ts-resource-detail-remotes>
+      <ts-remote-list [remoteResponses]="remoteResponses" (reloadRemoteResponses)="onReloadRemoteResponses()"></ts-remote-list>
     </div>
     <div class="col-span-6 col-start-4 mt-5" *ngIf="transactions && transactions.length">
-      <ts-resource-detail-transactions [transactions]="transactions" (reloadTransactions)="onReloadTransactions()"></ts-resource-detail-transactions>
+      <ts-transactions [transactions]="transactions" (reloadTransactions)="onReloadTransactions()"></ts-transactions>
     </div>
     <div class="col-span-6 col-start-4 mt-5" *tsHasPermission="'ASSETS_CREATE'">
       <ts-resource-detail-create-relation [asset]="asset" (relationCreated)="onReloadRelations()"></ts-resource-detail-create-relation>
     </div>
     <div class="col-span-6 col-start-4 mt-5">
-      <ts-resource-detail-relations [relations]="relations" (reloadRelations)="onReloadRelations()" (deletedRelation)="onRelationDelete($event)"></ts-resource-detail-relations>
+      <ts-relation-list [relations]="relations" (reloadRelations)="onReloadRelations()" (deletedRelation)="onRelationDelete($event)"></ts-relation-list>
     </div>
   </div>
 </ng-container>
