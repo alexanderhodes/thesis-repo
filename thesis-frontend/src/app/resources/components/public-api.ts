@@ -1,5 +1,6 @@
 export * from './create-resource/public-api';
 export * from './relation-list/public-api';
+export * from './remote-detail/public-api';
 export * from './remote-list/public-api';
 export * from './resource-data/public-api';
 export * from './resource-detail/public-api';

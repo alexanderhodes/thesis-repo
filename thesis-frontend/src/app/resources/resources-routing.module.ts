@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {
   ResourceOverviewComponent,
   ResourceDetailComponent,
-  TransactionDetailComponent
+  TransactionDetailComponent, RemoteDetailComponent
 } from './components/public-api';
 
 const routes: Routes = [
@@ -16,8 +16,12 @@ const routes: Routes = [
     component: ResourceDetailComponent
   },
   {
-    path: ':node/:uuid/:transaction',
+    path: ':node/:uuid/transaction/:transaction',
     component: TransactionDetailComponent
+  },
+  {
+    path: ':node/:uuid/remote/:name',
+    component: RemoteDetailComponent
   }
 ];
 

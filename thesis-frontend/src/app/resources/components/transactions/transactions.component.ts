@@ -27,16 +27,10 @@ export class TransactionsComponent {
   }
 
   toTransactionDetail(assetTransaction: AssetTransaction): void {
-    console.log('assetTransaction', assetTransaction);
     const end = this.router.url.indexOf('?custom');
     const url = end > 0 ? this.router.url.substring(0, end) : this.router.url;
-    console.log('url', url, this.router.url, end, this.router.url.indexOf('?custom'));
     this.stateService.setItem(STORAGE_TEMP, assetTransaction);
-    this.router.navigate([`${url}/${assetTransaction.transaction.id}`], {
-      state: {
-        transaction: assetTransaction
-      }
-    }).then();
+    this.router.navigate([`${url}/transaction/${assetTransaction.transaction.id}`]).then();
   }
 
 }

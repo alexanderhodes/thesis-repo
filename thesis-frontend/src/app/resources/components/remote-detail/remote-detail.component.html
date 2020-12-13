@@ -1,0 +1,21 @@
+<ng-container *ngIf="remoteResponses">
+  <div class="grid grid-cols-12">
+    <div class="col-span-6 col-start-4">
+      <div class="text-3xl">{{ 'common.remote' | translate }} {{ ('common.resource') | translate }}</div>
+    </div>
+    <div class="col-span-6 col-start-4">
+      <div class="font-bold">{{ ('common.instance') | translate }}:</div>
+      {{ remoteResponses.name }}
+    </div>
+    <div class="col-span-6 col-start-4">
+      <div class="font-bold">{{ ('common.host') | translate }}:</div>
+      {{ remoteResponses.host }}
+    </div>
+    <div class="col-span-6 col-start-4 mt-5">
+      <span class="text-xl">{{ 'common.resource' | translate }}</span>
+    </div>
+    <div class="col-span-6 col-start-4">
+      <ts-resource-data [data]="getRemoteResponseData()"></ts-resource-data>
+    </div>
+  </div>
+</ng-container>

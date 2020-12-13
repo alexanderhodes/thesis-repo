@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewEncapsulation
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
 import {TranslateService} from '@ngx-translate/core';
@@ -33,8 +26,7 @@ export class TransactionDetailComponent implements OnInit, OnDestroy {
               private asyncPipe: AsyncPipe,
               private translateService: TranslateService,
               private stateService: StateService,
-              private breadcrumbService: BreadcrumbService,
-              private changeDetectorRef: ChangeDetectorRef) {
+              private breadcrumbService: BreadcrumbService) {
   }
 
   ngOnInit(): void {
