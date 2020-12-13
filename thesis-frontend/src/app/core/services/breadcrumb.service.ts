@@ -23,8 +23,10 @@ export class BreadcrumbService implements OnDestroy {
     if (!this.#breadcrumbs || this.#breadcrumbs.length === 0) {
       this.startBreadcrumb(breadcrumb);
     } else {
-      this.#breadcrumbs.push(breadcrumb);
-      this.#breadcrumbs$.next(this.#breadcrumbs);
+      if (this.#breadcrumbs[this.#breadcrumbs.length - 1].url !== breadcrumb.url) {
+        this.#breadcrumbs.push(breadcrumb);
+        this.#breadcrumbs$.next(this.#breadcrumbs);
+      }
     }
   }
 

@@ -1,4 +1,11 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewEncapsulation
+} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
 import {TranslateService} from '@ngx-translate/core';
@@ -16,7 +23,7 @@ import {AssetTransaction} from '../../../shared';
     AsyncPipe
   ]
 })
-export class TransactionDetailComponent implements OnInit {
+export class TransactionDetailComponent implements OnInit, OnDestroy {
 
   transaction: AssetTransaction;
   transactionId: string;
@@ -43,6 +50,10 @@ export class TransactionDetailComponent implements OnInit {
       text: this.asyncPipe.transform(this.translateService.get('common.transaction')),
       url: this.router.url
     });
+  }
+
+  ngOnDestroy(): void {
+    this.breadcrumbService.removeLastBreadcrumb();
   }
 
 }
