@@ -51,6 +51,11 @@ export interface MetaData {
   user: string;
 }
 
+export interface AssetWithContext {
+  '@context': { [key: string]: string };
+  [key: string]: any;
+}
+
 export interface Asset {
   namespace: Namespace;
   data: {

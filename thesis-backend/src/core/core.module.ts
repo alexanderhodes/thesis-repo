@@ -1,13 +1,15 @@
 import {HttpModule, Module} from '@nestjs/common';
 import {AppController} from './controllers';
-import {AppService, RemoteService, SchedulerService} from './services';
+import {AppService, JsonLdService, RemoteService, SchedulerService} from './services';
 import {AppConfigModule} from '../app-config';
+import {DatabaseModule} from '../database';
 
 const controllers = [
     AppController
 ];
 const services = [
     AppService,
+    JsonLdService,
     RemoteService,
     SchedulerService
 ];
@@ -15,7 +17,8 @@ const services = [
 @Module({
     imports: [
         AppConfigModule,
-        HttpModule
+        HttpModule,
+        DatabaseModule
     ],
     controllers: [
         ...controllers

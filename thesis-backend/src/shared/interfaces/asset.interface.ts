@@ -11,6 +11,11 @@ export interface IAsset {
     };
 }
 
+export interface IAssetWithContext {
+    '@context': { [key: string]: string };
+    [key: string]: any;
+}
+
 export interface IResource extends IAsset {
     data: {
         uuid: string;

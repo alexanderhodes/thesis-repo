@@ -11,6 +11,7 @@ import {AsyncPipe} from '@angular/common';
 import {take, takeUntil} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {
+  ApplicationApiService,
   BreadcrumbService,
   CleanUpHelper,
   GraphApiService,
@@ -20,13 +21,14 @@ import {
 } from '../../../core';
 import {
   Asset,
-  AssetTransaction,
+  AssetTransaction, FileService,
   GraphObject,
   GraphQuery, GraphRelation,
   GraphRelationQuery, GraphRelationsResponse, KeyPair,
   Node, Relation,
   RemoteResponse, StorageUser, Transaction
 } from '../../../shared';
+import {IAssetWithContext} from '../../../../../../thesis-backend/src/shared';
 
 @Component({
   selector: 'ts-resource-detail',
@@ -52,6 +54,8 @@ export class ResourceDetailComponent extends CleanUpHelper implements OnInit, On
   #keyPair: KeyPair;
 
   constructor(private graphApiService: GraphApiService,
+              private applicationApiService: ApplicationApiService,
+              private fileService: FileService,
               private transactionsApiService: TransactionsApiService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
@@ -141,6 +145,13 @@ export class ResourceDetailComponent extends CleanUpHelper implements OnInit, On
           this._getRelations();
       });
     }
+  }
+
+  downloadJsonLD(): void {
+    this.applicationApiService.getAsJsonLD(this.asset).pipe(take(1))
+      .subscribe((assetWithContext: IAssetWithContext) => {
+        this.fileService.createFileForDownload(assetWithContext);
+      });
   }
 
   private _getNode(): void {

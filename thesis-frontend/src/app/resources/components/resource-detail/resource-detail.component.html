@@ -24,6 +24,9 @@
         </div>
       </ng-container>
     </div>
+    <div class="col-span-6 col-start-4 mt-5">
+      <a (click)="downloadJsonLD()" class="cursor-pointer hover:underline hover:text-blue">{{ 'common.jsonld-download' | translate }}</a>
+    </div>
     <div class="col-span-6 col-start-4 mt-5" *ngIf="remoteResponses && remoteResponses.length">
       <ts-resource-detail-remotes [remoteResponses]="remoteResponses" (reloadRemoteResponses)="onReloadRemoteResponses()"></ts-resource-detail-remotes>
     </div>
