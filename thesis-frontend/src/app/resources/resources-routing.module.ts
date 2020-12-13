@@ -1,6 +1,10 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ResourceOverviewComponent, ResourceDetailComponent} from './components/public-api';
+import {
+  ResourceOverviewComponent,
+  ResourceDetailComponent,
+  TransactionDetailComponent
+} from './components/public-api';
 
 const routes: Routes = [
   {
@@ -10,6 +14,10 @@ const routes: Routes = [
   {
     path: ':node/:uuid',
     component: ResourceDetailComponent
+  },
+  {
+    path: ':node/:uuid/:transaction',
+    component: TransactionDetailComponent
   }
 ];
 

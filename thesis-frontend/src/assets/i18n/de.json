@@ -70,6 +70,7 @@
   "common.release": "freigeben",
   "common.timestamp": "Zeitpunkt",
   "common.transaction-type": "Transaktionsart",
+  "common.transaction": "Transaktion",
   "common.user": "Benutzer",
   "common.update": "aktualisieren",
   "common.transactions": "Transaktionen",

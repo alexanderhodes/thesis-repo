@@ -15,7 +15,7 @@
       <span class="text-lg">{{ 'common.transaction-type' | translate }}</span>
     </th>
     <th class="px-4 py-2 text-left h-auto">
-      <span class="text-lg">{{ 'common.user' | translate }}</span>
+      <span class="text-lg">{{ 'common.actions' | translate }}</span>
     </th>
   </tr>
   </thead>
@@ -25,7 +25,9 @@
     <td class="px-4 py-2">{{ transaction.metadata.timestamp | date:'dd.MM.yyyy HH:mm' }}</td>
     <td class="px-4 py-2">{{ ('common.' + transaction.metadata.asset.data.status) | translate }}</td>
     <td class="px-4 py-2">{{ ('common.' + transaction.metadata.transactionType) | translate }}</td>
-    <td class="px-4 py-2">{{ transaction.metadata.user }}</td>
+    <td class="px-4 py-2">
+      <button ts-button-tertiary (click)="toTransactionDetail(transaction)">{{ 'common.to-detail' | translate }}</button>
+    </td>
   </tr>
   </tbody>
 </table>

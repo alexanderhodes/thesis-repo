@@ -33,7 +33,7 @@ export interface Transaction {
 export interface AssetTransaction {
   metadata: MetaData;
   asset: Asset;
-  transaction: any;
+  transaction: Transaction;
 }
 
 export type Namespace = 'occupation' | 'qualification' | 'relation' | string;

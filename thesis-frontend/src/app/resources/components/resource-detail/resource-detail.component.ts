@@ -21,14 +21,21 @@ import {
 } from '../../../core';
 import {
   Asset,
-  AssetTransaction, FileService,
+  AssetTransaction,
+  AssetWithContext,
+  FileService,
   GraphObject,
-  GraphQuery, GraphRelation,
-  GraphRelationQuery, GraphRelationsResponse, KeyPair,
-  Node, Relation,
-  RemoteResponse, StorageUser, Transaction
+  GraphQuery,
+  GraphRelation,
+  GraphRelationQuery,
+  GraphRelationsResponse,
+  KeyPair,
+  Node,
+  Relation,
+  RemoteResponse,
+  StorageUser,
+  Transaction
 } from '../../../shared';
-import {IAssetWithContext} from '../../../../../../thesis-backend/src/shared';
 
 @Component({
   selector: 'ts-resource-detail',
@@ -99,7 +106,7 @@ export class ResourceDetailComponent extends CleanUpHelper implements OnInit, On
   }
 
   ngOnDestroy(): void {
-    this.breadcrumbService.removeLastBreadcrumb();
+    // this.breadcrumbService.removeLastBreadcrumb();
   }
 
   onReloadRemoteResponses(): void {
@@ -149,7 +156,7 @@ export class ResourceDetailComponent extends CleanUpHelper implements OnInit, On
 
   downloadJsonLD(): void {
     this.applicationApiService.getAsJsonLD(this.asset).pipe(take(1))
-      .subscribe((assetWithContext: IAssetWithContext) => {
+      .subscribe((assetWithContext: AssetWithContext) => {
         this.fileService.createFileForDownload(assetWithContext);
       });
   }

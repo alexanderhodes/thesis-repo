@@ -1,0 +1,51 @@
+<ng-container *ngIf="transaction">
+  <div class="grid grid-cols-12">
+    <div class="col-span-6 col-start-4">
+      <div class="text-3xl">{{ ('common.transaction') | translate }}:</div>
+    </div>
+    <div class="col-span-6 col-start-4">
+      <div class="font-bold">{{ ('common.identifier') | translate }}:</div>
+      {{ transactionId }}
+    </div>
+    <div class="col-span-6 col-start-4">
+      <div class="font-bold">{{ ('common.timestamp') | translate }}:</div>
+      {{ transaction.metadata.timestamp | date:'dd.MM.yyyy HH:mm' }}
+    </div>
+    <div class="col-span-6 col-start-4">
+      <div class="font-bold">{{ ('common.status') | translate }}:</div>
+      {{ ('common.' + transaction.metadata.asset.data.status) | translate }}
+    </div>
+    <div class="col-span-6 col-start-4">
+      <div class="font-bold">{{ ('common.user') | translate }}:</div>
+      {{ transaction.metadata.user }}
+    </div>
+    <div class="col-span-6 col-start-4">
+      <div class="font-bold">{{ ('common.transaction-type') | translate }}:</div>
+      {{ ('common.' + transaction.metadata.transactionType) | translate }}
+    </div>
+    <div class="col-span-6 col-start-4 mt-5">
+      <span class="text-xl">{{ 'common.resource' | translate }}</span>
+    </div>
+    <div *ngFor="let item of transaction.asset.data | keyvalue" class="col-span-6 col-start-4">
+      <ng-container *ngIf="item.key !== 'uuid'">
+        <div class="font-bold">
+          <ng-container *ngIf="(('common.'+item.key) | translate).indexOf('common') === -1; else translationNotFound">
+            {{ ('common.' + item.key) | translate }}
+          </ng-container>
+          <ng-template #translationNotFound>
+            {{ item.key }}
+          </ng-template>
+        </div>
+        <div>
+          <ng-container *ngIf="item.key === 'status'; else normalAttribute">
+            {{ ('common.' + item.value) | translate }}
+          </ng-container>
+          <ng-template #normalAttribute>
+            {{ item.value && item.value.length && item.value !== 'null' ? item.value : '&nbsp;' }}
+          </ng-template>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>
+

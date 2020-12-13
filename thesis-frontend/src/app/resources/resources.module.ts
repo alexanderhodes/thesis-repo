@@ -9,9 +9,10 @@ import {
   ResourceDetailCreateRelationComponent,
   ResourceDetailRelationsComponent,
   ResourceDetailRemotesComponent,
-  ResourceDetailTransactionsComponent,
   ResourceListComponent,
-  ResourceOverviewComponent
+  ResourceOverviewComponent,
+  TransactionDetailComponent,
+  TransactionsComponent
 } from './components/public-api';
 import {ResourcesRoutingModule} from './resources-routing.module';
 import {CoreModule} from '../core';
@@ -22,9 +23,10 @@ const components = [
   ResourceDetailCreateRelationComponent,
   ResourceDetailRelationsComponent,
   ResourceDetailRemotesComponent,
-  ResourceDetailTransactionsComponent,
   ResourceOverviewComponent,
-  ResourceListComponent
+  ResourceListComponent,
+  TransactionDetailComponent,
+  TransactionsComponent
 ];
 
 @NgModule({

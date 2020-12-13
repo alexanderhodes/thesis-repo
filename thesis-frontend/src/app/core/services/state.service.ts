@@ -4,6 +4,7 @@ import {Observable, ReplaySubject} from 'rxjs';
 const STORAGE_KEY: string = 'ts-data';
 
 export const STORAGE_USER = 'user';
+export const STORAGE_TEMP = 'temp';
 
 @Injectable({
   providedIn: 'root'
