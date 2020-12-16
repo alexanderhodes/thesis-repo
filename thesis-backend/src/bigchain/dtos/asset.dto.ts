@@ -7,6 +7,7 @@ export class AssetDto {
         readonly uuid: string;
         readonly identifier: string;
         readonly name: string;
+        readonly status: Status;
         readonly [key: string]: any;
     };
 }
@@ -58,9 +59,10 @@ export class RelationDto extends AssetDto {
         readonly name: string;
         readonly attributes: { [key: string]: any };
         readonly direction: RelationDirection;
-        readonly left: RelationNode,
-        readonly right: RelationNode,
-        readonly return?: RelationReturn[]
+        readonly left: RelationNode;
+        readonly right: RelationNode;
+        readonly return?: RelationReturn[];
+        readonly status: Status;
     };
 }
 

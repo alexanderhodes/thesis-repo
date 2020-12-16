@@ -7,6 +7,7 @@ export interface IAsset {
         uuid: string;
         identifier: string;
         name: string;
+        status: Status;
         [key: string]: any;
     };
 }
